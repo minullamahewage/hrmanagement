@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}JobTitle index{% endblock %}
+
+{% block body %}
+    <h1>JobTitle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>JobTitle</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job_title in job_titles %}
+            <tr>
+                <td>{{ job_title.job_title }}</td>
+                <td>{{ job_title.description }}</td>
+                <td>
+                    <a href="{{ path('job_title_show', {'jobTitle': job_title.job_title}) }}">show</a>
+                    <a href="{{ path('job_title_edit', {'jobTitle': job_title.job_title}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('job_title_new') }}">Create new</a>
+{% endblock %}
