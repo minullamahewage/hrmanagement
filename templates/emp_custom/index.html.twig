@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EmpCustom index{% endblock %}
+
+{% block body %}
+    <h1>EmpCustom index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emp_custom in emp_customs %}
+            <tr>
+                <td>{{ emp_custom.attribute }}</td>
+                <td>
+                    <a href="{{ path('emp_custom_show', {'attribute': emp_custom.attribute}) }}">show</a>
+                    <a href="{{ path('emp_custom_edit', {'attribute': emp_custom.attribute}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('emp_custom_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EmpData{% endblock %}
+
+{% block body %}
+    <h1>Create new EmpData</h1>
+
+    {{ include('emp_data/_form.html.twig') }}
+
+    <a href="{{ path('emp_data_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EmpCustom{% endblock %}
+
+{% block body %}
+    <h1>EmpCustom</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Attribute</th>
+                <td>{{ emp_custom.attribute }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('emp_custom_index') }}">back to list</a>
+
+    <a href="{{ path('emp_custom_edit', {'attribute': emp_custom.attribute}) }}">edit</a>
+
+    {{ include('emp_custom/_delete_form.html.twig') }}
+{% endblock %}

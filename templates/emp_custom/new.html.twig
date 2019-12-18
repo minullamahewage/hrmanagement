@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EmpCustom{% endblock %}
+
+{% block body %}
+    <h1>Create new EmpCustom</h1>
+
+    {{ include('emp_custom/_form.html.twig') }}
+
+    <a href="{{ path('emp_custom_index') }}">back to list</a>
+{% endblock %}
