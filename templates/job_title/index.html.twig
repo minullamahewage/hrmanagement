@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>JobTitleId</th>
+                {# <th>JobTitleId</th> #}
                 <th>JobTitle</th>
                 <th>Description</th>
                 <th>actions</th>
@@ -17,12 +17,12 @@
         <tbody>
         {% for job_title in job_titles %}
             <tr>
-                <td>{{ job_title.jobTitleId }}</td>
-                <td>{{ job_title.jobTitle }}</td>
+                {# <td>{{ job_title.jobTitleId }}</td> #}
+                <td>{{ job_title.job_title }}</td>
                 <td>{{ job_title.description }}</td>
                 <td>
-                    <a href="{{ path('job_title_show', {'jobTitleId': job_title.jobTitleId}) }}">show</a>
-                    <a href="{{ path('job_title_edit', {'jobTitleId': job_title.jobTitleId}) }}">edit</a>
+                    <a href="{{ path('job_title_show', {'jobTitleId': job_title.job_title_id}) }}">show</a>
+                    <a href="{{ path('job_title_edit', {'jobTitleId': job_title.job_title_id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

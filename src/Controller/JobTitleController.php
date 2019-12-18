@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\JobTitle;
 use App\Form\JobTitleType;
+use App\Model\JobTitleModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,12 @@ class JobTitleController extends AbstractController
      */
     public function index(): Response
     {
-        $jobTitles = $this->getDoctrine()
-            ->getRepository(JobTitle::class)
-            ->findAll();
-
+        $entityManager=$this->getDoctrine()->getManager();
+        $jobTitleModel=new JobTitleModel();
+        // $jobTitles = $this->getDoctrine()
+        //     ->getRepository(JobTitle::class)
+        //     ->findAll();
+        $jobTitles=$jobTitleModel->getAllJobTitles($entityManager);
         return $this->render('job_title/index.html.twig', [
             'job_titles' => $jobTitles,
         ]);
@@ -34,14 +37,15 @@ class JobTitleController extends AbstractController
     public function new(Request $request): Response
     {
         $jobTitle = new JobTitle();
+        $jobTitleModel = new JobTitleModel();
         $form = $this->createForm(JobTitleType::class, $jobTitle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($jobTitle);
-            $entityManager->flush();
-
+            // $entityManager->persist($jobTitle);
+            // $entityManager->flush();
+            $jobTitleModel->addJobTitle($jobTitle, $entityManager);
             return $this->redirectToRoute('job_title_index');
         }
 
@@ -66,12 +70,14 @@ class JobTitleController extends AbstractController
      */
     public function edit(Request $request, JobTitle $jobTitle): Response
     {
+        $jobTitleModel = new JobTitleModel();
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm(JobTitleType::class, $jobTitle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            // $this->getDoctrine()->getManager()->flush();
+            $jobTitleModel->changeJobTitle($jobTitle,$entityManager);
             return $this->redirectToRoute('job_title_index');
         }
 
