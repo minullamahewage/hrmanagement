@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Department index{% endblock %}
+
+{% block body %}
+    <h1>Department index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>DeptId</th>
+                <th>DeptName</th>
+                <th>Building</th>
+                <th>Floor</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for department in departments %}
+            <tr>
+                <td>{{ department.deptId }}</td>
+                <td>{{ department.deptName }}</td>
+                <td>{{ department.building }}</td>
+                <td>{{ department.floor }}</td>
+                <td>
+                    <a href="{{ path('department_show', {'deptId': department.deptId}) }}">show</a>
+                    <a href="{{ path('department_edit', {'deptId': department.deptId}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('department_new') }}">Create new</a>
+{% endblock %}

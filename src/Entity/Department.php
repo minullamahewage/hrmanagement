@@ -47,6 +47,13 @@ class Department
         return $this->deptId;
     }
 
+    public function setDeptId(string $deptId): self
+    {
+        $this->deptId = $deptId;
+
+        return $this;
+    }
+
     public function getDeptName(): ?string
     {
         return $this->deptName;

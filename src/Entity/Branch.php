@@ -24,6 +24,13 @@ class Branch
     /**
      * @var string|null
      *
+     * @ORM\Column(name="name", type="string", length=20, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string|null
+     *
      * @ORM\Column(name="line_1", type="string", length=30, nullable=true)
      */
     private $line1;
@@ -59,6 +66,25 @@ class Branch
     public function getBranchId(): ?string
     {
         return $this->branchId;
+    }
+
+    public function setBranchId(?string $branchId): self
+    {
+        $this->branchId = $branchId;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getLine1(): ?string
