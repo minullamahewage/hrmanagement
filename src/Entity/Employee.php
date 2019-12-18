@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Employee
  *
- * @ORM\Table(name="employee", indexes={@ORM\Index(name="superviser_id", columns={"superviser_id"}), @ORM\Index(name="dept_name", columns={"dept_name"}), @ORM\Index(name="pay_grade", columns={"pay_grade"}), @ORM\Index(name="emp_status", columns={"emp_status"}), @ORM\Index(name="branch_id", columns={"branch_id"}), @ORM\Index(name="job_title", columns={"job_title"})})
+ * @ORM\Table(name="employee", indexes={@ORM\Index(name="employee_ibfk_9", columns={"job_title_id"}), @ORM\Index(name="pay_grade", columns={"pay_grade"}), @ORM\Index(name="dept_id", columns={"dept_id"}), @ORM\Index(name="employee_ibfk_8", columns={"emp_status_id"}), @ORM\Index(name="branch_id", columns={"branch_id"}), @ORM\Index(name="superviser_id", columns={"superviser_id"})})
  * @ORM\Entity
  */
 class Employee
@@ -104,26 +104,6 @@ class Employee
     private $branch;
 
     /**
-     * @var \Department
-     *
-     * @ORM\ManyToOne(targetEntity="Department")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dept_name", referencedColumnName="dept_name")
-     * })
-     */
-    private $deptName;
-
-    /**
-     * @var \JobTitle
-     *
-     * @ORM\ManyToOne(targetEntity="JobTitle")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="job_title", referencedColumnName="job_title")
-     * })
-     */
-    private $jobTitle;
-
-    /**
      * @var \PayGrade
      *
      * @ORM\ManyToOne(targetEntity="PayGrade")
@@ -134,16 +114,6 @@ class Employee
     private $payGrade;
 
     /**
-     * @var \EmploymentStatus
-     *
-     * @ORM\ManyToOne(targetEntity="EmploymentStatus")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_status", referencedColumnName="emp_status")
-     * })
-     */
-    private $empStatus;
-
-    /**
      * @var \Employee
      *
      * @ORM\ManyToOne(targetEntity="Employee")
@@ -152,6 +122,36 @@ class Employee
      * })
      */
     private $superviser;
+
+    /**
+     * @var \Department
+     *
+     * @ORM\ManyToOne(targetEntity="Department")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dept_id", referencedColumnName="dept_id")
+     * })
+     */
+    private $dept;
+
+    /**
+     * @var \EmploymentStatus
+     *
+     * @ORM\ManyToOne(targetEntity="EmploymentStatus")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="emp_status_id", referencedColumnName="id")
+     * })
+     */
+    private $empStatus;
+
+    /**
+     * @var \JobTitle
+     *
+     * @ORM\ManyToOne(targetEntity="JobTitle")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="job_title_id", referencedColumnName="job_title_id")
+     * })
+     */
+    private $jobTitle;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -313,30 +313,6 @@ class Employee
         return $this;
     }
 
-    public function getDeptName(): ?Department
-    {
-        return $this->deptName;
-    }
-
-    public function setDeptName(?Department $deptName): self
-    {
-        $this->deptName = $deptName;
-
-        return $this;
-    }
-
-    public function getJobTitle(): ?JobTitle
-    {
-        return $this->jobTitle;
-    }
-
-    public function setJobTitle(?JobTitle $jobTitle): self
-    {
-        $this->jobTitle = $jobTitle;
-
-        return $this;
-    }
-
     public function getPayGrade(): ?PayGrade
     {
         return $this->payGrade;
@@ -345,6 +321,30 @@ class Employee
     public function setPayGrade(?PayGrade $payGrade): self
     {
         $this->payGrade = $payGrade;
+
+        return $this;
+    }
+
+    public function getSuperviser(): ?self
+    {
+        return $this->superviser;
+    }
+
+    public function setSuperviser(?self $superviser): self
+    {
+        $this->superviser = $superviser;
+
+        return $this;
+    }
+
+    public function getDept(): ?Department
+    {
+        return $this->dept;
+    }
+
+    public function setDept(?Department $dept): self
+    {
+        $this->dept = $dept;
 
         return $this;
     }
@@ -361,14 +361,14 @@ class Employee
         return $this;
     }
 
-    public function getSuperviser(): ?self
+    public function getJobTitle(): ?JobTitle
     {
-        return $this->superviser;
+        return $this->jobTitle;
     }
 
-    public function setSuperviser(?self $superviser): self
+    public function setJobTitle(?JobTitle $jobTitle): self
     {
-        $this->superviser = $superviser;
+        $this->jobTitle = $jobTitle;
 
         return $this;
     }

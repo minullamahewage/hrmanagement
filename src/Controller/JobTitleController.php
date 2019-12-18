@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\JobTitle;
-use App\Model\JobTitleModel;
 use App\Form\JobTitleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +19,9 @@ class JobTitleController extends AbstractController
      */
     public function index(): Response
     {
-        $jobTitleModel = new JobTitleModel();
-        $entityManager = $this->getDoctrine()->getManager();
-        $jobTitles = $jobTitleModel->getAllJobTitles($entityManager);
-        // $jobTitles = $this->getDoctrine()
-        //     ->getRepository(JobTitle::class)
-        //     ->findAll();
+        $jobTitles = $this->getDoctrine()
+            ->getRepository(JobTitle::class)
+            ->findAll();
 
         return $this->render('job_title/index.html.twig', [
             'job_titles' => $jobTitles,
@@ -37,17 +33,14 @@ class JobTitleController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $jobTitleModel = new JobTitleModel();
         $jobTitle = new JobTitle();
         $form = $this->createForm(JobTitleType::class, $jobTitle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($jobTitle);
-            // $entityManager->flush();
-            $jobTitleModel->addNewJobTitle($jobTitle,$entityManager);
-            
+            $entityManager->persist($jobTitle);
+            $entityManager->flush();
 
             return $this->redirectToRoute('job_title_index');
         }
@@ -59,7 +52,7 @@ class JobTitleController extends AbstractController
     }
 
     /**
-     * @Route("/{jobTitle}", name="job_title_show", methods={"GET"})
+     * @Route("/{jobTitleId}", name="job_title_show", methods={"GET"})
      */
     public function show(JobTitle $jobTitle): Response
     {
@@ -69,7 +62,7 @@ class JobTitleController extends AbstractController
     }
 
     /**
-     * @Route("/{jobTitle}/edit", name="job_title_edit", methods={"GET","POST"})
+     * @Route("/{jobTitleId}/edit", name="job_title_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, JobTitle $jobTitle): Response
     {
@@ -89,11 +82,11 @@ class JobTitleController extends AbstractController
     }
 
     /**
-     * @Route("/{jobTitle}", name="job_title_delete", methods={"DELETE"})
+     * @Route("/{jobTitleId}", name="job_title_delete", methods={"DELETE"})
      */
     public function delete(Request $request, JobTitle $jobTitle): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$jobTitle->getJobTitle(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$jobTitle->getJobTitleId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($jobTitle);
             $entityManager->flush();

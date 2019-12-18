@@ -8,6 +8,10 @@
     <table class="table">
         <tbody>
             <tr>
+                <th>JobTitleId</th>
+                <td>{{ job_title.jobTitleId }}</td>
+            </tr>
+            <tr>
                 <th>JobTitle</th>
                 <td>{{ job_title.jobTitle }}</td>
             </tr>
@@ -20,7 +24,7 @@
 
     <a href="{{ path('job_title_index') }}">back to list</a>
 
-    <a href="{{ path('job_title_edit', {'jobTitle': job_title.jobTitle}) }}">edit</a>
+    <a href="{{ path('job_title_edit', {'jobTitleId': job_title.jobTitleId}) }}">edit</a>
 
     {{ include('job_title/_delete_form.html.twig') }}
 {% endblock %}

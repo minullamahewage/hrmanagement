@@ -21,7 +21,7 @@ class PayGrade
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $payGrade = '';
+    private $payGrade;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

@@ -26,10 +26,10 @@ class JobTitleModel {
         // return $stmt-> fetchAll();
     }
 
-    public function changeJobTitle($jobTitle,$em){
-        $conn= $em->getConnection();
-        $sql="UPDATE job_title SET job_title = :job_title, description = :description WHERE "
+    // public function changeJobTitle($jobTitle,$em){
+    //     $conn= $em->getConnection();
+    //     $sql="UPDATE job_title SET job_title = :job_title, description = :description WHERE "
 
-    }
+    // }
 }
 
