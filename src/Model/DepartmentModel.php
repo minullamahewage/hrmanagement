@@ -44,4 +44,12 @@ class DepartmentModel{
         return $stmt->fetchAll();
     }
 
+    public function deleteDepartment($departmentID, $em){
+        $conn = $em->getConnection();
+        $sql = "DELETE FROM department where department_id = :department_ID";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':department_ID',$departmentID);
+        $stmt->execute();
+    }
+
 }
