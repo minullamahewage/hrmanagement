@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dependent index{% endblock %}
+
+{% block body %}
+    <h1>Dependent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>DependentId</th>
+                <th>Nic</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Relationship</th>
+                <th>Telephone</th>
+                <th>AddrLine1</th>
+                <th>AddrLine2</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>PostalCode</th>
+                <th>Empid</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dependent in dependents %}
+            <tr>
+                <td>{{ dependent.dependentId }}</td>
+                <td>{{ dependent.nic }}</td>
+                <td>{{ dependent.name }}</td>
+                <td>{{ dependent.email }}</td>
+                <td>{{ dependent.relationship }}</td>
+                <td>{{ dependent.telephone }}</td>
+                <td>{{ dependent.addrLine1 }}</td>
+                <td>{{ dependent.addrLine2 }}</td>
+                <td>{{ dependent.city }}</td>
+                <td>{{ dependent.country }}</td>
+                <td>{{ dependent.postalCode }}</td>
+                <td>{{ dependent.empid }}</td>
+                <td>
+                    <a href="{{ path('dependent_show', {'dependentId': dependent.dependentId}) }}">show</a>
+                    <a href="{{ path('dependent_edit', {'dependentId': dependent.dependentId}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('dependent_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Dependent{% endblock %}
+
+{% block body %}
+    <h1>Edit Dependent</h1>
+
+    {{ include('dependent/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('dependent_index') }}">back to list</a>
+
+    {{ include('dependent/_delete_form.html.twig') }}
+{% endblock %}

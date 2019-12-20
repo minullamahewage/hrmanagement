@@ -92,14 +92,11 @@ class Dependent
     private $postalCode;
 
     /**
-     * @var \Employee
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-     * })
+     * @ORM\Column(name="emp_id", type="string", length=10, nullable=false)
      */
-    private $emp;
+    private $empid;
 
     public function getDependentId(): ?int
     {
@@ -226,14 +223,14 @@ class Dependent
         return $this;
     }
 
-    public function getEmp(): ?Employee
+    public function getEmpId(): ?string
     {
-        return $this->emp;
+        return $this->empid;
     }
 
-    public function setEmp(?Employee $emp): self
+    public function setEmpId(?String $empid): self
     {
-        $this->emp = $emp;
+        $this->empid = $empid;
 
         return $this;
     }
