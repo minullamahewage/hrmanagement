@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\EmploymentStatus;
 use App\Form\EmploymentStatusType;
+use App\Model\EmploymentStatusModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,16 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/employment/status")
  */
-class EmploymentStatusController extends AbstractController
-{
+class EmploymentStatusController extends AbstractController{
     /**
      * @Route("/", name="employment_status_index", methods={"GET"})
      */
     public function index(): Response
     {
-        $employmentStatuses = $this->getDoctrine()
-            ->getRepository(EmploymentStatus::class)
-            ->findAll();
+       // $employmentStatuses = $this->getDoctrine()
+        $entityManager = $this->getDoctrine()->getManager();
+        $employmentStatusModel = new EmploymentStatusModel();
+        $employmentStatuses= $employmentStatusModel->getAllEmploymentStatus($entityManager);
+            //->getRepository(EmploymentStatus::class)
+            //->findAll();
 
         return $this->render('employment_status/index.html.twig', [
             'employment_statuses' => $employmentStatuses,
@@ -39,8 +42,10 @@ class EmploymentStatusController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($employmentStatus);
-            $entityManager->flush();
+            //$entityManager->persist($employmentStatus);
+            //$entityManager->flush();
+            $employmentStatusModel = new EmploymentStatusModel();
+            $employmentStatusModel->addemploymentStatus($employmentStatus, $entityManager);
 
             return $this->redirectToRoute('employment_status_index');
         }
@@ -88,8 +93,10 @@ class EmploymentStatusController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$employmentStatus->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($employmentStatus);
-            $entityManager->flush();
+            //$entityManager->remove($employmentStatus);
+            //$entityManager->flush();
+            $employmentStatusModel = new EmploymentStatusModel();
+            $employmentStatusModel->deleteEmploymentStatus($employmentStatus, $entityManager);
         }
 
         return $this->redirectToRoute('employment_status_index');

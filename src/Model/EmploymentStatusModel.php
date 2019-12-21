@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 namespace App\Model;
 
@@ -38,7 +38,7 @@ class EmploymentStatusModel {
         $conn = $em->getConnection();
         $sql = "DELETE FROM employment_status WHERE emp_status = :emp_status ";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':emp_status', $emergencyContact->getEmpStatus());
+        $stmt->bindValue(':emp_status', $employmentStatus->getEmpStatus());
         $stmt->execute();
     }
 
@@ -51,4 +51,3 @@ class EmploymentStatusModel {
         return $stmt-> fetchAll();
     }
 }
-
