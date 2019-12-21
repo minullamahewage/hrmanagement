@@ -17,35 +17,39 @@ class EmpTelephone
      *
      * @ORM\Column(name="telephone", type="string", length=12, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * 
      */
     private $telephone = '';
 
     /**
-     * @var \Employee
+     * @var string
      *
+     * @ORM\Column(name="emp_id", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-     * })
+     * 
      */
-    private $emp;
+    private $empId = '';
 
     public function getTelephone(): ?string
     {
         return $this->telephone;
     }
-
-    public function getEmp(): ?Employee
+    
+    public function setTelephone(?string $telephone) : self
     {
-        return $this->emp;
+        $this->telephone = $telephone;
+        return $this;
+
     }
 
-    public function setEmp(?Employee $emp): self
+    public function getEmpId(): ?string
     {
-        $this->emp = $emp;
+        return $this->empId;
+    }
+
+    public function setEmpId(?string $empId): self
+    {
+        $this->empId = $empId;
 
         return $this;
     }
