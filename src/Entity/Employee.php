@@ -295,60 +295,60 @@ class Employee
         return $this;
     }
 
-    public function getPayGradeId(): ?string
+    public function getPayGrade(): ?string
     {
-        return $this->payGradeId;
+        return $this->payGrade;
     }
 
-    public function setPayGradeId(?string $payGradeId): self
+    public function setPayGrade(?string $payGrade): self
     {
-        $this->payGradeId = $payGradeId;
+        $this->payGrade = $payGrade;
 
         return $this;
     }
 
-    public function getSuperviserId(): ?string
+    public function getSupervisorId(): ?string
     {
-        return $this->superviserId;
+        return $this->supervisorId;
     }
 
-    public function setSuperviser(?string $superviser): self
+    public function setSupervisor(?string $supervisor): self
     {
-        $this->superviserId = $superviserId;
+        $this->supervisorId = $supervisorId;
 
         return $this;
     }
 
-    public function getDeptId(): ?string
+    public function getDeptId(): ?int
     {
         return $this->deptId;
     }
 
-    public function setDeptId(?string $deptId): self
+    public function setDeptId(?int $deptId): self
     {
         $this->deptId = $deptId;
 
         return $this;
     }
 
-    public function getEmpStatusId(): ?string
+    public function getEmpStatusId(): ?int
     {
         return $this->empStatusId;
     }
 
-    public function setEmpStatusId(?string $empStatusId): self
+    public function setEmpStatusId(?int $empStatusId): self
     {
         $this->empStatusId = $empStatusId;
 
         return $this;
     }
 
-    public function getJobTitleId(): ?string
+    public function getJobTitleId(): ?int
     {
         return $this->jobTitleId;
     }
 
-    public function setJobTitleId(?string $jobTitleId): self
+    public function setJobTitleId(?int $jobTitleId): self
     {
         $this->jobTitleId = $jobTitleId;
 
