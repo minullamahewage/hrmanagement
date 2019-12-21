@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}New Branch{% endblock %}
@@ -172,12 +173,9 @@
                 <h2 class="title">Create new Branch</h2>
               </div>
               <div class="card-body">
-                <form>
-                    {{ include('branch/_form.html.twig') }}
-                    <a href="{{ path('branch_index') }}" >back to list</a>   
-                </form>
-              </div>
-              
+                {{ include('branch/_form.html.twig') }}
+                <a href="{{ path('branch_index') }}">back to list</a>
+              </div>  
             </div>
           </div>
         </div>
