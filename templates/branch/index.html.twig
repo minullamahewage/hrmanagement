@@ -176,11 +176,7 @@
                             <tr>
                                 <th>Branch Id</th>
                                 <th>Name</th>
-                                <th>Line1</th>
-                                <th>Line2</th>
-                                <th>City</th>
-                                <th>Country</th>
-                                <th>Postal Code</th>
+                                <th>Address</th>
                                 <th>actions</th>
                             </tr>
                         </thead>
@@ -189,11 +185,7 @@
                             <tr>
                                 <td>{{ branch.branch_id}}</td>
                                 <td>{{ branch.name }}</td>
-                                <td>{{ branch.line_1 }}</td>
-                                <td>{{ branch.line_2 }}</td>
-                                <td>{{ branch.city }}</td>
-                                <td>{{ branch.country }}</td>
-                                <td>{{ branch.postal_code }}</td>
+                                <td>{{ branch.line_1 }}, {{ branch.line_2 }}, {{ branch.city }}, {{ branch.country }}, {{ branch.postal_code }} </td>
                                 <td>
                                     <a href="{{ path('branch_show', {'branchId': branch.branch_id}) }}">show</a>
                                     <a href="{{ path('branch_edit', {'branchId': branch.branch_id}) }}">edit</a>
@@ -236,7 +228,7 @@
             ©
             <script>
               document.write(new Date().getFullYear())
-            </script>2019 made for <i class="tim-icons icon-heart-2"></i> 
+            </script> made with <i class="tim-icons icon-heart-2"></i> 
             <a href="javascript:void(0)" target="_blank">JUPITER</a> for a better HRM.
           </div>
         </div>
