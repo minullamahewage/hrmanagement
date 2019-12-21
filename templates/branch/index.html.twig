@@ -2,7 +2,12 @@
 
 {% block title %}Branches{% endblock %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="templates/css/styles.css"/>
+{% endblock %}
+
 {% block body %}
+    <div class="content-panel">
     <h1>Branches</h1>
 
     <table class="table">
@@ -42,4 +47,5 @@
     </table>
 
     <a href="{{ path('branch_new') }}">Create new</a>
+    </div>
 {% endblock %}
