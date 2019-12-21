@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EmployHistory{% endblock %}
+
+{% block body %}
+    <h1>Create new EmployHistory</h1>
+
+    {{ include('employ_history/_form.html.twig') }}
+
+    <a href="{{ path('employ_history_index') }}">back to list</a>
+{% endblock %}
