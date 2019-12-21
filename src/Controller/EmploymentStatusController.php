@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/employment/status")
+ * @Route("/employmentstatus")
  */
 class EmploymentStatusController extends AbstractController{
     /**
@@ -22,7 +22,7 @@ class EmploymentStatusController extends AbstractController{
        // $employmentStatuses = $this->getDoctrine()
         $entityManager = $this->getDoctrine()->getManager();
         $employmentStatusModel = new EmploymentStatusModel();
-        $employmentStatuses= $employmentStatusModel->getAllEmploymentStatus($entityManager);
+        $employmentStatuses= $employmentStatusModel->getAllEmploymentStatuses($entityManager);
             //->getRepository(EmploymentStatus::class)
             //->findAll();
 
