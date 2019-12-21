@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeaveLimit{% endblock %}
+
+{% block body %}
+    <h1>LeaveLimit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>LeaveType</th>
+                <td>{{ leave_limit.leaveType }}</td>
+            </tr>
+            <tr>
+                <th>PayGrade</th>
+                <td>{{ leave_limit.payGrade }}</td>
+            </tr>
+            <tr>
+                <th>LeaveLimit</th>
+                <td>{{ leave_limit.leaveLimit }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('leave_limit_index') }}">back to list</a>
+
+    <a href="{{ path('leave_limit_edit', {'payGrade' : leave_limit.payGrade,'leaveType': leave_limit.leaveType}) }}">edit</a>
+
+    {{ include('leave_limit/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit LeaveLimit{% endblock %}
+
+{% block body %}
+    <h1>Edit LeaveLimit</h1>
+
+    {{ include('leave_limit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('leave_limit_index') }}">back to list</a>
+
+    {{ include('leave_limit/_delete_form.html.twig') }}
+{% endblock %}

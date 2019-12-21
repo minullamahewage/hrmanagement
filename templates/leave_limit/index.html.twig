@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leave Limits{% endblock %}
+
+{% block body %}
+    <h1>Leave Limits </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Pay Grade</th>
+                <th>Leave Type</th>
+                <th>Leave Limit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for leave_limit in leave_limits %}
+            <tr>
+                <td>{{ leave_limit.payGrade }}</td>
+                <td>{{ leave_limit.leaveType }}</td>
+                <td>{{ leave_limit.leaveLimit }}</td>
+                <td>
+                    <a href="{{ path('leave_limit_show', {'payGrade' : leave_limit.payGrade,'leaveType': leave_limit.leaveType}) }}">show</a>
+                    <a href="{{ path('leave_limit_edit', {'payGrade' : leave_limit.payGrade,'leaveType': leave_limit.leaveType}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('leave_limit_new') }}">Create new</a>
+{% endblock %}

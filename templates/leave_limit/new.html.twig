@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LeaveLimit{% endblock %}
+
+{% block body %}
+    <h1>Create new LeaveLimit</h1>
+
+    {{ include('leave_limit/_form.html.twig') }}
+
+    <a href="{{ path('leave_limit_index') }}">back to list</a>
+{% endblock %}
