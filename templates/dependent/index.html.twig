@@ -26,21 +26,21 @@
         <tbody>
         {% for dependent in dependents %}
             <tr>
-                <td>{{ dependent.dependentId }}</td>
+                <td>{{ dependent.dependent_id }}</td>
                 <td>{{ dependent.nic }}</td>
                 <td>{{ dependent.name }}</td>
                 <td>{{ dependent.email }}</td>
                 <td>{{ dependent.relationship }}</td>
                 <td>{{ dependent.telephone }}</td>
-                <td>{{ dependent.addrLine1 }}</td>
-                <td>{{ dependent.addrLine2 }}</td>
+                <td>{{ dependent.addr_line_1 }}</td>
+                <td>{{ dependent.addr_line_2 }}</td>
                 <td>{{ dependent.city }}</td>
                 <td>{{ dependent.country }}</td>
-                <td>{{ dependent.postalCode }}</td>
-                <td>{{ dependent.empid }}</td>
+                <td>{{ dependent.postal_code }}</td>
+                <td>{{ dependent.emp_id }}</td>
                 <td>
-                    <a href="{{ path('dependent_show', {'dependentId': dependent.dependentId}) }}">show</a>
-                    <a href="{{ path('dependent_edit', {'dependentId': dependent.dependentId}) }}">edit</a>
+                    <a href="{{ path('dependent_show', {'dependentId': dependent.dependent_id}) }}">show</a>
+                    <a href="{{ path('dependent_edit', {'dependentId': dependent.dependent_id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

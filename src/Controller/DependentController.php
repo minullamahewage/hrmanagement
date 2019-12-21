@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Dependent;
 use App\Form\DependentType;
+use App\Model\DependentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,13 @@ class DependentController extends AbstractController
      */
     public function index(): Response
     {
-        $dependents = $this->getDoctrine()
-            ->getRepository(Dependent::class)
-            ->findAll();
+        $entityManager=$this->getDoctrine()->getManager();
+        $dependentModel=new DependentModel();
 
+        //$dependents = $this->getDoctrine()
+          //  ->getRepository(Dependent::class)
+            //->findAll();
+        $dependents=$dependentModel->getAllDependents($entityManager);
         return $this->render('dependent/index.html.twig', [
             'dependents' => $dependents,
         ]);
@@ -34,14 +38,15 @@ class DependentController extends AbstractController
     public function new(Request $request): Response
     {
         $dependent = new Dependent();
+        $dependentModel = new DependentModel();
         $form = $this->createForm(DependentType::class, $dependent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($dependent);
-            $entityManager->flush();
-
+            //$entityManager->persist($dependent);
+            //$entityManager->flush();
+            $dependentModel->addDependent($dependent,$entityManager);
             return $this->redirectToRoute('dependent_index');
         }
 
@@ -66,12 +71,14 @@ class DependentController extends AbstractController
      */
     public function edit(Request $request, Dependent $dependent): Response
     {
+        $dependentModel = new DependentModel();
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm(DependentType::class, $dependent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            //$this->getDoctrine()->getManager()->flush();
+            $dependentModel->changeDependentDetails($dependent,$entityManager);
             return $this->redirectToRoute('dependent_index');
         }
 
@@ -88,8 +95,10 @@ class DependentController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$dependent->getDependentId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($dependent);
-            $entityManager->flush();
+            //$entityManager->remove($dependent);
+            //$entityManager->flush();
+            $dependentModel = new DependentModel();
+            $dependentModel->deleteDependent($dependent, $entityManager);
         }
 
         return $this->redirectToRoute('dependent_index');

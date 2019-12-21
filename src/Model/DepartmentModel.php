@@ -25,9 +25,9 @@ class DepartmentModel{
 
     public function changeDepartmentDetails($department, $em){
         $conn = $em->getConnection();
-        $sql = "UPDATE department SET dept_id = dept_id, dept_name = :dept_name, building = :building, floor = :floor WHERE dept_id = :dept_id";
+        $sql = "UPDATE department SET dept_name = :dept_name, building = :building, floor = :floor WHERE dept_id = :dept_id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':dept_id', $department->getDeptId());
+        //$stmt->bindValue(':dept_id', $department->getDeptId());
         $stmt->bindValue(':dept_name',$department->getDeptName());
         $stmt->bindValue(':building', $department->getBuilding());
         $stmt->bindValue(':floor', $department->getFloor());
@@ -42,6 +42,14 @@ class DepartmentModel{
         $stmt->bindValue(':dept_id', $dept_id);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    public function deleteDepartment($dept_ID, $em){
+        $conn = $em->getConnection();
+        $sql = "DELETE FROM department where dept_id = :department_ID";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':department_ID',$dept_ID);
+        $stmt->execute();
     }
 
 }

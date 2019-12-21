@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Form\DepartmentType;
+use App\Model\DepartmentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,12 @@ class DepartmentController extends AbstractController
      */
     public function index(): Response
     {
-        $departments = $this->getDoctrine()
-            ->getRepository(Department::class)
-            ->findAll();
-
+        $entityManager=$this->getDoctrine()->getManager();
+        $departmentModel=new DepartmentModel();
+        //$departments = $this->getDoctrine()
+        //    ->getRepository(Department::class)
+        //    ->findAll();
+        $departments=$departmentModel->getAllDepartments($entityManager);
         return $this->render('department/index.html.twig', [
             'departments' => $departments,
         ]);
@@ -34,14 +37,15 @@ class DepartmentController extends AbstractController
     public function new(Request $request): Response
     {
         $department = new Department();
+        $departmentModel = new DepartmentModel();
         $form = $this->createForm(DepartmentType::class, $department);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($department);
-            $entityManager->flush();
-
+            //$entityManager->persist($department);
+            //$entityManager->flush();
+            $departmentModel->addDepartment($department, $entityManager);
             return $this->redirectToRoute('department_index');
         }
 
@@ -66,12 +70,14 @@ class DepartmentController extends AbstractController
      */
     public function edit(Request $request, Department $department): Response
     {
+        $departmentModel = new DepartmentModel();
+        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm(DepartmentType::class, $department);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            //$this->getDoctrine()->getManager()->flush();
+            $departmentModel->changeDepartmentDetails($department,$entityManager);
             return $this->redirectToRoute('department_index');
         }
 
@@ -88,10 +94,11 @@ class DepartmentController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$department->getDeptId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($department);
-            $entityManager->flush();
+            //$entityManager->remove($department);
+            //$entityManager->flush();
+            $departmentModel = new DepartmentModel();
+            $departmentModel->deleteDepartment($department->getDeptId(), $entityManager);
         }
-
         return $this->redirectToRoute('department_index');
     }
 }
