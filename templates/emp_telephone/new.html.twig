@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EmpTelephone{% endblock %}
+
+{% block body %}
+    <h1>Create new EmpTelephone</h1>
+
+    {{ include('emp_telephone/_form.html.twig') }}
+
+    <a href="{{ path('emp_telephone_index') }}">back to list</a>
+{% endblock %}
