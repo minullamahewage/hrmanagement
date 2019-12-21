@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 18, 2019 at 01:16 PM
+-- Generation Time: Dec 21, 2019 at 12:29 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -152,11 +152,11 @@ CREATE TABLE `employment_status` (
 INSERT INTO `employment_status` (`id`, `emp_status`) VALUES
 (1, 'Contract Full-time'),
 (2, 'Contract Part-time'),
-(3, 'Freelance'),
-(4, 'Inter Full-time'),
-(5, 'Intern Part-time'),
-(6, 'NaN'),
-(0, 'Permanent ');
+(6, 'Freelance'),
+(3, 'Intern Full-time'),
+(4, 'Intern Part-time'),
+(7, 'NaN'),
+(5, 'Permanent');
 
 -- --------------------------------------------------------
 
@@ -378,8 +378,8 @@ ALTER TABLE `employee`
   ADD KEY `pay_grade` (`pay_grade`),
   ADD KEY `superviser_id` (`superviser_id`),
   ADD KEY `dept_id` (`dept_id`),
-  ADD KEY `employee_ibfk_8` (`emp_status_id`),
-  ADD KEY `employee_ibfk_9` (`job_title_id`);
+  ADD KEY `employee_ibfk_9` (`job_title_id`),
+  ADD KEY `emp_status_id` (`emp_status_id`);
 
 --
 -- Indexes for table `employment_status`
@@ -475,7 +475,13 @@ ALTER TABLE `dependent`
 -- AUTO_INCREMENT for table `emergency_contact`
 --
 ALTER TABLE `emergency_contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `employment_status`
+--
+ALTER TABLE `employment_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employ_history`
@@ -510,10 +516,10 @@ ALTER TABLE `emergency_contact`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_10` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`),
   ADD CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`pay_grade`) REFERENCES `pay_grade` (`pay_grade`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`superviser_id`) REFERENCES `employee` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_7` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`),
-  ADD CONSTRAINT `employee_ibfk_8` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_9` FOREIGN KEY (`job_title_id`) REFERENCES `job_title` (`job_title_id`) ON UPDATE CASCADE;
 
 --
