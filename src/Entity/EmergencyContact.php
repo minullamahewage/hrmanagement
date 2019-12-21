@@ -36,14 +36,11 @@ class EmergencyContact
     private $telephone;
 
     /**
-     * @var \Employee
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-     * })
+      * @ORM\Column(name="emp_id", type="string", length=10, nullable=false)
      */
-    private $emp;
+    private $emp_id;
 
     public function getId(): ?int
     {
@@ -74,14 +71,14 @@ class EmergencyContact
         return $this;
     }
 
-    public function getEmp(): ?Employee
+    public function getEmpId(): ?string
     {
-        return $this->emp;
+        return $this->emp_id;
     }
 
-    public function setEmp(?Employee $emp): self
+    public function setEmpId(?string $emp_id): self
     {
-        $this->emp = $emp;
+        $this->emp_id = $emp_id;
 
         return $this;
     }
