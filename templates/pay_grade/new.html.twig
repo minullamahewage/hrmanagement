@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PayGrade{% endblock %}
+
+{% block body %}
+    <h1>Create new PayGrade</h1>
+
+    {{ include('pay_grade/_form.html.twig') }}
+
+    <a href="{{ path('pay_grade_index') }}">back to list</a>
+{% endblock %}

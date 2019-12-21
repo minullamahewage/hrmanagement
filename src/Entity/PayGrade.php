@@ -24,57 +24,24 @@ class PayGrade
     private $payGrade;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="LeaveType", inversedBy="payGrade")
-     * @ORM\JoinTable(name="leave_limit",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="pay_grade", referencedColumnName="pay_grade")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="leave_type", referencedColumnName="leave_type")
-     *   }
-     * )
-     */
-    private $leaveType;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->leaveType = new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
 
     public function getPayGrade(): ?string
     {
         return $this->payGrade;
     }
-
-    /**
-     * @return Collection|LeaveType[]
-     */
-    public function getLeaveType(): Collection
+    public function setPayGrade(string $payGrade): self
     {
-        return $this->leaveType;
-    }
-
-    public function addLeaveType(LeaveType $leaveType): self
-    {
-        if (!$this->leaveType->contains($leaveType)) {
-            $this->leaveType[] = $leaveType;
-        }
+        $this->payGrade = $payGrade;
 
         return $this;
     }
 
-    public function removeLeaveType(LeaveType $leaveType): self
-    {
-        if ($this->leaveType->contains($leaveType)) {
-            $this->leaveType->removeElement($leaveType);
-        }
-
-        return $this;
-    }
+    
 
 }

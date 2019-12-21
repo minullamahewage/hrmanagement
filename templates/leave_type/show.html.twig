@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeaveType{% endblock %}
+
+{% block body %}
+    <h1>LeaveType</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>LeaveType</th>
+                <td>{{ leave_type.leaveType }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ leave_type.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('leave_type_index') }}">back to list</a>
+
+    <a href="{{ path('leave_type_edit', {'leaveType': leave_type.leaveType}) }}">edit</a>
+
+    {{ include('leave_type/_delete_form.html.twig') }}
+{% endblock %}

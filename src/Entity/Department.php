@@ -59,7 +59,7 @@ class Department
         return $this->deptName;
     }
 
-    public function setDeptName(string $deptName): self
+    public function setDeptName(?string $deptName): self
     {
         $this->deptName = $deptName;
 

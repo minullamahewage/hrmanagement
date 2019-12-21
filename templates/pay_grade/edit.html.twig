@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PayGrade{% endblock %}
+
+{% block body %}
+    <h1>Edit PayGrade</h1>
+
+    {{ include('pay_grade/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('pay_grade_index') }}">back to list</a>
+
+    {{ include('pay_grade/_delete_form.html.twig') }}
+{% endblock %}

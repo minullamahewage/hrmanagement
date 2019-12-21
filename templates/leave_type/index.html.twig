@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeaveType index{% endblock %}
+
+{% block body %}
+    <h1>LeaveType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LeaveType</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for leave_type in leave_types %}
+            <tr>
+                <td>{{ leave_type.leaveType }}</td>
+                <td>{{ leave_type.description }}</td>
+                <td>
+                    <a href="{{ path('leave_type_show', {'leaveType': leave_type.leaveType}) }}">show</a>
+                    <a href="{{ path('leave_type_edit', {'leaveType': leave_type.leaveType}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('leave_type_new') }}">Create new</a>
+{% endblock %}

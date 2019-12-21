@@ -30,12 +30,6 @@ class LeaveType
      */
     private $description;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="PayGrade", mappedBy="leaveType")
-     */
-    private $payGrade;
 
     /**
      * Constructor
@@ -50,6 +44,11 @@ class LeaveType
         return $this->leaveType;
     }
 
+    public function setLeaveType(?string $leaveType): self
+    {
+        $this->leaveType = $leaveType;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -62,32 +61,5 @@ class LeaveType
         return $this;
     }
 
-    /**
-     * @return Collection|PayGrade[]
-     */
-    public function getPayGrade(): Collection
-    {
-        return $this->payGrade;
-    }
-
-    public function addPayGrade(PayGrade $payGrade): self
-    {
-        if (!$this->payGrade->contains($payGrade)) {
-            $this->payGrade[] = $payGrade;
-            $payGrade->addLeaveType($this);
-        }
-
-        return $this;
-    }
-
-    public function removePayGrade(PayGrade $payGrade): self
-    {
-        if ($this->payGrade->contains($payGrade)) {
-            $this->payGrade->removeElement($payGrade);
-            $payGrade->removeLeaveType($this);
-        }
-
-        return $this;
-    }
 
 }
