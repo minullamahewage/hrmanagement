@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Department;
 use App\Form\DepartmentType;
+use App\Model\DepartmentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class DepartmentController extends AbstractController
         //$departments = $this->getDoctrine()
         //    ->getRepository(Department::class)
         //    ->findAll();
-        $departments=$departmentModel->getAllJobTitles($entityManager);
+        $departments=$departmentModel->getAllDepartments($entityManager);
         return $this->render('department/index.html.twig', [
             'departments' => $departments,
         ]);
@@ -44,7 +45,7 @@ class DepartmentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             //$entityManager->persist($department);
             //$entityManager->flush();
-            $jobTitleModel->addDepartment($department, $entityManager);
+            $departmentModel->addDepartment($department, $entityManager);
             return $this->redirectToRoute('department_index');
         }
 
@@ -96,9 +97,8 @@ class DepartmentController extends AbstractController
             //$entityManager->remove($department);
             //$entityManager->flush();
             $departmentModel = new DepartmentModel();
-            $departmentModel->deleteDepartment($department, $entityManager);
+            $departmentModel->deleteDepartment($department->getDeptId(), $entityManager);
         }
-
         return $this->redirectToRoute('department_index');
     }
 }

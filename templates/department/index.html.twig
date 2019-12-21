@@ -18,13 +18,13 @@
         <tbody>
         {% for department in departments %}
             <tr>
-                <td>{{ department.deptId }}</td>
-                <td>{{ department.deptName }}</td>
+                <td>{{ department.dept_id }}</td>
+                <td>{{ department.dept_name }}</td>
                 <td>{{ department.building }}</td>
                 <td>{{ department.floor }}</td>
                 <td>
-                    <a href="{{ path('department_show', {'deptId': department.deptId}) }}">show</a>
-                    <a href="{{ path('department_edit', {'deptId': department.deptId}) }}">edit</a>
+                    <a href="{{ path('department_show', {'deptId': department.dept_id}) }}">show</a>
+                    <a href="{{ path('department_edit', {'deptId': department.dept_id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
