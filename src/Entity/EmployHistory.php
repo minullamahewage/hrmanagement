@@ -96,7 +96,7 @@ class EmployHistory
         return $this->emp_id;
     }
 
-    public function setEmpID(?string $emp_id): self
+    public function setEmpId(?string $emp_id): self
     {
         $this->emp_id = $emp_id;
 

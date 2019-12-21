@@ -32,7 +32,7 @@ class LeaveLimit
     private $payGrade = '';
 
     /**
-     * @var string|null
+     * @var integer|null
      *
      * @ORM\Column(name="leave_limit", type="integer",  nullable=false)
      */
