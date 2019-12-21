@@ -2,50 +2,72 @@
 
 {% block title %}Branches{% endblock %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="templates/css/styles.css"/>
+{% block stylesheets %}
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link rel="stylesheet" href="{{ asset('/css/nucleo-icons.css') }}" >
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('/css/black-dashboard.css?v=1.0.0') }}" >
 {% endblock %}
 
 {% block body %}
-    <div class="content-panel">
-    <h1>Branches</h1>
+<div class="main-panel">
+    <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card ">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Branch Id</th>
-                <th>Name</th>
-                <th>Line1</th>
-                <th>Line2</th>
-                <th>City</th>
-                <th>Country</th>
-                <th>Postal Code</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for branch in branches %}
-            <tr>
-                <td>{{ branch.branch_id}}</td>
-                <td>{{ branch.name }}</td>
-                <td>{{ branch.line_1 }}</td>
-                <td>{{ branch.line_2 }}</td>
-                <td>{{ branch.city }}</td>
-                <td>{{ branch.country }}</td>
-                <td>{{ branch.postal_code }}</td>
-                <td>
-                    <a href="{{ path('branch_show', {'branchId': branch.branch_id}) }}">show</a>
-                    <a href="{{ path('branch_edit', {'branchId': branch.branch_id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+              <div class="card-header">
+                <h4 class="card-title"> Branches</h4>
+              </div>
 
-    <a href="{{ path('branch_new') }}">Create new</a>
+              <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table tablesorter " id="">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Branch Id</th>
+                                <th>Name</th>
+                                <th>Line1</th>
+                                <th>Line2</th>
+                                <th>City</th>
+                                <th>Country</th>
+                                <th>Postal Code</th>
+                                <th>actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for branch in branches %}
+                            <tr>
+                                <td>{{ branch.branch_id}}</td>
+                                <td>{{ branch.name }}</td>
+                                <td>{{ branch.line_1 }}</td>
+                                <td>{{ branch.line_2 }}</td>
+                                <td>{{ branch.city }}</td>
+                                <td>{{ branch.country }}</td>
+                                <td>{{ branch.postal_code }}</td>
+                                <td>
+                                    <a href="{{ path('branch_show', {'branchId': branch.branch_id}) }}">show</a>
+                                    <a href="{{ path('branch_edit', {'branchId': branch.branch_id}) }}">edit</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
+
+        <a href="{{ path('branch_new') }}">Create new</a>
+</div>
+
 {% endblock %}
