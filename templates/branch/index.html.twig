@@ -204,8 +204,9 @@
                                 <td colspan="7">no records found</td>
                             </tr>
                         {% endfor %}
-                        </tbody>
+                        </tbody>                  
                     </table>
+                    <a href="{{ path('branch_new') }}">Create new</a>
                 </div>
               </div>
             </div>
@@ -399,9 +400,4 @@
       });
   </script>
                     
-                    
-
-        <a href="{{ path('branch_new') }}">Create new</a>
-
-
 {% endblock %}
