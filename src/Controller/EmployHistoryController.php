@@ -20,13 +20,12 @@ class EmployHistoryController extends AbstractController
      */
     public function index(): Response
     {
-        //$employHistories = $this->getDoctrine()
-        //    ->getRepository(EmployHistory::class)
-        //    ->findAll();
-        $entityManager = $this->getDoctrine()->getManager();
+        // $employHistories = $this->getDoctrine()
+        //     ->getRepository(EmployHistory::class)
+        //     ->findAll();
         $employHistoryModel = new EmployHistoryModel();
-        $employHistories= $employHistoryModel->getAllEmployHistories($entityManager);
-
+        $entityManager = $this->getDoctrine()->getManager();
+        $employHistories = $employHistoryModel->getAllEmployHistories($entityManager);
         return $this->render('employ_history/index.html.twig', [
             'employ_histories' => $employHistories,
         ]);
@@ -38,15 +37,15 @@ class EmployHistoryController extends AbstractController
     public function new(Request $request): Response
     {
         $employHistory = new EmployHistory();
+        $employHistoryModel = new EmployHistoryModel();
         $form = $this->createForm(EmployHistoryType::class, $employHistory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            //$entityManager->persist($employHistory);
-            //$entityManager->flush();
-            $employHistoryModel = new EmployHistoryModel();
-            $employHistoryModel->addEmployHistory($employHistory, $entityManager);
+            // $entityManager->persist($employHistory);
+            // $entityManager->flush();
+            $employHistoryModel->addEMployHistory($employHistory, $entityManager);
 
             return $this->redirectToRoute('employ_history_index');
         }
@@ -72,14 +71,12 @@ class EmployHistoryController extends AbstractController
      */
     public function edit(Request $request, EmployHistory $employHistory): Response
     {
-        $employHistoryModel = new EmployHistoryModel();
-        $entityManager = $this->getDoctrine()->getManager();
         $form = $this->createForm(EmployHistoryType::class, $employHistory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$this->getDoctrine()->getManager()->flush();
-            $employHistoryModel->changeEmployHistory($employHistory,$entityManager);
+            $this->getDoctrine()->getManager()->flush();
+
             return $this->redirectToRoute('employ_history_index');
         }
 
@@ -96,10 +93,10 @@ class EmployHistoryController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$employHistory->getEmpHistoryId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $employHistoryModel = new EmployHistoryModel();
-            $employHistoryModel->deleteEmployHistory($employHistory->getEmpHistoryId(), $entityManager);
-            //$entityManager->remove($employHistory);
-            //$entityManager->flush();
+            // $entityManager->remove($employHistory);
+            // $entityManager->flush();
+            $employHistoryModel= new EmployHistoryModel();
+            $employHistoryModel->deleteEmployHistory($employHistory, $entityManager);
         }
 
         return $this->redirectToRoute('employ_history_index');

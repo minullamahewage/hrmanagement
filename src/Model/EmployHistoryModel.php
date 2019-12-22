@@ -15,40 +15,40 @@ class EmployHistoryModel{
 
     public function addEmployHistory($employHistory, $em){
         $conn =$em->getConnection();
-        $sql = "INSERT INTO employ_history(emp_id, to, from, emp_status) VALUES (:emp_id, :to, :from, :emp_status)";
+        $sql = "INSERT INTO employ_history(emp_id, to_date, from_date, emp_status) VALUES (:emp_id, :to_date, :from_date, :emp_status)";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':emp_id', $employHistory->getEmpId());
-        $stmt->bindValue(':to',$employHistory->getTo());
-        $stmt->bindValue(':from', $employHistory->getFrom());
+        $stmt->bindValue(':to_date',$employHistory->getToDate()->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':from_date', $employHistory->getFromDate()->format('Y-m-d H:i:s'));
         $stmt->bindValue(':emp_status', $employHistory->getEmpStatus());
         $stmt->execute();
     }
 
     public function changeEmployHistory($employHistory, $em){
         $conn = $em->getConnection();
-        $sql = "UPDATE employ_history SET emp_id = :emp_id, to = :to, from = :from, emp_status = :emp_status WHERE emp_history_id = :emp_history_id";
+        $sql = "UPDATE employ_history SET emp_id = :emp_id, to_date = :to_date, from_date = :from_date, emp_status = :emp_status WHERE emp_history_id = :emp_history_id";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':emp_id', $employHistory->getEmpId());
-        $stmt->bindValue(':to', $employHistory->getTo());
-        $stmt->bindValue(':from', $employHistory->getFrom());
+        $stmt->bindValue(':to_date', $employHistory->getToDate());
+        $stmt->bindValue(':from_date', $employHistory->getFromDate());
         $stmt->bindValue(':emp_status', $employHistory->getEmpStatus());
         $stmt->execute();
     }
 
-    public function getEmpEmployHistory($empID, $em){
+    public function getEmployHistory($empId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employ_history where emp_id = :emp_ID";
+        $sql = "SELECT * FROM employ_history where emp_id = :emp_Id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':emp_ID', $empID);
+        $stmt->bindValue(':emp_Id', $empId);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
-    public function deleteEmployHistory($empHistoryID, $em){
+    public function deleteEmployHistory($empHistory, $em){
         $conn = $em->getConnection();
-        $sql = "DELETE FROM employ_history where emp_history_id = :emp_history_ID";
+        $sql = "DELETE FROM employ_history where emp_history_id = :emp_history_Id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':emp_history_ID',$empHistoryID);
+        $stmt->bindValue(':emp_history_Id',$empHistory->getEmpHistoryId());
         $stmt->execute();
     }
 

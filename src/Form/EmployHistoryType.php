@@ -12,8 +12,8 @@ class EmployHistoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('to')
-            ->add('from')
+            ->add('toDate')
+            ->add('fromDate')
             ->add('empStatus')
             ->add('emp_id')
         ;

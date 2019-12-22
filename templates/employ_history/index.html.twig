@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th>EmpHistoryId</th>
-                <th>To</th>
-                <th>From</th>
+                <th>ToDate</th>
+                <th>FromDate</th>
                 <th>EmpStatus</th>
                 <th>Emp_id</th>
                 <th>actions</th>
@@ -20,8 +20,8 @@
         {% for employ_history in employ_histories %}
             <tr>
                 <td>{{ employ_history.emp_history_id }}</td>
-                <td>{{ employ_history.to ? employ_history.to|date('Y-m-d') : '' }}</td>
-                <td>{{ employ_history.from ? employ_history.from|date('Y-m-d') : '' }}</td>
+                <td>{{ employ_history.to_date ? employ_history.to_date|date('Y-m-d') : '' }}</td>
+                <td>{{ employ_history.from_date ? employ_history.from_date|date('Y-m-d') : '' }}</td>
                 <td>{{ employ_history.emp_status }}</td>
                 <td>{{ employ_history.emp_id }}</td>
                 <td>
