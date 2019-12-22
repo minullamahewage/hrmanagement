@@ -82,7 +82,7 @@ class Employee
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dob", type="date", nullable=true)
+     * @ORM\Column(name="dob", type="datetime", nullable=true)
      */
     private $dob;
 
@@ -135,20 +135,20 @@ class Employee
      */
     private $jobTitleId;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="EmpCustom", inversedBy="emp")
-     * @ORM\JoinTable(name="emp_custom_data",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="attribute", referencedColumnName="attribute")
-     *   }
-     * )
-     */
-    private $attribute;
+    // /**
+    //  * @var \Doctrine\Common\Collections\Collection
+    //  *
+    //  * @ORM\ManyToMany(targetEntity="EmpCustom", inversedBy="emp")
+    //  * @ORM\JoinTable(name="emp_custom_data",
+    //  *   joinColumns={
+    //  *     @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
+    //  *   },
+    //  *   inverseJoinColumns={
+    //  *     @ORM\JoinColumn(name="attribute", referencedColumnName="attribute")
+    //  *   }
+    //  * )
+    //  */
+    // private $attribute;
 
     /**
      * Constructor
@@ -355,30 +355,30 @@ class Employee
         return $this;
     }
 
-    /**
-     * @return Collection|EmpCustom[]
-     */
-    public function getAttribute(): Collection
-    {
-        return $this->attribute;
-    }
+    // /**
+    //  * @return Collection|EmpCustom[]
+    //  */
+    // public function getAttribute(): Collection
+    // {
+    //     return $this->attribute;
+    // }
 
-    public function addAttribute(EmpCustom $attribute): self
-    {
-        if (!$this->attribute->contains($attribute)) {
-            $this->attribute[] = $attribute;
-        }
+    // public function addAttribute(EmpCustom $attribute): self
+    // {
+    //     if (!$this->attribute->contains($attribute)) {
+    //         $this->attribute[] = $attribute;
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeAttribute(EmpCustom $attribute): self
-    {
-        if ($this->attribute->contains($attribute)) {
-            $this->attribute->removeElement($attribute);
-        }
+    // public function removeAttribute(EmpCustom $attribute): self
+    // {
+    //     if ($this->attribute->contains($attribute)) {
+    //         $this->attribute->removeElement($attribute);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 }

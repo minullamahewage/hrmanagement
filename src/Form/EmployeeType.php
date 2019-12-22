@@ -28,7 +28,6 @@ class EmployeeType extends AbstractType
             ->add('deptId')
             ->add('empStatusId')
             ->add('jobTitleId')
-            ->add('attribute')
         ;
     }
 

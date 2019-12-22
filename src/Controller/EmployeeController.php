@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Employee;
 use App\Form\EmployeeType;
+use App\Model\EmployeeModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,12 @@ class EmployeeController extends AbstractController
      */
     public function index(): Response
     {
-        $employees = $this->getDoctrine()
-            ->getRepository(Employee::class)
-            ->findAll();
+        // $employees = $this->getDoctrine()
+        //     ->getRepository(Employee::class)
+        //     ->findAll();
+        $employeeModel = new EmployeeModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $employees = $employeeModel->getAllEmployees($entityManager);
 
         return $this->render('employee/index.html.twig', [
             'employees' => $employees,
@@ -39,8 +43,8 @@ class EmployeeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($employee);
-            $entityManager->flush();
+            $employeeModel = new EmployeeModel();
+            $employeeModel->addEmployee($employee, $entityManager);
 
             return $this->redirectToRoute('employee_index');
         }
@@ -70,7 +74,9 @@ class EmployeeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $employeeModel = new EmployeeModel();
+            $employeeModel->changeEmployee($employee, $entityManager);
 
             return $this->redirectToRoute('employee_index');
         }
@@ -88,8 +94,8 @@ class EmployeeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$employee->getEmpId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($employee);
-            $entityManager->flush();
+            $employeeModel = new EmployeeModel();
+            $employeeModel->deleteEmployee($employee, $entityManager);
         }
 
         return $this->redirectToRoute('employee_index');

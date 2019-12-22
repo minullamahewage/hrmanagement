@@ -37,18 +37,18 @@ class EmployHistoryModel{
 
     public function getEmployHistory($empId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employ_history where emp_id = :emp_Id";
+        $sql = "SELECT * FROM employ_history where emp_id = :emp_id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':emp_Id', $empId);
+        $stmt->bindValue(':emp_id', $empId);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
     public function deleteEmployHistory($empHistory, $em){
         $conn = $em->getConnection();
-        $sql = "DELETE FROM employ_history where emp_history_id = :emp_history_Id";
+        $sql = "DELETE FROM employ_history where emp_history_id = :emp_history_id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':emp_history_Id',$empHistory->getEmpHistoryId());
+        $stmt->bindValue(':emp_history_id',$empHistory->getEmpHistoryId());
         $stmt->execute();
     }
 

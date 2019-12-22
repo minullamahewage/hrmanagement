@@ -31,26 +31,26 @@
         <tbody>
         {% for employee in employees %}
             <tr>
-                <td>{{ employee.empId }}</td>
-                <td>{{ employee.nic }}</td>
+                <td>{{ employee.emp_id }}</td>
+                <td>{{ employee.NIC }}</td>
                 <td>{{ employee.name }}</td>
                 <td>{{ employee.email }}</td>
-                <td>{{ employee.addrLine1 }}</td>
-                <td>{{ employee.addrLine2 }}</td>
+                <td>{{ employee.addr_line_1 }}</td>
+                <td>{{ employee.addr_line_2 }}</td>
                 <td>{{ employee.city }}</td>
                 <td>{{ employee.country }}</td>
-                <td>{{ employee.postalCode }}</td>
+                <td>{{ employee.postal_code }}</td>
                 <td>{{ employee.dob ? employee.dob|date('Y-m-d') : '' }}</td>
-                <td>{{ employee.maritalStatus }}</td>
-                <td>{{ employee.branchId }}</td>
-                <td>{{ employee.payGrade }}</td>
-                <td>{{ employee.supervisorId }}</td>
-                <td>{{ employee.deptId }}</td>
-                <td>{{ employee.empStatusId }}</td>
-                <td>{{ employee.jobTitleId }}</td>
+                <td>{{ employee.marital_status }}</td>
+                <td>{{ employee.branch_id }}</td>
+                <td>{{ employee.pay_grade }}</td>
+                <td>{{ employee.supervisor_id }}</td>
+                <td>{{ employee.dept_id }}</td>
+                <td>{{ employee.emp_status_id }}</td>
+                <td>{{ employee.job_title_id }}</td>
                 <td>
-                    <a href="{{ path('employee_show', {'empId': employee.empId}) }}">show</a>
-                    <a href="{{ path('employee_edit', {'empId': employee.empId}) }}">edit</a>
+                    <a href="{{ path('employee_show', {'empId': employee.emp_id}) }}">show</a>
+                    <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
