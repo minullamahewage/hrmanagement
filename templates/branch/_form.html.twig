@@ -1,4 +1,53 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-fill btn-primary">{{ button_label|default('Save') }}</button>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.branchId) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.branchId) }}       
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.name) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.name) }}   
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.line1) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.line1) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.line2) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.line2) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.city) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.city) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.country) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.country) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.postalCode) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.postalCode) }}
+    </div>
+</div>
+
+<button class="btn btn-fill btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
