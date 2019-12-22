@@ -24,16 +24,16 @@ class EmployHistory
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="to", type="date", nullable=true)
+     * @ORM\Column(name="to_date", type="datetime", nullable=true)
      */
-    private $to;
+    private $toDate;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="from", type="date", nullable=true)
+     * @ORM\Column(name="from_date", type="datetime", nullable=true)
      */
-    private $from;
+    private $fromDate;
 
     /**
      * @var string|null
@@ -55,26 +55,26 @@ class EmployHistory
         return $this->empHistoryId;
     }
 
-    public function getTo(): ?\DateTimeInterface
+    public function getToDate(): ?\DateTimeInterface
     {
-        return $this->to;
+        return $this->toDate;
     }
 
-    public function setTo(?\DateTimeInterface $to): self
+    public function setToDate(?\DateTimeInterface $toDate): self
     {
-        $this->to = $to;
+        $this->toDate = $toDate;
 
         return $this;
     }
 
-    public function getFrom(): ?\DateTimeInterface
+    public function getFromDate(): ?\DateTimeInterface
     {
-        return $this->from;
+        return $this->fromDate;
     }
 
-    public function setFrom(?\DateTimeInterface $from): self
+    public function setFromDate(?\DateTimeInterface $fromDate): self
     {
-        $this->from = $from;
+        $this->fromDate = $fromDate;
 
         return $this;
     }
@@ -96,7 +96,7 @@ class EmployHistory
         return $this->emp_id;
     }
 
-    public function setEmp(?string $emp_id): self
+    public function setEmpId(?string $emp_id): self
     {
         $this->emp_id = $emp_id;
 

@@ -2,23 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\PayGrade;
+use App\Entity\EmpTelephone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PayGrade1Type extends AbstractType
+class EmpTelephoneType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('telephone')
+            ->add('empId')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PayGrade::class,
+            'data_class' => EmpTelephone::class,
         ]);
     }
 }

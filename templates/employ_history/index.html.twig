@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EmployHistory index{% endblock %}
+
+{% block body %}
+    <h1>EmployHistory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EmpHistoryId</th>
+                <th>ToDate</th>
+                <th>FromDate</th>
+                <th>EmpStatus</th>
+                <th>Emp_id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employ_history in employ_histories %}
+            <tr>
+                <td>{{ employ_history.emp_history_id }}</td>
+                <td>{{ employ_history.to_date ? employ_history.to_date|date('Y-m-d') : '' }}</td>
+                <td>{{ employ_history.from_date ? employ_history.from_date|date('Y-m-d') : '' }}</td>
+                <td>{{ employ_history.emp_status }}</td>
+                <td>{{ employ_history.emp_id }}</td>
+                <td>
+                    <a href="{{ path('employ_history_show', {'empHistoryId': employ_history.emp_history_id}) }}">show</a>
+                    <a href="{{ path('employ_history_edit', {'empHistoryId': employ_history.emp_history_id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('employ_history_new') }}">Create new</a>
+{% endblock %}

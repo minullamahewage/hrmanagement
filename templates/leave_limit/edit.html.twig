@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit LeaveLimit{% endblock %}
+{% block title %}Edit Leave Limit{% endblock %}
 
 {% block body %}
-    <h1>Edit LeaveLimit</h1>
+    <h2>Edit {{leave_limit.payGrade}} {{leave_limit.leaveType}} Leave Limit</h2>
+
+    <a>{{leave_limit.payGrade}}</a>
+    <a>{{leave_limit.leaveType}}</a2>
 
     {{ include('leave_limit/_form.html.twig', {'button_label': 'Update'}) }}
 

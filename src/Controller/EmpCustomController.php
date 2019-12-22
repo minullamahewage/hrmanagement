@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\EmpCustom;
 use App\Form\EmpCustomType;
+use App\Model\EmpCustomModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/emp/custom")
+ * @Route("/empcustom")
  */
 class EmpCustomController extends AbstractController
 {
@@ -19,9 +20,12 @@ class EmpCustomController extends AbstractController
      */
     public function index(): Response
     {
-        $empCustoms = $this->getDoctrine()
-            ->getRepository(EmpCustom::class)
-            ->findAll();
+        //$empCustoms = $this->getDoctrine()
+        //    ->getRepository(EmpCustom::class)
+        //    ->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $empCustomModel = new EmpCustomModel();
+        $empCustoms= $empCustomModel->getAllCustomAttributes($entityManager);
 
         return $this->render('emp_custom/index.html.twig', [
             'emp_customs' => $empCustoms,
@@ -39,8 +43,10 @@ class EmpCustomController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($empCustom);
-            $entityManager->flush();
+            //$entityManager->persist($empCustom);
+            //$entityManager->flush();
+            $empCustomModel = new EmpCustomModel();
+            $empCustomModel->addCustomAttribute($empCustom, $entityManager);
 
             return $this->redirectToRoute('emp_custom_index');
         }
@@ -88,8 +94,10 @@ class EmpCustomController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$empCustom->getAttribute(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($empCustom);
-            $entityManager->flush();
+            //$entityManager->remove($empCustom);
+            //$entityManager->flush();
+            $empCustomModel = new EmpCustomModel();
+            $empCustomModel->deleteCustomAttribute($empCustom, $entityManager);
         }
 
         return $this->redirectToRoute('emp_custom_index');

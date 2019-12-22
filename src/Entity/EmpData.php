@@ -43,7 +43,7 @@ class EmpData
         return $this->attribute;
     }
 
-    public function setAttribute(string $string): self
+    public function setAttribute(string $attribute): self
     {
         $this->attribute = $attribute;
         return $this;
@@ -55,7 +55,7 @@ class EmpData
         return $this->emp_id;
     }
 
-    public function setEmpId(string $string): self
+    public function setEmpId(string $emp_id): self
     {
         $this->emp_id = $emp_id;
         return $this;
@@ -64,10 +64,10 @@ class EmpData
 
     public function getValue(): ?string
     {
-        return $this->$value;
+        return $this->value;
     }
 
-    public function setValue(string $string): self
+    public function setValue(string $value): self
     {
         $this->value = $value;
         return $this;

@@ -17,12 +17,12 @@
         <tbody>
         {% for leave_limit in leave_limits %}
             <tr>
-                <td>{{ leave_limit.payGrade }}</td>
-                <td>{{ leave_limit.leaveType }}</td>
-                <td>{{ leave_limit.leaveLimit }}</td>
+                <td>{{ leave_limit.pay_grade }}</td>
+                <td>{{ leave_limit.leave_type }}</td>
+                <td>{{ leave_limit.leave_limit }}</td>
                 <td>
-                    <a href="{{ path('leave_limit_show', {'payGrade' : leave_limit.payGrade,'leaveType': leave_limit.leaveType}) }}">show</a>
-                    <a href="{{ path('leave_limit_edit', {'payGrade' : leave_limit.payGrade,'leaveType': leave_limit.leaveType}) }}">edit</a>
+                    <a href="{{ path('leave_limit_show', {'payGrade' : leave_limit.pay_grade,'leaveType': leave_limit.leave_type}) }}">show</a>
+                    <a href="{{ path('leave_limit_edit', {'payGrade' : leave_limit.pay_grade,'leaveType': leave_limit.leave_type}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

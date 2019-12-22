@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employee{% endblock %}
+
+{% block body %}
+    <h1>Employee</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>EmpId</th>
+                <td>{{ employee.empId }}</td>
+            </tr>
+            <tr>
+                <th>Nic</th>
+                <td>{{ employee.nic }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ employee.name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ employee.email }}</td>
+            </tr>
+            <tr>
+                <th>AddrLine1</th>
+                <td>{{ employee.addrLine1 }}</td>
+            </tr>
+            <tr>
+                <th>AddrLine2</th>
+                <td>{{ employee.addrLine2 }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ employee.city }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ employee.country }}</td>
+            </tr>
+            <tr>
+                <th>PostalCode</th>
+                <td>{{ employee.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>Dob</th>
+                <td>{{ employee.dob ? employee.dob|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>MaritalStatus</th>
+                <td>{{ employee.maritalStatus }}</td>
+            </tr>
+            <tr>
+                <th>BranchId</th>
+                <td>{{ employee.branchId }}</td>
+            </tr>
+            <tr>
+                <th>PayGrade</th>
+                <td>{{ employee.payGrade }}</td>
+            </tr>
+            <tr>
+                <th>SupervisorId</th>
+                <td>{{ employee.supervisorId }}</td>
+            </tr>
+            <tr>
+                <th>DeptId</th>
+                <td>{{ employee.deptId }}</td>
+            </tr>
+            <tr>
+                <th>EmpStatusId</th>
+                <td>{{ employee.empStatusId }}</td>
+            </tr>
+            <tr>
+                <th>JobTitleId</th>
+                <td>{{ employee.jobTitleId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('employee_index') }}">back to list</a>
+
+    <a href="{{ path('employee_edit', {'empId': employee.empId}) }}">edit</a>
+
+    {{ include('employee/_delete_form.html.twig') }}
+{% endblock %}
