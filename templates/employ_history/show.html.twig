@@ -12,12 +12,12 @@
                 <td>{{ employ_history.empHistoryId }}</td>
             </tr>
             <tr>
-                <th>To</th>
-                <td>{{ employ_history.to ? employ_history.to|date('Y-m-d') : '' }}</td>
+                <th>ToDate</th>
+                <td>{{ employ_history.toDate ? employ_history.toDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>From</th>
-                <td>{{ employ_history.from ? employ_history.from|date('Y-m-d') : '' }}</td>
+                <th>FromDate</th>
+                <td>{{ employ_history.fromDate ? employ_history.fromDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>EmpStatus</th>
