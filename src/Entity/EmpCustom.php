@@ -28,7 +28,7 @@ class EmpCustom
     }
 
     
-    public function setAttribute(string $string): self
+    public function setAttribute(string $attribute): self
     {
         $this->attribute = $attribute;
         return $this;

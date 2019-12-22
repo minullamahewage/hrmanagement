@@ -3,10 +3,10 @@ namespace App\Model;
 
 class EmploymentStatusModel {
 
-    public function getAllEmploymentStatus($em){
+    public function getAllEmploymentStatuses($em){
 
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employment_status ORDER BY emp_id ASC";
+        $sql = "SELECT * FROM employment_status ORDER BY id ASC";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt-> fetchAll();

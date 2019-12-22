@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\LeaveLimit;
 use App\Form\LeaveLimitType;
+use App\Form\LeaveLimitTypeEdit;
+use App\Model\LeaveLimitModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +21,12 @@ class LeaveLimitController extends AbstractController
      */
     public function index(): Response
     {
-        $leaveLimits = $this->getDoctrine()
-            ->getRepository(LeaveLimit::class)
-            ->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $leaveLimitModel = new LeaveLimitModel();
+        $leaveLimits = $leaveLimitModel->getAllLeaveLimits($entityManager);
+        // $leaveLimits = $this->getDoctrine()
+        //     ->getRepository(LeaveLimit::class)
+        //     ->findAll();
 
         return $this->render('leave_limit/index.html.twig', [
             'leave_limits' => $leaveLimits,
@@ -39,8 +44,10 @@ class LeaveLimitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($leaveLimit);
-            $entityManager->flush();
+            $leaveLimitModel = new LeaveLimitModel();
+            $leaveLimitModel->addLeaveLimit($leaveLimit, $entityManager);
+            // $entityManager->persist($leaveLimit);
+            // $entityManager->flush();
 
             return $this->redirectToRoute('leave_limit_index');
         }
@@ -66,11 +73,14 @@ class LeaveLimitController extends AbstractController
      */
     public function edit(Request $request, LeaveLimit $leaveLimit): Response
     {
-        $form = $this->createForm(LeaveLimitType::class, $leaveLimit);
+        $form = $this->createForm(LeaveLimitTypeEdit::class, $leaveLimit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            // $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $leaveLimitModel = new LeaveLimitModel();
+            $leaveLimitModel->changeLeaveLimit($leaveLimit, $entityManager);
 
             return $this->redirectToRoute('leave_limit_index');
         }
@@ -88,8 +98,10 @@ class LeaveLimitController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$leaveLimit->getLeaveType(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($leaveLimit);
-            $entityManager->flush();
+            $leaveLimitModel = new LeaveLimitModel();
+            $leaveLimitModel->deleteLeaveLimit($leaveLimit, $entityManager);
+            // $entityManager->remove($leaveLimit);
+            // $entityManager->flush();
         }
 
         return $this->redirectToRoute('leave_limit_index');

@@ -18,7 +18,7 @@
         {% for emp_datum in emp_datas %}
             <tr>
                 <td>{{ emp_datum.attribute }}</td>
-                <td>{{ emp_datum.empId }}</td>
+                <td>{{ emp_datum.emp_id }}</td>
                 <td>{{ emp_datum.value }}</td>
                 <td>
                     <a href="{{ path('emp_data_show', {'attribute': emp_datum.attribute}) }}">show</a>

@@ -82,7 +82,7 @@ class Employee
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dob", type="date", nullable=true)
+     * @ORM\Column(name="dob", type="datetime", nullable=true)
      */
     private $dob;
 
@@ -94,79 +94,61 @@ class Employee
     private $maritalStatus;
 
     /**
-     * @var \Branch
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Branch")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="branch_id", referencedColumnName="branch_id")
-     * })
+     * @ORM\Column(name="branch_id", type="string", length=10, nullable=true)
      */
-    private $branch;
+    private $branchId;
 
     /**
-     * @var \PayGrade
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="PayGrade")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pay_grade", referencedColumnName="pay_grade")
-     * })
+     * @ORM\Column(name="pay_grade", type="string", length=10, nullable=true)
      */
     private $payGrade;
 
     /**
-     * @var \Employee
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="superviser_id", referencedColumnName="emp_id")
-     * })
+     * @ORM\Column(name="supervisor_id", type="string", length=10, nullable=true)
      */
-    private $superviser;
+    private $supervisorId;
 
     /**
-     * @var \Department
+     * @var integer|null
      *
-     * @ORM\ManyToOne(targetEntity="Department")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dept_id", referencedColumnName="dept_id")
-     * })
+     * @ORM\Column(name="dept_id", type="integer", nullable=true)
      */
-    private $dept;
+    private $deptId;
 
     /**
-     * @var \EmploymentStatus
+     * @var integer|null
      *
-     * @ORM\ManyToOne(targetEntity="EmploymentStatus")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_status_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="emp_status_id", type="integer", nullable=true)
      */
-    private $empStatus;
+    private $empStatusId;
 
     /**
-     * @var \JobTitle
+     * @var integer|null
      *
-     * @ORM\ManyToOne(targetEntity="JobTitle")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="job_title_id", referencedColumnName="job_title_id")
-     * })
+     * @ORM\Column(name="job_title_id", type="integer",  nullable=true)
      */
-    private $jobTitle;
+    private $jobTitleId;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="EmpCustom", inversedBy="emp")
-     * @ORM\JoinTable(name="emp_custom_data",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="attribute", referencedColumnName="attribute")
-     *   }
-     * )
-     */
-    private $attribute;
+    // /**
+    //  * @var \Doctrine\Common\Collections\Collection
+    //  *
+    //  * @ORM\ManyToMany(targetEntity="EmpCustom", inversedBy="emp")
+    //  * @ORM\JoinTable(name="emp_custom_data",
+    //  *   joinColumns={
+    //  *     @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
+    //  *   },
+    //  *   inverseJoinColumns={
+    //  *     @ORM\JoinColumn(name="attribute", referencedColumnName="attribute")
+    //  *   }
+    //  * )
+    //  */
+    // private $attribute;
 
     /**
      * Constructor
@@ -301,102 +283,102 @@ class Employee
         return $this;
     }
 
-    public function getBranch(): ?Branch
+    public function getBranchId(): ?string
     {
-        return $this->branch;
+        return $this->branchId;
     }
 
-    public function setBranch(?Branch $branch): self
+    public function setBranchId(?string $branchId): self
     {
-        $this->branch = $branch;
+        $this->branchId = $branchId;
 
         return $this;
     }
 
-    public function getPayGrade(): ?PayGrade
+    public function getPayGrade(): ?string
     {
         return $this->payGrade;
     }
 
-    public function setPayGrade(?PayGrade $payGrade): self
+    public function setPayGrade(?string $payGrade): self
     {
         $this->payGrade = $payGrade;
 
         return $this;
     }
 
-    public function getSuperviser(): ?self
+    public function getSupervisorId(): ?string
     {
-        return $this->superviser;
+        return $this->supervisorId;
     }
 
-    public function setSuperviser(?self $superviser): self
+    public function setSupervisor(?string $supervisor): self
     {
-        $this->superviser = $superviser;
+        $this->supervisorId = $supervisorId;
 
         return $this;
     }
 
-    public function getDept(): ?Department
+    public function getDeptId(): ?int
     {
-        return $this->dept;
+        return $this->deptId;
     }
 
-    public function setDept(?Department $dept): self
+    public function setDeptId(?int $deptId): self
     {
-        $this->dept = $dept;
+        $this->deptId = $deptId;
 
         return $this;
     }
 
-    public function getEmpStatus(): ?EmploymentStatus
+    public function getEmpStatusId(): ?int
     {
-        return $this->empStatus;
+        return $this->empStatusId;
     }
 
-    public function setEmpStatus(?EmploymentStatus $empStatus): self
+    public function setEmpStatusId(?int $empStatusId): self
     {
-        $this->empStatus = $empStatus;
+        $this->empStatusId = $empStatusId;
 
         return $this;
     }
 
-    public function getJobTitle(): ?JobTitle
+    public function getJobTitleId(): ?int
     {
-        return $this->jobTitle;
+        return $this->jobTitleId;
     }
 
-    public function setJobTitle(?JobTitle $jobTitle): self
+    public function setJobTitleId(?int $jobTitleId): self
     {
-        $this->jobTitle = $jobTitle;
+        $this->jobTitleId = $jobTitleId;
 
         return $this;
     }
 
-    /**
-     * @return Collection|EmpCustom[]
-     */
-    public function getAttribute(): Collection
-    {
-        return $this->attribute;
-    }
+    // /**
+    //  * @return Collection|EmpCustom[]
+    //  */
+    // public function getAttribute(): Collection
+    // {
+    //     return $this->attribute;
+    // }
 
-    public function addAttribute(EmpCustom $attribute): self
-    {
-        if (!$this->attribute->contains($attribute)) {
-            $this->attribute[] = $attribute;
-        }
+    // public function addAttribute(EmpCustom $attribute): self
+    // {
+    //     if (!$this->attribute->contains($attribute)) {
+    //         $this->attribute[] = $attribute;
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeAttribute(EmpCustom $attribute): self
-    {
-        if ($this->attribute->contains($attribute)) {
-            $this->attribute->removeElement($attribute);
-        }
+    // public function removeAttribute(EmpCustom $attribute): self
+    // {
+    //     if ($this->attribute->contains($attribute)) {
+    //         $this->attribute->removeElement($attribute);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 18, 2019 at 01:16 PM
+-- Generation Time: Dec 22, 2019 at 09:22 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -124,14 +124,14 @@ CREATE TABLE `employee` (
   `job_title_id` int(11) NOT NULL,
   `pay_grade` varchar(10) DEFAULT NULL,
   `emp_status_id` int(11) NOT NULL,
-  `superviser_id` varchar(10) DEFAULT NULL
+  `supervisor_id` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `superviser_id`) VALUES
+INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
 ('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'married', '1', 1, 1, 'Level4', 1, '1');
 
 -- --------------------------------------------------------
@@ -152,11 +152,11 @@ CREATE TABLE `employment_status` (
 INSERT INTO `employment_status` (`id`, `emp_status`) VALUES
 (1, 'Contract Full-time'),
 (2, 'Contract Part-time'),
-(3, 'Freelance'),
-(4, 'Inter Full-time'),
-(5, 'Intern Part-time'),
-(6, 'NaN'),
-(0, 'Permanent ');
+(6, 'Freelance'),
+(3, 'Intern Full-time'),
+(4, 'Intern Part-time'),
+(7, 'NaN'),
+(5, 'Permanent');
 
 -- --------------------------------------------------------
 
@@ -167,10 +167,17 @@ INSERT INTO `employment_status` (`id`, `emp_status`) VALUES
 CREATE TABLE `employ_history` (
   `emp_history_id` int(11) NOT NULL,
   `emp_id` varchar(10) DEFAULT NULL,
-  `to` date DEFAULT NULL,
-  `from` date DEFAULT NULL,
-  `emp_status` varchar(20) DEFAULT NULL
+  `to_date` datetime DEFAULT NULL,
+  `from_date` datetime DEFAULT NULL,
+  `emp_status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employ_history`
+--
+
+INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`, `emp_status`) VALUES
+(1, '1', '2015-12-18 00:00:00', '2018-12-01 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -376,10 +383,10 @@ ALTER TABLE `employee`
   ADD PRIMARY KEY (`emp_id`),
   ADD KEY `branch_id` (`branch_id`),
   ADD KEY `pay_grade` (`pay_grade`),
-  ADD KEY `superviser_id` (`superviser_id`),
+  ADD KEY `superviser_id` (`supervisor_id`),
   ADD KEY `dept_id` (`dept_id`),
-  ADD KEY `employee_ibfk_8` (`emp_status_id`),
-  ADD KEY `employee_ibfk_9` (`job_title_id`);
+  ADD KEY `employee_ibfk_9` (`job_title_id`),
+  ADD KEY `emp_status_id` (`emp_status_id`);
 
 --
 -- Indexes for table `employment_status`
@@ -393,7 +400,8 @@ ALTER TABLE `employment_status`
 --
 ALTER TABLE `employ_history`
   ADD PRIMARY KEY (`emp_history_id`),
-  ADD KEY `emp_id` (`emp_id`);
+  ADD KEY `emp_id` (`emp_id`),
+  ADD KEY `emp_status` (`emp_status`);
 
 --
 -- Indexes for table `emp_custom`
@@ -475,13 +483,19 @@ ALTER TABLE `dependent`
 -- AUTO_INCREMENT for table `emergency_contact`
 --
 ALTER TABLE `emergency_contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `employment_status`
+--
+ALTER TABLE `employment_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employ_history`
 --
 ALTER TABLE `employ_history`
-  MODIFY `emp_history_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `leaves`
@@ -510,17 +524,18 @@ ALTER TABLE `emergency_contact`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_10` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`),
   ADD CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`pay_grade`) REFERENCES `pay_grade` (`pay_grade`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`superviser_id`) REFERENCES `employee` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`supervisor_id`) REFERENCES `employee` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_7` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`),
-  ADD CONSTRAINT `employee_ibfk_8` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_9` FOREIGN KEY (`job_title_id`) REFERENCES `job_title` (`job_title_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `employ_history`
 --
 ALTER TABLE `employ_history`
-  ADD CONSTRAINT `employ_history_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`);
+  ADD CONSTRAINT `employ_history_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`),
+  ADD CONSTRAINT `employ_history_ibfk_2` FOREIGN KEY (`emp_status`) REFERENCES `employment_status` (`id`);
 
 --
 -- Constraints for table `emp_data`

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employee index{% endblock %}
+
+{% block body %}
+    <h1>Employee index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EmpId</th>
+                <th>Nic</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>AddrLine1</th>
+                <th>AddrLine2</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>PostalCode</th>
+                <th>Dob</th>
+                <th>MaritalStatus</th>
+                <th>BranchId</th>
+                <th>PayGrade</th>
+                <th>SupervisorId</th>
+                <th>DeptId</th>
+                <th>EmpStatusId</th>
+                <th>JobTitleId</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td>{{ employee.emp_id }}</td>
+                <td>{{ employee.NIC }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.addr_line_1 }}</td>
+                <td>{{ employee.addr_line_2 }}</td>
+                <td>{{ employee.city }}</td>
+                <td>{{ employee.country }}</td>
+                <td>{{ employee.postal_code }}</td>
+                <td>{{ employee.dob ? employee.dob|date('Y-m-d') : '' }}</td>
+                <td>{{ employee.marital_status }}</td>
+                <td>{{ employee.branch_id }}</td>
+                <td>{{ employee.pay_grade }}</td>
+                <td>{{ employee.supervisor_id }}</td>
+                <td>{{ employee.dept_id }}</td>
+                <td>{{ employee.emp_status_id }}</td>
+                <td>{{ employee.job_title_id }}</td>
+                <td>
+                    <a href="{{ path('employee_show', {'empId': employee.emp_id}) }}">show</a>
+                    <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('employee_new') }}">Create new</a>
+{% endblock %}
