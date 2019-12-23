@@ -28,6 +28,18 @@
           </a>
         </div>
         <ul class="nav">
+          <li>
+            <a href="{{ path('employee_index') }}">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Employees</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{ path('user_index') }}">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Users</p>
+            </a>
+          </li>
           <li class="active ">
             <a href="{{ path('branch_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
@@ -35,15 +47,15 @@
             </a>
           </li>
           <li>
-            <a href="./icons.html">
+            <a href="{{ path('department_index') }}">
               <i class="tim-icons icon-atom"></i>
               <p>Departments</p>
             </a>
           </li>
           <li>
-            <a href="./map.html">
+            <a href="{{ path('employee_index') }}">
               <i class="tim-icons icon-pin"></i>
-              <p>EmploymentStatus</p>
+              <p>Employment Status</p>
             </a>
           </li>
           <li>
