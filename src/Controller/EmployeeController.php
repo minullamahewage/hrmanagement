@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Employee;
 use App\Form\EmployeeType;
 use App\Model\EmployeeModel;
+use App\Model\JobTitleModel;
+use App\Model\EmploymentStatusModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,20 @@ class EmployeeController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $employeeModel->getAllEmployees($entityManager);
 
+        //changing job title id and emp status id to job title and emp status
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        foreach ($employees as &$employee){
+            $jobTitleId = $employee['job_title_id'];
+            $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+            $employee['job_title'] = $jobTitle;
+            
+
+            $empStatusId = $employee['emp_status_id'];
+            $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+            $employee["emp_status"] = $empStatus;
+        }
+
         return $this->render('employee/index.html.twig', [
             'employees' => $employees,
         ]);
@@ -40,10 +56,23 @@ class EmployeeController extends AbstractController
         $employee = new Employee();
         $form = $this->createForm(EmployeeType::class, $employee);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
             $employeeModel = new EmployeeModel();
+            //Getting job title id from job title id for sql
+            $jobTitleModel = new JobTitleModel();
+            $jobTitle = $employee->getJobTitle();
+            $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle, $entityManager);
+            $employee->setJobTitleId(strval($jobTitleId));
+            //Getting employment status id from id
+            $employmentStatusModel = new EmploymentStatusModel();
+            $empStatus = $employee->getEmpStatus();
+            $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
+            $employee->setEmpStatusId(strval($empStatusId));
+            //adding employee to db
             $employeeModel->addEmployee($employee, $entityManager);
 
             return $this->redirectToRoute('employee_index');
@@ -60,6 +89,18 @@ class EmployeeController extends AbstractController
      */
     public function show(Employee $employee): Response
     {
+        //changing job title id and emp status id to job title and emp status
+        $entityManager = $this->getDoctrine()->getManager();
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $jobTitleId = $employee->getJobTitleId();
+        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+        $employee->setJobTitle($jobTitle);
+            
+
+        $empStatusId = $employee->getEmpStatusId();
+        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+        $employee->setEmpStatus($empStatus);
         return $this->render('employee/show.html.twig', [
             'employee' => $employee,
         ]);
@@ -99,5 +140,19 @@ class EmployeeController extends AbstractController
         }
 
         return $this->redirectToRoute('employee_index');
+    }
+
+    /**
+     * @Route("/subordinate/{empId}", name="employee_subordinate", methods={"GET"})
+     */
+    public function showSubordinates($empId): Response
+    {
+        //changing job title id and emp status id to job title and emp status
+        $entityManager = $this->getDoctrine()->getManager();
+        $employeeModel = new EmployeeModel();
+        $subordinates = $employeeModel->getSubordinates($empId);
+        return $this->render('employee/subordinate.html.twig', [
+            'subordinate' => $subordinates,
+        ]);
     }
 }

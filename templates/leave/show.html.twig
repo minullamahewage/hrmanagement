@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leave{% endblock %}
+
+{% block body %}
+    <h1>Leave</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>LeaveFormId</th>
+                <td>{{ leave.leaveFormId }}</td>
+            </tr>
+            <tr>
+                <th>FromDate</th>
+                <td>{{ leave.fromDate ? leave.fromDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TillDate</th>
+                <td>{{ leave.tillDate ? leave.tillDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ApprovalStatus</th>
+                <td>{{ leave.approvalStatus }}</td>
+            </tr>
+            <tr>
+                <th>EmpId</th>
+                <td>{{ leave.empId }}</td>
+            </tr>
+            <tr>
+                <th>LeaveType</th>
+                <td>{{ leave.leaveType }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('leave_index') }}">back to list</a>
+
+    <a href="{{ path('leave_edit', {'leaveFormId': leave.leaveFormId}) }}">edit</a>
+
+    {{ include('leave/_delete_form.html.twig') }}
+{% endblock %}

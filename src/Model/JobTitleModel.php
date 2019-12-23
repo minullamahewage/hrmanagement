@@ -36,5 +36,24 @@ class JobTitleModel {
         $stmt->execute();
 
     }
+
+    public function getJobTitle($jobTitleId, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT job_title from job_title WHERE job_title_id = :job_title_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':job_title_id' , $jobTitleId);
+        $stmt->execute();
+        return $stmt->fetchAll()[0]['job_title'];
+
+    }
+    public function getJobTitleId($jobTitle, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT job_title_id from job_title WHERE job_title = :job_title";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':job_title' , $jobTitle);
+        $stmt->execute();
+        return $stmt->fetchAll()[0]['job_title_id'];
+
+    }
 }
 

@@ -80,9 +80,9 @@ class Employee
     private $postalCode;
 
     /**
-     * @var \DateTime|null
+     * @var \Date|null
      *
-     * @ORM\Column(name="dob", type="datetime", nullable=true)
+     * @ORM\Column(name="dob", type="date", nullable=true)
      */
     private $dob;
 
@@ -127,6 +127,12 @@ class Employee
      * @ORM\Column(name="emp_status_id", type="integer", nullable=true)
      */
     private $empStatusId;
+     /**
+     * @var string|null
+     *
+     * 
+     */
+    private $empStatus;
 
     /**
      * @var integer|null
@@ -134,6 +140,12 @@ class Employee
      * @ORM\Column(name="job_title_id", type="integer",  nullable=true)
      */
     private $jobTitleId;
+    /**
+     * @var string|null
+     *
+     * 
+     */
+    private $jobTitle;
 
     // /**
     //  * @var \Doctrine\Common\Collections\Collection
@@ -161,6 +173,13 @@ class Employee
     public function getEmpId(): ?string
     {
         return $this->empId;
+    }
+
+    public function setEmpId(?string $empId): ?self
+    {
+        $this->empId = $empId;
+        return $this;
+
     }
 
     public function getNic(): ?string
@@ -312,7 +331,7 @@ class Employee
         return $this->supervisorId;
     }
 
-    public function setSupervisor(?string $supervisor): self
+    public function setSupervisorId(?string $supervisorId): self
     {
         $this->supervisorId = $supervisorId;
 
@@ -343,6 +362,18 @@ class Employee
         return $this;
     }
 
+    public function getEmpStatus(): ?string
+    {
+        return $this->empStatus;
+    }
+
+    public function setEmpStatus(?string $empStatus): self
+    {
+        $this->empStatus = $empStatus;
+
+        return $this;
+    }
+
     public function getJobTitleId(): ?int
     {
         return $this->jobTitleId;
@@ -351,6 +382,18 @@ class Employee
     public function setJobTitleId(?int $jobTitleId): self
     {
         $this->jobTitleId = $jobTitleId;
+
+        return $this;
+    }
+
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    public function setJobTitle(?string $jobTitle): self
+    {
+        $this->jobTitle = $jobTitle;
 
         return $this;
     }

@@ -103,4 +103,21 @@ class EmergencyContactController extends AbstractController
 
         return $this->redirectToRoute('emergency_contact_index');
     }
+
+    /**
+     * @Route("/emp/{empId}", name="emergency_contact_emp", methods={"GET"})
+     */
+    public function empEmergencyContacts($empId): Response
+    {
+        // $emergencyContacts = $this->getDoctrine()
+        //     ->getRepository(EmergencyContact::class)
+        //     ->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $emergencyContactModel = new EmergencyContactModel();
+        $emergencyContacts = $emergencyContactModel->getEmpEmergencyContacts($empId,$entityManager);
+
+        return $this->render('emergency_contact/emp.html.twig', [
+            'emergency_contacts' => $emergencyContacts,
+        ]);
+    }
 }

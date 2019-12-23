@@ -23,8 +23,8 @@
                 <th>PayGrade</th>
                 <th>SupervisorId</th>
                 <th>DeptId</th>
-                <th>EmpStatusId</th>
-                <th>JobTitleId</th>
+                <th>Employment Status</th>
+                <th>Job Title</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -46,8 +46,8 @@
                 <td>{{ employee.pay_grade }}</td>
                 <td>{{ employee.supervisor_id }}</td>
                 <td>{{ employee.dept_id }}</td>
-                <td>{{ employee.emp_status_id }}</td>
-                <td>{{ employee.job_title_id }}</td>
+                <td>{{ employee.emp_status }}</td>
+                <td>{{ employee.job_title }}</td>
                 <td>
                     <a href="{{ path('employee_show', {'empId': employee.emp_id}) }}">show</a>
                     <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a>
@@ -62,4 +62,5 @@
     </table>
 
     <a href="{{ path('employee_new') }}">Create new</a>
+    
 {% endblock %}

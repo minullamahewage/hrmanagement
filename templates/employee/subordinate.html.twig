@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subordinates{% endblock %}
+
+{% block body %}
+    <h1>Subordinates</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EmpId</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subordinate in subordinates %}
+            <tr>
+                <td>{{ subrodinate.emp_id }}</td>
+                <td>{{ subordinate.name }}</td>
+                <td>{{ subordinate.name }}</td>
+                <td>{{ subordinate.email }}</td>
+                <td>{{ subordinate.addr_line_1 }}</td>
+                <td>{{ subordinate.addr_line_2 }}</td>
+                <td>{{ subordinate.city }}</td>
+                <td>{{ subordinate.country }}</td>
+                <td>{{ subordinate.postal_code }}</td>
+                <td>{{ subordinate.branch_id }}</td>
+                <td>{{ subordinate.pay_grade }}</td>
+                <td>{{ employee.dept_id }}</td>
+                <td>{{ employee.emp_status }}</td>
+                <td>{{ employee.job_title }}</td>
+                <td>
+                    <a href="{{ path('employee_show', {'empId': employee.emp_id}) }}">show</a>
+                    <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('employee_new') }}">Create new</a>
+    
+{% endblock %}

@@ -24,7 +24,7 @@ class User
     /**
      * @var string|null
      *
-     * @ORM\Column(name="password", type="string", length=30, nullable=true)
+     * @ORM\Column(name="password", type="string", length=100, nullable=true)
      */
     private $password;
 
@@ -36,18 +36,21 @@ class User
     private $type;
 
     /**
-     * @var \Employee
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Employee")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-     * })
+     * @ORM\Column(name="emp_id", type="string", length=10, nullable=false)
      */
-    private $emp;
+    private $empId;
 
     public function getUsername(): ?string
     {
         return $this->username;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+        return $this;
     }
 
     public function getPassword(): ?string
@@ -74,14 +77,14 @@ class User
         return $this;
     }
 
-    public function getEmp(): ?Employee
+    public function getEmpId(): ?string
     {
-        return $this->emp;
+        return $this->empId;
     }
 
-    public function setEmp(?Employee $emp): self
+    public function setEmpId(?string $empId): self
     {
-        $this->emp = $emp;
+        $this->empId = $empId;
 
         return $this;
     }
