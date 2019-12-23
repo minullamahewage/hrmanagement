@@ -84,6 +84,7 @@
     <a href="{{ url('leave_new', {'empId': employee.empId}) }}">Request Leave</a>
     <a href="{{ url('dependent_emp', {'empId': employee.empId}) }}">View Dependents</a>
     <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">View Emergency Contacts</a>
+    <a href="{{ url('employee_subordinate', {'empId': employee.empId}) }}">View Subordinates</a>
 
 
     {{ include('employee/_delete_form.html.twig') }}

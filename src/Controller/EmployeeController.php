@@ -141,4 +141,18 @@ class EmployeeController extends AbstractController
 
         return $this->redirectToRoute('employee_index');
     }
+
+    /**
+     * @Route("/subordinate/{empId}", name="employee_subordinate", methods={"GET"})
+     */
+    public function showSubordinates($empId): Response
+    {
+        //changing job title id and emp status id to job title and emp status
+        $entityManager = $this->getDoctrine()->getManager();
+        $employeeModel = new EmployeeModel();
+        $subordinates = $employeeModel->getSubordinates($empId);
+        return $this->render('employee/subordinate.html.twig', [
+            'subordinate' => $subordinates,
+        ]);
+    }
 }
