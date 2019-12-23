@@ -14,7 +14,7 @@ class EmployHistoryType extends AbstractType
         $builder
             ->add('toDate')
             ->add('fromDate')
-            ->add('empStatus')
+            ->add('empStatusId')
             ->add('emp_id')
         ;
     }

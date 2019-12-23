@@ -17,6 +17,7 @@
                 <th>City</th>
                 <th>Country</th>
                 <th>PostalCode</th>
+                <th>Telephone No</th>
                 <th>Dob</th>
                 <th>MaritalStatus</th>
                 <th>BranchId</th>
@@ -40,6 +41,11 @@
                 <td>{{ employee.city }}</td>
                 <td>{{ employee.country }}</td>
                 <td>{{ employee.postal_code }}</td>
+                <td>{% for telephone in employee.emp_telephone %}
+                    {{telephone.telephone}} ,
+                    {% endfor %}
+                </td>
+                
                 <td>{{ employee.dob ? employee.dob|date('Y-m-d') : '' }}</td>
                 <td>{{ employee.marital_status }}</td>
                 <td>{{ employee.branch_id }}</td>

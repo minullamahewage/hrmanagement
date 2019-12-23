@@ -22,23 +22,30 @@ class EmployHistory
     private $empHistoryId;
 
     /**
-     * @var \DateTime|null
+     * @var \Date|null
      *
-     * @ORM\Column(name="to_date", type="datetime", nullable=true)
+     * @ORM\Column(name="to_date", type="date", nullable=true)
      */
     private $toDate;
 
     /**
-     * @var \DateTime|null
+     * @var \Date|null
      *
-     * @ORM\Column(name="from_date", type="datetime", nullable=true)
+     * @ORM\Column(name="from_date", type="date", nullable=true)
      */
     private $fromDate;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="emp_status", type="string", length=20, nullable=true)
+     * @ORM\Column(name="emp_status_id", type="string", length=20, nullable=true)
+     */
+    private $empStatusId;
+
+    /**
+     * @var string|null
+     *
+     * 
      */
     private $empStatus;
 
@@ -79,12 +86,25 @@ class EmployHistory
         return $this;
     }
 
+
+    public function getEmpStatusId(): ?int
+    {
+        return $this->empStatusId;
+    }
+
+    public function setEmpStatusId(?int $empStatusId): self
+    {
+        $this->empStatusId = $empStatusId;
+
+        return $this;
+    }
+
     public function getEmpStatus(): ?string
     {
         return $this->empStatus;
     }
 
-    public function setEmpStatus(?string $empStatus): self
+    public function setEmpStatus(?int $empStatus): self
     {
         $this->empStatus = $empStatus;
 

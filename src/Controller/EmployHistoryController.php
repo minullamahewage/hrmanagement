@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\EmployHistory;
 use App\Form\EmployHistoryType;
 use App\Model\EmployHistoryModel;
+use App\Model\EmploymentStatusModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +25,16 @@ class EmployHistoryController extends AbstractController
         //     ->getRepository(EmployHistory::class)
         //     ->findAll();
         $employHistoryModel = new EmployHistoryModel();
+        $employStatusModel = new EmploymentStatusModel;
         $entityManager = $this->getDoctrine()->getManager();
         $employHistories = $employHistoryModel->getAllEmployHistories($entityManager);
+
+        foreach ($employHistories as &$employHistory){
+            $empStatusId = $employHistory['emp_status_id'];
+            $empStatus = $employStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+            $employHistory["emp_status"] = $empStatus;
+        }
+
         return $this->render('employ_history/index.html.twig', [
             'employ_histories' => $employHistories,
         ]);
@@ -45,7 +54,13 @@ class EmployHistoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             // $entityManager->persist($employHistory);
             // $entityManager->flush();
-            $employHistoryModel->addEMployHistory($employHistory, $entityManager);
+            //Getting employment status id from id
+            $employmentStatusModel = new EmploymentStatusModel();
+            $empStatus = $employee->getEmpStatus();
+            $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
+            $employHistory->setEmpStatusId(strval($empStatusId));
+
+            $employHistoryModel->addEmployHistory($employHistory, $entityManager);
 
             return $this->redirectToRoute('employ_history_index');
         }
@@ -100,5 +115,25 @@ class EmployHistoryController extends AbstractController
         }
 
         return $this->redirectToRoute('employ_history_index');
+    }
+
+    /**
+     * @Route("/emp/{empId}", name="employhistory_emp", methods={"GET"})
+     */
+    public function empEmployHistory($empId): Response
+    {
+        $employHistoryModel = new EmployHistoryModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $employHistories = $employHistoryModel->getEmployHistory($empId,$entityManager);
+        $employStatusModel = new EmploymentStatusModel;
+
+        foreach ($employHistories as &$employHistory){
+            $empStatusId = $employHistory['emp_status_id'];
+            $empStatus = $employStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+            $employHistory["emp_status"] = $empStatus;
+        }
+        return $this->render('employ_history/emp.html.twig', [
+            'employ_histories' => $employHistories,
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use App\Form\EmployeeType;
 use App\Model\EmployeeModel;
 use App\Model\JobTitleModel;
 use App\Model\EmploymentStatusModel;
+use App\Model\EmpTelephoneModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,15 +33,19 @@ class EmployeeController extends AbstractController
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
         foreach ($employees as &$employee){
             $jobTitleId = $employee['job_title_id'];
             $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
             $employee['job_title'] = $jobTitle;
-            
 
             $empStatusId = $employee['emp_status_id'];
             $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
             $employee["emp_status"] = $empStatus;
+
+            $empId = $employee['emp_id'];
+            $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
+            $employee["emp_telephone"] = $empTelephone;
         }
 
         return $this->render('employee/index.html.twig', [
@@ -93,16 +98,21 @@ class EmployeeController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        //job title
         $jobTitleId = $employee->getJobTitleId();
         $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
         $employee->setJobTitle($jobTitle);
-            
-
+        //emply status
         $empStatusId = $employee->getEmpStatusId();
         $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
         $employee->setEmpStatus($empStatus);
+        //emp telephone
+        $empId = $employee->getEmpId();
+        $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
         return $this->render('employee/show.html.twig', [
             'employee' => $employee,
+            'emp_telephone' => $empTelephone,
         ]);
     }
 

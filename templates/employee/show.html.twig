@@ -44,6 +44,12 @@
                 <td>{{ employee.postalCode }}</td>
             </tr>
             <tr>
+                <th>Telephone No</th>
+                {% for telephone in emp_telephone %}
+                    <tr><th></th><td>{{telephone.telephone}}</td></tr>
+                {% endfor %}
+            </tr>
+            <tr>
                 <th>Dob</th>
                 <td>{{ employee.dob ? employee.dob|date('Y-m-d') : '' }}</td>
             </tr>
@@ -85,6 +91,7 @@
     <a href="{{ url('dependent_emp', {'empId': employee.empId}) }}">View Dependents</a>
     <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">View Emergency Contacts</a>
     <a href="{{ url('employee_subordinate', {'empId': employee.empId}) }}">View Subordinates</a>
+    <a href="{{ url('employhistory_emp', {'empId': employee.empId}) }}">View Employment History</a>
 
 
     {{ include('employee/_delete_form.html.twig') }}
