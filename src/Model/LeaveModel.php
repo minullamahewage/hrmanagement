@@ -42,4 +42,14 @@ class LeaveModel{
         $stmt->bindValue(':leave_form_id', $leave->getLeaveFormId());
         $stmt->execute();
     }
+
+    public function getEmpLeaves($empId,$em){
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM leaves  WHERE emp_id = :emp_id ORDER BY leave_form_id ASC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':emp_id', $empId);
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+    }
 }

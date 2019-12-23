@@ -90,6 +90,33 @@ class EmployeeController extends AbstractController
     }
 
     /**
+     * @Route("/admin/{empId}", name="admin_show", methods={"GET"})
+     */
+    public function showAdmin(Employee $employee): Response
+    {
+        //changing job title id and emp status id to job title and emp status
+        $entityManager = $this->getDoctrine()->getManager();
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        //job title
+        $jobTitleId = $employee->getJobTitleId();
+        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+        $employee->setJobTitle($jobTitle);
+        //emply status
+        $empStatusId = $employee->getEmpStatusId();
+        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+        $employee->setEmpStatus($empStatus);
+        //emp telephone
+        $empId = $employee->getEmpId();
+        $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
+        return $this->render('employee/show_admin.html.twig', [
+            'employee' => $employee,
+            'emp_telephone' => $empTelephone,
+        ]);
+    }
+
+    /**
      * @Route("/{empId}", name="employee_show", methods={"GET"})
      */
     public function show(Employee $employee): Response

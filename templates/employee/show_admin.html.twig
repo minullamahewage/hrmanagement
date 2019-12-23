@@ -84,7 +84,9 @@
         </tbody>
     </table>
 
-    <a href="{{ url('leave_new', {'empId': employee.empId}) }}">Request Leave</a><br>
+    <a href="{{ path('employee_index') }}">back to list</a><br>
+
+    <a href="{{ path('employee_edit', {'empId': employee.empId}) }}">edit</a><br>
     <a href="{{ url('dependent_emp', {'empId': employee.empId}) }}">View Dependents</a><br>
     <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">View Emergency Contacts</a><br>
     <a href="{{ url('employee_subordinate', {'empId': employee.empId}) }}">View Subordinates</a><br>
@@ -92,4 +94,5 @@
     <a href="{{ url('leave_emp', {'empId': employee.empId}) }}">View Leaves</a>
 
 
+    {{ include('employee/_delete_form.html.twig') }}
 {% endblock %}

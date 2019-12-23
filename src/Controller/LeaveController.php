@@ -100,4 +100,18 @@ class LeaveController extends AbstractController
 
         return $this->redirectToRoute('leave_index');
     }
+
+    /**
+     * @Route("/emp/{empId}", name="leave_emp", methods={"GET"})
+     */
+    public function empLeaves($empId): Response
+    {
+        $leaveModel = new LeaveModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
+
+        return $this->render('leave/emp.html.twig', [
+            'leaves' => $leaves,
+        ]);
+    }
 }
