@@ -44,7 +44,7 @@ class EmergencyContactModel {
         $stmt->execute();
     }
 
-    public function getEmpEmergencyContact($emp_id, $em){
+    public function getEmpEmergencyContacts($emp_id, $em){
         $conn = $em->getConnection();
         $sql = "SELECT * FROM emergency_contact WHERE emp_id = :emp_id ORDER BY name ASC";
         $stmt = $conn->prepare($sql);

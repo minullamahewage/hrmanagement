@@ -43,10 +43,18 @@ class EmploymentStatusModel {
 
     public function getEmploymentStatus($id, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employment_status WHERE id = :id ";
+        $sql = "SELECT emp_status FROM employment_status WHERE id = :id ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
-        return $stmt-> fetchAll();
+        return $stmt-> fetchAll()[0]['emp_status'];
+    }
+    public function getEmploymentStatusId($empStatus, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT id FROM employment_status WHERE emp_status = :emp_status ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':emp_status', $empStatus);
+        $stmt->execute();
+        return $stmt-> fetchAll()[0]['id'];
     }
 }

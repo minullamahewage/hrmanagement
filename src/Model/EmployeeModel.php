@@ -13,7 +13,7 @@ class EmployeeModel{
 
     public function addEmployee($employee, $em){
         $conn = $em->getConnection();
-        $sql = "INSERT INTO employee (emp_id, NIC, name, email, addr_line_1, addr_line_2, city, country, potal_code, dob, marital_status, branch_id, dept_id, job_title_id, pay_grade, emp_status_id, supervisor_id) VALUES (:emp_id, :NIC, :name, :email, :addr_line_1, :addr_line_2, :city, :country, :potal_code, :dob, :marital_status, :branch_id, :dept_id, :job_title_id, :pay_grade, :emp_status_id, :supervisor_id) ";
+        $sql = "INSERT INTO employee (emp_id, NIC, name, email, addr_line_1, addr_line_2, city, country, postal_code, dob, marital_status, branch_id, dept_id, job_title_id, pay_grade, emp_status_id, supervisor_id) VALUES (:emp_id, :NIC, :name, :email, :addr_line_1, :addr_line_2, :city, :country, :postal_code, :dob, :marital_status, :branch_id, :dept_id, :job_title_id, :pay_grade, :emp_status_id, :supervisor_id) ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':emp_id', $employee->getEmpId());
         $stmt->bindValue(':NIC', $employee->getNic());
@@ -24,7 +24,7 @@ class EmployeeModel{
         $stmt->bindValue(':city', $employee->getCity());
         $stmt->bindValue(':country', $employee->getCountry());
         $stmt->bindValue(':postal_code', $employee->getPostalCode());
-        $stmt->bindValue(':dob', $employee->getDob()->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':dob', $employee->getDob()->format('Y-m-d'));
         $stmt->bindValue(':marital_status', $employee->getMaritalStatus());
         $stmt->bindValue(':branch_id', $employee->getBranchId());
         $stmt->bindValue(':pay_grade', $employee->getPayGrade());
@@ -57,7 +57,7 @@ class EmployeeModel{
         $stmt->bindValue(':city', $employee->getCity());
         $stmt->bindValue(':country', $employee->getCountry());
         $stmt->bindValue(':postal_code', $employee->getPostalCode());
-        $stmt->bindValue(':dob', $employee->getDob()->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':dob', $employee->getDob()->format('Y-m-d'));
         $stmt->bindValue(':marital_status', $employee->getMaritalStatus());
         $stmt->bindValue(':branch_id', $employee->getBranchId());
         $stmt->bindValue(':pay_grade', $employee->getPayGrade());

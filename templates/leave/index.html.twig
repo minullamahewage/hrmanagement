@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leave index{% endblock %}
+
+{% block body %}
+    <h1>Leave index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LeaveFormId</th>
+                <th>FromDate</th>
+                <th>TillDate</th>
+                <th>ApprovalStatus</th>
+                <th>EmpId</th>
+                <th>LeaveType</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.leave_form_id }}</td>
+                <td>{{ leave.from_date ? leave.from_date|date('Y-m-d') : '' }}</td>
+                <td>{{ leave.till_date ? leave.till_date|date('Y-m-d') : '' }}</td>
+                <td>{{ leave.approval_status }}</td>
+                <td>{{ leave.emp_id }}</td>
+                <td>{{ leave.leave_type }}</td>
+                <td>
+                    <a href="{{ path('leave_show', {'leaveFormId': leave.leave_form_id}) }}">show</a>
+                    {# <a href="{{ path('leave_edit', {'leaveFormId': leave.leave_form_d}) }}">edit</a> #}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('leave_new') }}">Create new</a> #}
+{% endblock %}

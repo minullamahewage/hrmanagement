@@ -103,4 +103,21 @@ class DependentController extends AbstractController
 
         return $this->redirectToRoute('dependent_index');
     }
+
+    /**
+     * @Route("/emp/{empId}", name="dependent_emp", methods={"GET"})
+     */
+    public function empDependent($empId): Response
+    {
+        $entityManager=$this->getDoctrine()->getManager();
+        $dependentModel=new DependentModel();
+
+        //$dependents = $this->getDoctrine()
+          //  ->getRepository(Dependent::class)
+            //->findAll();
+        $dependents=$dependentModel->getEmpDependent($empId, $entityManager);
+        return $this->render('dependent/emp.html.twig', [
+            'dependents' => $dependents,
+        ]);
+    }
 }
