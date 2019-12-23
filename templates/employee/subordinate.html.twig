@@ -9,15 +9,27 @@
         <thead>
             <tr>
                 <th>EmpId</th>
+                <th>Nic</th>
                 <th>Name</th>
+                <th>Email</th>
+                <th>AddrLine1</th>
+                <th>AddrLine2</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>PostalCode</th>
+                <th>BranchId</th>
+                <th>PayGrade</th>
+                <th>DeptId</th>
+                <th>Employment Status</th>
+                <th>Job Title</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for subordinate in subordinates %}
             <tr>
-                <td>{{ subrodinate.emp_id }}</td>
-                <td>{{ subordinate.name }}</td>
+                <td>{{ subordinate.emp_id }}</td>
+                <td>{{ subordinate.NIC }}</td>
                 <td>{{ subordinate.name }}</td>
                 <td>{{ subordinate.email }}</td>
                 <td>{{ subordinate.addr_line_1 }}</td>
@@ -27,12 +39,12 @@
                 <td>{{ subordinate.postal_code }}</td>
                 <td>{{ subordinate.branch_id }}</td>
                 <td>{{ subordinate.pay_grade }}</td>
-                <td>{{ employee.dept_id }}</td>
-                <td>{{ employee.emp_status }}</td>
-                <td>{{ employee.job_title }}</td>
+                <td>{{ subordinate.dept_id }}</td>
+                <td>{{ subordinate.emp_status }}</td>
+                <td>{{ subordinate.job_title }}</td>
                 <td>
-                    <a href="{{ path('employee_show', {'empId': employee.emp_id}) }}">show</a>
-                    <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a>
+                    {# <a href="{{ path('employee_show', {'empId': employee.emp_id}) }}">show</a>
+                    <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}
@@ -43,6 +55,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('employee_new') }}">Create new</a>
+    {# <a href="{{ path('employee_new') }}">Create new</a> #}
     
 {% endblock %}

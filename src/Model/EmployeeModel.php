@@ -76,9 +76,9 @@ class EmployeeModel{
         $stmt->execute();
     }
 
-    public function getSubordinate($empId, $em){
+    public function getSubordinates($empId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT employee.emp_id, employee.name FROM employee, supervisor WHERE employee.emp_id = supervisor.supervisor_id AND supervisor.emp_id = :emp_id";
+        $sql = "SELECT employee.* FROM employee, supervisor WHERE employee.emp_id = supervisor.emp_id AND supervisor.supervisor_id = :emp_id";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':emp_id', $empId);
         $stmt->execute();

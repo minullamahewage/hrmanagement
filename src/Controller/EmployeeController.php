@@ -150,9 +150,22 @@ class EmployeeController extends AbstractController
         //changing job title id and emp status id to job title and emp status
         $entityManager = $this->getDoctrine()->getManager();
         $employeeModel = new EmployeeModel();
-        $subordinates = $employeeModel->getSubordinates($empId);
+        $subordinates = $employeeModel->getSubordinates($empId, $entityManager);
+
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        foreach ($subordinates as &$subordinate){
+            $jobTitleId = $subordinate['job_title_id'];
+            $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+            $subordinate['job_title'] = $jobTitle;
+            
+
+            $empStatusId = $subordinate['emp_status_id'];
+            $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+            $subordinate["emp_status"] = $empStatus;
+        }
         return $this->render('employee/subordinate.html.twig', [
-            'subordinate' => $subordinates,
+            'subordinates' => $subordinates,
         ]);
     }
 }
