@@ -118,6 +118,7 @@ class EmergencyContactController extends AbstractController
 
         return $this->render('emergency_contact/emp.html.twig', [
             'emergency_contacts' => $emergencyContacts,
+            'emp_id' =>$empId,
         ]);
     }
 }

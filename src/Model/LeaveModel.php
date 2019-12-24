@@ -52,4 +52,22 @@ class LeaveModel{
         return $stmt->fetchAll();
 
     }
+
+    public function checkRemLeaves($empId, $leaveType,$em){
+        $conn = $em->getConnection();
+        $sql = "SELECT leaves_remaining FROM leaves_remaining WHERE emp_id = :emp_id AND leave_type = :leave_type";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':emp_id', $empId);
+        $stmt->bindValue(':leave_type', $leaveType);
+        $stmt->execute();
+        return $stmt->fetchAll()[0]['leaves_remaining'];
+    }
+    public function getEmpRemLeaves($empId,$em){
+        $conn = $em->getConnection();
+        $sql = "SELECT leave_type, leave_limit, leaves_taken, leaves_remaining FROM leaves_remaining WHERE emp_id = :emp_id ";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':emp_id', $empId);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

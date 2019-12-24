@@ -46,14 +46,30 @@ class LeaveController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $leaveModel = new LeaveModel();
-            $leave->setEmpId($empId);
-            $leaveModel->addLeave($leave, $entityManager);
-            return $this->redirectToRoute('leave_index');
+            $remainingLeaves = $leaveModel->checkRemLeaves($empId, $leave->getLeaveType(), $entityManager);
+            $days = ($leave->getTillDate()->diff($leave->getFromDate()))->format('%a');
+            // var_dump($remainingLeaves); exit;
+            // var_dump($remainingLeaves - $days);
+            if ($remainingLeaves - $days>0){
+                $leave->setEmpId($empId);
+                $leaveModel->addLeave($leave, $entityManager);
+                return $this->redirectToRoute('leave_emp',array('empId'=> $empId));
+
+            }
+            else{
+                // var_dump("failed"); exit;
+                return new Response('No leaves remaining from this type');
+
+            }
+
+            
+            
         }
 
         return $this->render('leave/new.html.twig', [
             'leave' => $leave,
             'form' => $form->createView(),
+            'emp_id' =>$empId,
         ]);
     }
 
@@ -106,12 +122,33 @@ class LeaveController extends AbstractController
      */
     public function empLeaves($empId): Response
     {
+    
         $leaveModel = new LeaveModel();
         $entityManager = $this->getDoctrine()->getManager();
         $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
+        $leavesRemaining  = $leaveModel->getEmpRemLeaves($empId,$entityManager);
 
         return $this->render('leave/emp.html.twig', [
             'leaves' => $leaves,
+            'leaves_remaining' =>$leavesRemaining,
+            'emp_id' =>$empId,
+        ]);
+    }
+    /**
+     * @Route("/requests/{empId}", name="leave_requests", methods={"GET"})
+     */
+    public function leaveRequests($empId): Response
+    {
+    
+        $leaveModel = new LeaveModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
+        $leavesRemaining  = $leaveModel->getEmpRemLeaves($empId,$entityManager);
+
+        return $this->render('leave/emp.html.twig', [
+            'leaves' => $leaves,
+            'leaves_remaining' =>$leavesRemaining,
+            'emp_id' =>$empId,
         ]);
     }
 }

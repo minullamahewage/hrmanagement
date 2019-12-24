@@ -3,9 +3,9 @@
 {% block title %}New Leave{% endblock %}
 
 {% block body %}
-    <h1>Create new Leave</h1>
+    <h1>Leave Request Form</h1>
 
     {{ include('leave/_form.html.twig') }}
 
-    <a href="{{ path('leave_index') }}">back to list</a>
+    <a href="{{ path('employee_show', {'empId': emp_id}) }}">Go back</a> 
 {% endblock %}

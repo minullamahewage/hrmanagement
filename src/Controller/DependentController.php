@@ -118,6 +118,7 @@ class DependentController extends AbstractController
         $dependents=$dependentModel->getEmpDependent($empId, $entityManager);
         return $this->render('dependent/emp.html.twig', [
             'dependents' => $dependents,
+            'emp_id' => $empId,
         ]);
     }
 }

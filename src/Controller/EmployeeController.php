@@ -137,10 +137,26 @@ class EmployeeController extends AbstractController
         //emp telephone
         $empId = $employee->getEmpId();
         $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
-        return $this->render('employee/show.html.twig', [
-            'employee' => $employee,
-            'emp_telephone' => $empTelephone,
-        ]);
+
+        //check if supervisor
+        $employeeModel = new EmployeeModel();
+        if(count($employeeModel->getSubordinates($empId, $entityManager))){
+            return $this->render('employee/show_sup.html.twig', [
+                'employee' => $employee,
+                'emp_telephone' => $empTelephone,
+            ]);
+
+        }
+        else{
+            return $this->render('employee/show.html.twig', [
+                'employee' => $employee,
+                'emp_telephone' => $empTelephone,
+            ]);
+        }
+        // return $this->render('employee/show.html.twig', [
+        //     'employee' => $employee,
+        //     'emp_telephone' => $empTelephone,
+        // ]);
     }
 
     /**
@@ -203,6 +219,7 @@ class EmployeeController extends AbstractController
         }
         return $this->render('employee/subordinate.html.twig', [
             'subordinates' => $subordinates,
+            'emp_id' =>$empId
         ]);
     }
 }

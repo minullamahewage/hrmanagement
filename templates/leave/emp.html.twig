@@ -3,6 +3,36 @@
 {% block title %}Leaves{% endblock %}
 
 {% block body %}
+    <h1>Employee ID {{emp_id}}</h1>
+    <h1>Leaves Remaining</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Leave Type</th>
+                <th>Leave Limit</th>
+                <th>Leaves Taken</th>
+                <th>Leaves Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for leave_remaining in leaves_remaining %}
+            <tr>
+                <td>{{ leave_remaining.leave_type }}</td>
+                <td>{{ leave_remaining.leave_limit }}</td>
+                <td>{{ leave_remaining.leaves_taken }}</td>
+                <td>{{ leave_remaining.leaves_remaining }}</td>
+                <td>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
     <h1>Leaves</h1>
 
     <table class="table">
@@ -38,5 +68,6 @@
         </tbody>
     </table>
 
-    {# <a href="{{ path('leave_new') }}">Create new</a> #}
+
+    <a href="{{ path('employee_show',{'empId': emp_id}) }}">Go back to main page</a> 
 {% endblock %}

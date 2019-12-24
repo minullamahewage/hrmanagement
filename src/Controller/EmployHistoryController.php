@@ -134,6 +134,7 @@ class EmployHistoryController extends AbstractController
         }
         return $this->render('employ_history/emp.html.twig', [
             'employ_histories' => $employHistories,
+            'emp_id' => $empId,
         ]);
     }
 }
