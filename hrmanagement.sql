@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 22, 2019 at 09:22 AM
+-- Generation Time: Dec 24, 2019 at 09:57 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -43,7 +43,7 @@ CREATE TABLE `branch` (
 --
 
 INSERT INTO `branch` (`branch_id`, `name`, `line_1`, `line_2`, `city`, `country`, `postal_code`) VALUES
-('1', 'Colombo', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100'),
+('1', 'Colombo', '21', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100'),
 ('2', 'Kandy', '20', 'Street', 'Kandy', 'Sri Lanka', '1000');
 
 -- --------------------------------------------------------
@@ -87,6 +87,13 @@ CREATE TABLE `dependent` (
   `country` varchar(20) DEFAULT NULL,
   `postal_code` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dependent`
+--
+
+INSERT INTO `dependent` (`dependent_id`, `nic`, `emp_id`, `name`, `email`, `relationship`, `telephone`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`) VALUES
+(1, '900000004', '1', 'Dependent1', 'dependent1@gmail.com', 'Son', '071729729', '20', '20', 'Colombo', 'Sri Lanka', '10001');
 
 -- --------------------------------------------------------
 
@@ -132,7 +139,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
-('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'married', '1', 1, 1, 'Level4', 1, '1');
+('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'married', '1', 2, 1, 'Level4', 1, '2'),
+('2', '9600000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '2015-01-01', 'Unmarried', '1', 2, 1, 'Level2', 5, '1');
 
 -- --------------------------------------------------------
 
@@ -167,17 +175,17 @@ INSERT INTO `employment_status` (`id`, `emp_status`) VALUES
 CREATE TABLE `employ_history` (
   `emp_history_id` int(11) NOT NULL,
   `emp_id` varchar(10) DEFAULT NULL,
-  `to_date` datetime DEFAULT NULL,
-  `from_date` datetime DEFAULT NULL,
-  `emp_status` int(11) DEFAULT NULL
+  `to_date` date DEFAULT NULL,
+  `from_date` date DEFAULT NULL,
+  `emp_status_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employ_history`
 --
 
-INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`, `emp_status`) VALUES
-(1, '1', '2015-12-18 00:00:00', '2018-12-01 00:00:00', 1);
+INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`, `emp_status_id`) VALUES
+(1, '1', '2015-12-18', '2018-12-01', 1);
 
 -- --------------------------------------------------------
 
@@ -212,6 +220,15 @@ CREATE TABLE `emp_telephone` (
   `telephone` varchar(12) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `emp_telephone`
+--
+
+INSERT INTO `emp_telephone` (`emp_id`, `telephone`) VALUES
+('1', '071729729'),
+('1', '077729729'),
+('2', '076729729');
+
 -- --------------------------------------------------------
 
 --
@@ -229,7 +246,6 @@ CREATE TABLE `job_title` (
 --
 
 INSERT INTO `job_title` (`job_title_id`, `job_title`, `description`) VALUES
-(0, 'Test', NULL),
 (1, 'Accountant', NULL),
 (2, 'HR Manager', NULL),
 (3, 'QA Engineer', NULL),
@@ -244,11 +260,40 @@ INSERT INTO `job_title` (`job_title_id`, `job_title`, `description`) VALUES
 CREATE TABLE `leaves` (
   `leave_form_id` int(11) NOT NULL,
   `emp_id` varchar(10) DEFAULT NULL,
-  `from` date DEFAULT NULL,
-  `till` date DEFAULT NULL,
+  `from_date` date DEFAULT NULL,
+  `till_date` date DEFAULT NULL,
   `leave_type` varchar(15) DEFAULT NULL,
-  `approval_status` varchar(15) DEFAULT NULL
+  `approval_status` varchar(15) DEFAULT 'False'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `leaves`
+--
+
+INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leave_type`, `approval_status`) VALUES
+(1, '1', '2019-10-01', '2019-12-01', 'No-pay', 'False'),
+(4, '1', '2014-01-01', '2016-01-01', 'No-pay', 'True'),
+(5, '2', '2014-01-01', '2015-01-01', 'No-pay', 'True'),
+(6, '1', '2019-12-01', '2019-12-03', 'No-pay', 'True'),
+(7, '1', '2019-12-04', '2019-12-18', 'No-pay', 'True'),
+(8, '1', '2019-12-01', '2019-12-03', 'No-pay', 'True'),
+(9, '1', '2019-12-04', '2019-12-18', 'No-pay', 'True'),
+(10, '1', '2019-12-01', '2019-12-03', 'Annual', 'True'),
+(11, '2', '2019-12-02', '2019-12-04', 'No-pay', 'False');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `leaves_remaining`
+-- (See below for the actual view)
+--
+CREATE TABLE `leaves_remaining` (
+`emp_id` varchar(10)
+,`leave_type` varchar(15)
+,`leave_limit` int(11)
+,`leaves_taken` bigint(21)
+,`leaves_remaining` bigint(22)
+);
 
 -- --------------------------------------------------------
 
@@ -268,8 +313,10 @@ CREATE TABLE `leave_limit` (
 
 INSERT INTO `leave_limit` (`pay_grade`, `leave_type`, `leave_limit`) VALUES
 ('Level1', 'No-pay', 50),
+('Level2', 'Annual', 10),
 ('Level2', 'No-pay', 50),
 ('Level3', 'No-pay', 50),
+('Level4', 'Annual', 20),
 ('Level4', 'No-pay', 50);
 
 -- --------------------------------------------------------
@@ -296,17 +343,6 @@ INSERT INTO `leave_type` (`leave_type`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migration_versions`
---
-
-CREATE TABLE `migration_versions` (
-  `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pay_grade`
 --
 
@@ -327,12 +363,23 @@ INSERT INTO `pay_grade` (`pay_grade`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `supervisor`
+-- (See below for the actual view)
+--
+CREATE TABLE `supervisor` (
+`emp_id` varchar(10)
+,`supervisor_id` varchar(10)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
   `username` varchar(30) NOT NULL DEFAULT '',
-  `password` varchar(30) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `emp_id` varchar(10) DEFAULT NULL,
   `type` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -342,7 +389,26 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `emp_id`, `type`) VALUES
-('test1', 'test1', '1', '');
+('test1', 'test1', '1', 'admin'),
+('test2', 'test2', '2', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `leaves_remaining`
+--
+DROP TABLE IF EXISTS `leaves_remaining`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_remaining`  AS  select `employee`.`emp_id` AS `emp_id`,`leave_limit`.`leave_type` AS `leave_type`,`leave_limit`.`leave_limit` AS `leave_limit`,count(`leaves`.`emp_id`) AS `leaves_taken`,(`leave_limit`.`leave_limit` - count(`leaves`.`emp_id`)) AS `leaves_remaining` from ((`employee` left join `leave_limit` on((`employee`.`pay_grade` = `leave_limit`.`pay_grade`))) left join `leaves` on(((`employee`.`emp_id` = `leaves`.`emp_id`) and (`leave_limit`.`leave_type` = `leaves`.`leave_type`) and (`leaves`.`approval_status` = 'True')))) group by `employee`.`emp_id`,`leave_limit`.`leave_type` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `supervisor`
+--
+DROP TABLE IF EXISTS `supervisor`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `supervisor`  AS  select `employee`.`emp_id` AS `emp_id`,`employee`.`supervisor_id` AS `supervisor_id` from `employee` ;
 
 --
 -- Indexes for dumped tables
@@ -384,9 +450,9 @@ ALTER TABLE `employee`
   ADD KEY `branch_id` (`branch_id`),
   ADD KEY `pay_grade` (`pay_grade`),
   ADD KEY `superviser_id` (`supervisor_id`),
-  ADD KEY `dept_id` (`dept_id`),
-  ADD KEY `employee_ibfk_9` (`job_title_id`),
-  ADD KEY `emp_status_id` (`emp_status_id`);
+  ADD KEY `emp_status_id` (`emp_status_id`),
+  ADD KEY `employee_ibfk_7` (`dept_id`),
+  ADD KEY `job_title_id` (`job_title_id`);
 
 --
 -- Indexes for table `employment_status`
@@ -401,7 +467,7 @@ ALTER TABLE `employment_status`
 ALTER TABLE `employ_history`
   ADD PRIMARY KEY (`emp_history_id`),
   ADD KEY `emp_id` (`emp_id`),
-  ADD KEY `emp_status` (`emp_status`);
+  ADD KEY `emp_status` (`emp_status_id`);
 
 --
 -- Indexes for table `emp_custom`
@@ -451,12 +517,6 @@ ALTER TABLE `leave_type`
   ADD PRIMARY KEY (`leave_type`);
 
 --
--- Indexes for table `migration_versions`
---
-ALTER TABLE `migration_versions`
-  ADD PRIMARY KEY (`version`);
-
---
 -- Indexes for table `pay_grade`
 --
 ALTER TABLE `pay_grade`
@@ -477,7 +537,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `dependent`
 --
 ALTER TABLE `dependent`
-  MODIFY `dependent_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `dependent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `emergency_contact`
@@ -498,10 +558,16 @@ ALTER TABLE `employ_history`
   MODIFY `emp_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `job_title`
+--
+ALTER TABLE `job_title`
+  MODIFY `job_title_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -525,17 +591,17 @@ ALTER TABLE `emergency_contact`
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_10` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`),
+  ADD CONSTRAINT `employee_ibfk_11` FOREIGN KEY (`job_title_id`) REFERENCES `job_title` (`job_title_id`),
   ADD CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`pay_grade`) REFERENCES `pay_grade` (`pay_grade`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`supervisor_id`) REFERENCES `employee` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employee_ibfk_7` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`),
-  ADD CONSTRAINT `employee_ibfk_9` FOREIGN KEY (`job_title_id`) REFERENCES `job_title` (`job_title_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `employee_ibfk_7` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `employ_history`
 --
 ALTER TABLE `employ_history`
   ADD CONSTRAINT `employ_history_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`),
-  ADD CONSTRAINT `employ_history_ibfk_2` FOREIGN KEY (`emp_status`) REFERENCES `employment_status` (`id`);
+  ADD CONSTRAINT `employ_history_ibfk_2` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`);
 
 --
 -- Constraints for table `emp_data`
