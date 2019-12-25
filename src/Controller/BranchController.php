@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BranchController extends AbstractController
 {
+    //admin show all branches
     /**
      * @Route("/", name="branch_index", methods={"GET"})
      */
@@ -32,6 +33,7 @@ class BranchController extends AbstractController
         ]);
     }
 
+    //admin add new branch
     /**
      * @Route("/new", name="branch_new", methods={"GET","POST"})
      */
@@ -57,6 +59,7 @@ class BranchController extends AbstractController
         ]);
     }
 
+    //admin show branch details
     /**
      * @Route("/{branchId}", name="branch_show", methods={"GET"})
      */
@@ -67,6 +70,7 @@ class BranchController extends AbstractController
         ]);
     }
 
+    //admin edit branch details
     /**
      * @Route("/{branchId}/edit", name="branch_edit", methods={"GET","POST"})
      */
@@ -87,6 +91,7 @@ class BranchController extends AbstractController
         ]);
     }
 
+    //admin delete branch
     /**
      * @Route("/{branchId}", name="branch_delete", methods={"DELETE"})
      */

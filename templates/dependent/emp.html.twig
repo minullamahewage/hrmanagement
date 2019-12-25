@@ -20,7 +20,7 @@
                 <th>Country</th>
                 <th>PostalCode</th>
                 <th>Empid</th>
-                <th>actions</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -39,8 +39,7 @@
                 <td>{{ dependent.postal_code }}</td>
                 <td>{{ dependent.emp_id }}</td>
                 <td>
-                    <a href="{{ path('dependent_show', {'dependentId': dependent.dependent_id}) }}">show</a>
-                    <a href="{{ path('dependent_edit', {'dependentId': dependent.dependent_id}) }}">edit</a>
+                    
                 </td>
             </tr>
         {% else %}

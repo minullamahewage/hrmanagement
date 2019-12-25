@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LeaveController extends AbstractController
 {
+    //admin show all leave forms
     /**
      * @Route("/", name="leave_index", methods={"GET"})
      */
@@ -33,6 +34,7 @@ class LeaveController extends AbstractController
         ]);
     }
 
+    //employee request leave
     /**
      * @Route("/{empId}/new", name="leave_new", methods={"GET","POST"})
      */
@@ -41,8 +43,6 @@ class LeaveController extends AbstractController
         $leave = new Leave();
         $form = $this->createForm(LeaveType::class, $leave);
         $form->handleRequest($request);
-        
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $leaveModel = new LeaveModel();
@@ -54,18 +54,12 @@ class LeaveController extends AbstractController
                 $leave->setEmpId($empId);
                 $leaveModel->addLeave($leave, $entityManager);
                 return $this->redirectToRoute('leave_emp',array('empId'=> $empId));
-
             }
             else{
                 // var_dump("failed"); exit;
                 return new Response('No leaves remaining from this type');
-
-            }
-
-            
-            
+            }  
         }
-
         return $this->render('leave/new.html.twig', [
             'leave' => $leave,
             'form' => $form->createView(),
@@ -73,6 +67,7 @@ class LeaveController extends AbstractController
         ]);
     }
 
+    //admin show leave form 
     /**
      * @Route("/{leaveFormId}", name="leave_show", methods={"GET"})
      */
@@ -83,26 +78,29 @@ class LeaveController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{leaveFormId}/edit", name="leave_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Leave $leave): Response
-    {
-        $form = $this->createForm(LeaveType::class, $leave);
-        $form->handleRequest($request);
+    //admin edit leave form
+    // /**
+    //  * @Route("/{leaveFormId}/edit", name="leave_edit", methods={"GET","POST"})
+    //  */
+    // public function edit(Request $request, Leave $leave): Response
+    // {
+    //     $form = $this->createForm(LeaveType::class, $leave);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('leave_index');
-        }
+    //         return $this->redirectToRoute('leave_index');
+    //     }
 
-        return $this->render('leave/edit.html.twig', [
-            'leave' => $leave,
-            'form' => $form->createView(),
-        ]);
-    }
+    //     return $this->render('leave/edit.html.twig', [
+    //         'leave' => $leave,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
+
+    //admin delete leave form
     /**
      * @Route("/{leaveFormId}", name="leave_delete", methods={"DELETE"})
      */
@@ -117,6 +115,7 @@ class LeaveController extends AbstractController
         return $this->redirectToRoute('leave_index');
     }
 
+    //employee show leaves
     /**
      * @Route("/emp/{empId}", name="leave_emp", methods={"GET"})
      */
@@ -134,6 +133,8 @@ class LeaveController extends AbstractController
             'emp_id' =>$empId,
         ]);
     }
+
+    //supervisor view leave requests
     /**
      * @Route("/requests/{empId}", name="leave_requests", methods={"GET"})
      */
@@ -142,13 +143,52 @@ class LeaveController extends AbstractController
     
         $leaveModel = new LeaveModel();
         $entityManager = $this->getDoctrine()->getManager();
-        $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
-        $leavesRemaining  = $leaveModel->getEmpRemLeaves($empId,$entityManager);
+        $leaves = $leaveModel->getLeaveRequests($empId,$entityManager);
 
-        return $this->render('leave/emp.html.twig', [
+        return $this->render('leave/sup.html.twig', [
             'leaves' => $leaves,
-            'leaves_remaining' =>$leavesRemaining,
             'emp_id' =>$empId,
         ]);
+    }
+
+    //supervisor approve leave 
+    /**
+     * @Route("/approve/{leaveFormId}-{empId}", name="leave_approve", methods={"APPROVE"})
+     */
+    public function approve(Request $request, Leave $leave, $leaveFormId, $empId): Response
+    {
+        if ($this->isCsrfTokenValid('approve'.$leave->getLeaveFormId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $leaveModel = new LeaveModel();
+            $remainingLeaves = $leaveModel->checkRemLeaves($empId, $leave->getLeaveType(), $entityManager);
+            $days = ($leave->getTillDate()->diff($leave->getFromDate()))->format('%a');
+            // var_dump($days); exit;
+            if ($remainingLeaves - $days>0){
+                $leave->setEmpId($empId);
+                $leaveModel->approveLeave($leaveFormId, $entityManager);
+                return $this->redirectToRoute('leave_requests',array('empId'=> $empId));
+            }
+            else{
+                // var_dump("failed"); exit;
+                return new Response('No leaves remaining from this type');
+            }  
+        }
+
+        return $this->redirectToRoute('leave_requests', array('empId' => $empId));
+    }
+
+    //supervisor deny leave 
+    /**
+     * @Route("/deny/{leaveFormId}-{empId}", name="leave_deny", methods={"DENY"})
+     */
+    public function deny(Request $request, Leave $leave, $leaveFormId, $empId): Response
+    {
+        if ($this->isCsrfTokenValid('deny'.$leave->getLeaveFormId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $leaveModel = new LeaveModel();
+            $leaveModel->denyLeave($leaveFormId, $entityManager);
+        }
+
+        return $this->redirectToRoute('leave_requests', array('empId' => $empId));
     }
 }

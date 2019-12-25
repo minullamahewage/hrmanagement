@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EmergencyContactController extends AbstractController
 {
+    //admin show all emergency contacts
     /**
      * @Route("/", name="emergency_contact_index", methods={"GET"})
      */
@@ -32,6 +33,7 @@ class EmergencyContactController extends AbstractController
         ]);
     }
 
+    //admin add emergency contact
     /**
      * @Route("/new", name="emergency_contact_new", methods={"GET","POST"})
      */
@@ -56,6 +58,7 @@ class EmergencyContactController extends AbstractController
         ]);
     }
 
+    //admin show emergenecy contact details
     /**
      * @Route("/{id}", name="emergency_contact_show", methods={"GET"})
      */
@@ -66,6 +69,7 @@ class EmergencyContactController extends AbstractController
         ]);
     }
 
+    //admin edit emergency contact details
     /**
      * @Route("/{id}/edit", name="emergency_contact_edit", methods={"GET","POST"})
      */
@@ -88,6 +92,7 @@ class EmergencyContactController extends AbstractController
         ]);
     }
 
+    //admin delete emergency contact
     /**
      * @Route("/{id}", name="emergency_contact_delete", methods={"DELETE"})
      */
@@ -104,6 +109,7 @@ class EmergencyContactController extends AbstractController
         return $this->redirectToRoute('emergency_contact_index');
     }
 
+    //employee view personal emergency conacts
     /**
      * @Route("/emp/{empId}", name="emergency_contact_emp", methods={"GET"})
      */

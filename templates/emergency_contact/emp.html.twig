@@ -12,7 +12,7 @@
                 <th>Name</th>
                 <th>Telephone</th>
                 <th>Emp_id</th>
-                <th>actions</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -23,8 +23,6 @@
                 <td>{{ emergency_contact.telephone }}</td>
                 <td>{{ emergency_contact.emp_id }}</td>
                 <td>
-                    <a href="{{ path('emergency_contact_show', {'id': emergency_contact.id}) }}">show</a>
-                    <a href="{{ path('emergency_contact_edit', {'id': emergency_contact.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DependentController extends AbstractController
 {
+    //admin view all dependents
     /**
      * @Route("/", name="dependent_index", methods={"GET"})
      */
@@ -32,6 +33,7 @@ class DependentController extends AbstractController
         ]);
     }
 
+    //admin add new dependent
     /**
      * @Route("/new", name="dependent_new", methods={"GET","POST"})
      */
@@ -56,6 +58,7 @@ class DependentController extends AbstractController
         ]);
     }
 
+    //admin show dependent details
     /**
      * @Route("/{dependentId}", name="dependent_show", methods={"GET"})
      */
@@ -66,6 +69,7 @@ class DependentController extends AbstractController
         ]);
     }
 
+    //admin edit dependent details
     /**
      * @Route("/{dependentId}/edit", name="dependent_edit", methods={"GET","POST"})
      */
@@ -88,6 +92,7 @@ class DependentController extends AbstractController
         ]);
     }
 
+    //admin delete dependent
     /**
      * @Route("/{dependentId}", name="dependent_delete", methods={"DELETE"})
      */
@@ -104,6 +109,7 @@ class DependentController extends AbstractController
         return $this->redirectToRoute('dependent_index');
     }
 
+    //employee show dependents
     /**
      * @Route("/emp/{empId}", name="dependent_emp", methods={"GET"})
      */

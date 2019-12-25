@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DepartmentController extends AbstractController
 {
+    //admin show all departments
     /**
      * @Route("/", name="department_index", methods={"GET"})
      */
@@ -31,6 +32,7 @@ class DepartmentController extends AbstractController
         ]);
     }
 
+    //admin add new department
     /**
      * @Route("/new", name="department_new", methods={"GET","POST"})
      */
@@ -55,6 +57,7 @@ class DepartmentController extends AbstractController
         ]);
     }
 
+    //admin show department details
     /**
      * @Route("/{deptId}", name="department_show", methods={"GET"})
      */
@@ -65,6 +68,7 @@ class DepartmentController extends AbstractController
         ]);
     }
 
+    //admin edit department
     /**
      * @Route("/{deptId}/edit", name="department_edit", methods={"GET","POST"})
      */
@@ -87,6 +91,7 @@ class DepartmentController extends AbstractController
         ]);
     }
 
+    //admin delete department
     /**
      * @Route("/{deptId}", name="department_delete", methods={"DELETE"})
      */

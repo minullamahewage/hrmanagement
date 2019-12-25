@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('leave_deny', {'leaveFormId': leave.leave_form_id,'empId' : emp_id}) }}" onsubmit="return confirm('Are you sure you want to deny this leave?');">
+    <input type="hidden" name="_method" value="DENY">
+    <input type="hidden" name="_token" value="{{ csrf_token('deny' ~ leave.leave_form_id) }}">
+    <button class="btn">Deny</button>
+</form>

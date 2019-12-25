@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EmployeeController extends AbstractController
 {
+
+    //admin show all employees
     /**
      * @Route("/", name="employee_index", methods={"GET"})
      */
@@ -53,6 +55,7 @@ class EmployeeController extends AbstractController
         ]);
     }
 
+    //admin add new employee
     /**
      * @Route("/new", name="employee_new", methods={"GET","POST"})
      */
@@ -89,6 +92,8 @@ class EmployeeController extends AbstractController
         ]);
     }
 
+
+    //admin show individual employee details
     /**
      * @Route("/admin/{empId}", name="admin_show", methods={"GET"})
      */
@@ -116,6 +121,7 @@ class EmployeeController extends AbstractController
         ]);
     }
 
+    //employee show personal details
     /**
      * @Route("/{empId}", name="employee_show", methods={"GET"})
      */
@@ -159,6 +165,7 @@ class EmployeeController extends AbstractController
         // ]);
     }
 
+    //admin employee details edit
     /**
      * @Route("/{empId}/edit", name="employee_edit", methods={"GET","POST"})
      */
@@ -181,6 +188,7 @@ class EmployeeController extends AbstractController
         ]);
     }
 
+    //admin employee delete
     /**
      * @Route("/{empId}", name="employee_delete", methods={"DELETE"})
      */
@@ -195,6 +203,7 @@ class EmployeeController extends AbstractController
         return $this->redirectToRoute('employee_index');
     }
 
+    //supervisor view subordinates
     /**
      * @Route("/subordinate/{empId}", name="employee_subordinate", methods={"GET"})
      */

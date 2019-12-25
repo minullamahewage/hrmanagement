@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leave Requests{% endblock %}
+
+{% block body %}
+    <h1>Employee ID {{emp_id}}</h1>
+
+    <h1>Leave Requests</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LeaveFormId</th>
+                <th>FromDate</th>
+                <th>TillDate</th>
+                <th>EmpId</th>
+                <th>LeaveType</th>
+                <th>ApprovalStatus</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.leave_form_id }}</td>
+                <td>{{ leave.from_date ? leave.from_date|date('Y-m-d') : '' }}</td>
+                <td>{{ leave.till_date ? leave.till_date|date('Y-m-d') : '' }}</td>
+                <td>{{ leave.emp_id }}</td>
+                <td>{{ leave.leave_type }}</td>
+                <td>{{ leave.approval_status }}</td>
+                <td>
+                    {{ include('leave/_approve_leave.html.twig') }}
+                    {{ include('leave/_deny_leave.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No Leave Requests</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('employee_show',{'empId': emp_id}) }}">Go back to main page</a> 
+{% endblock %}

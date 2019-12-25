@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EmployHistoryController extends AbstractController
 {
+    //admin view employment history
     /**
      * @Route("/", name="employ_history_index", methods={"GET"})
      */
@@ -40,6 +41,7 @@ class EmployHistoryController extends AbstractController
         ]);
     }
 
+    //admin add new employment history entry
     /**
      * @Route("/new", name="employ_history_new", methods={"GET","POST"})
      */
@@ -71,6 +73,7 @@ class EmployHistoryController extends AbstractController
         ]);
     }
 
+    //admin show employment history entry details
     /**
      * @Route("/{empHistoryId}", name="employ_history_show", methods={"GET"})
      */
@@ -81,6 +84,7 @@ class EmployHistoryController extends AbstractController
         ]);
     }
 
+    //admin edit employment history details
     /**
      * @Route("/{empHistoryId}/edit", name="employ_history_edit", methods={"GET","POST"})
      */
@@ -101,6 +105,7 @@ class EmployHistoryController extends AbstractController
         ]);
     }
 
+    //admin delete employment history
     /**
      * @Route("/{empHistoryId}", name="employ_history_delete", methods={"DELETE"})
      */
@@ -117,6 +122,7 @@ class EmployHistoryController extends AbstractController
         return $this->redirectToRoute('employ_history_index');
     }
 
+    //employee view personal employment history
     /**
      * @Route("/emp/{empId}", name="employhistory_emp", methods={"GET"})
      */
