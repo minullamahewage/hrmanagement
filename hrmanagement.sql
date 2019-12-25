@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 24, 2019 at 09:57 AM
+-- Generation Time: Dec 25, 2019 at 10:07 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -139,7 +139,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
-('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'married', '1', 2, 1, 'Level4', 1, '2'),
+('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'married', '1', 2, 1, 'Level4', 1, '1'),
 ('2', '9600000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '2015-01-01', 'Unmarried', '1', 2, 1, 'Level2', 5, '1');
 
 -- --------------------------------------------------------
@@ -263,7 +263,7 @@ CREATE TABLE `leaves` (
   `from_date` date DEFAULT NULL,
   `till_date` date DEFAULT NULL,
   `leave_type` varchar(15) DEFAULT NULL,
-  `approval_status` varchar(15) DEFAULT 'False'
+  `approval_status` varchar(15) DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -271,15 +271,35 @@ CREATE TABLE `leaves` (
 --
 
 INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leave_type`, `approval_status`) VALUES
-(1, '1', '2019-10-01', '2019-12-01', 'No-pay', 'False'),
-(4, '1', '2014-01-01', '2016-01-01', 'No-pay', 'True'),
-(5, '2', '2014-01-01', '2015-01-01', 'No-pay', 'True'),
+(1, '1', '2019-10-01', '2019-10-02', 'No-pay', 'False'),
+(4, '1', '2014-01-01', '2014-01-03', 'No-pay', 'True'),
+(5, '2', '2014-01-01', '2014-01-02', 'No-pay', 'True'),
 (6, '1', '2019-12-01', '2019-12-03', 'No-pay', 'True'),
-(7, '1', '2019-12-04', '2019-12-18', 'No-pay', 'True'),
+(7, '1', '2019-12-04', '2019-12-10', 'No-pay', 'True'),
 (8, '1', '2019-12-01', '2019-12-03', 'No-pay', 'True'),
-(9, '1', '2019-12-04', '2019-12-18', 'No-pay', 'True'),
+(9, '1', '2019-12-04', '2019-12-06', 'No-pay', 'True'),
 (10, '1', '2019-12-01', '2019-12-03', 'Annual', 'True'),
-(11, '2', '2019-12-02', '2019-12-04', 'No-pay', 'False');
+(11, '2', '2019-12-02', '2019-12-04', 'No-pay', 'False'),
+(12, '1', '2014-01-01', '2014-01-02', 'Annual', 'False'),
+(13, '1', '2014-01-02', '2014-01-03', 'Annual', 'False'),
+(14, '1', '2014-01-02', '2014-01-03', 'Annual', 'Pending'),
+(15, '2', '2014-01-01', '2014-01-10', 'Annual', 'True'),
+(17, '2', '2014-01-01', '2014-01-02', 'No-pay', 'Pending'),
+(18, '2', '2014-01-01', '2014-01-02', 'No-pay', 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `leaves_days`
+-- (See below for the actual view)
+--
+CREATE TABLE `leaves_days` (
+`leave_form_id` int(11)
+,`emp_id` varchar(10)
+,`leave_type` varchar(15)
+,`approval_status` varchar(15)
+,`days` int(7)
+);
 
 -- --------------------------------------------------------
 
@@ -291,8 +311,8 @@ CREATE TABLE `leaves_remaining` (
 `emp_id` varchar(10)
 ,`leave_type` varchar(15)
 ,`leave_limit` int(11)
-,`leaves_taken` bigint(21)
-,`leaves_remaining` bigint(22)
+,`leaves_taken` decimal(33,0)
+,`leaves_remaining` decimal(34,0)
 );
 
 -- --------------------------------------------------------
@@ -314,6 +334,7 @@ CREATE TABLE `leave_limit` (
 INSERT INTO `leave_limit` (`pay_grade`, `leave_type`, `leave_limit`) VALUES
 ('Level1', 'No-pay', 50),
 ('Level2', 'Annual', 10),
+('Level2', 'Casual', 10),
 ('Level2', 'No-pay', 50),
 ('Level3', 'No-pay', 50),
 ('Level4', 'Annual', 20),
@@ -339,6 +360,17 @@ INSERT INTO `leave_type` (`leave_type`, `description`) VALUES
 ('Casual', NULL),
 ('Maternity', NULL),
 ('No-pay', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migration_versions`
+--
+
+CREATE TABLE `migration_versions` (
+  `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -395,11 +427,20 @@ INSERT INTO `user` (`username`, `password`, `emp_id`, `type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure for view `leaves_days`
+--
+DROP TABLE IF EXISTS `leaves_days`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_days`  AS  select `leaves`.`leave_form_id` AS `leave_form_id`,`leaves`.`emp_id` AS `emp_id`,`leaves`.`leave_type` AS `leave_type`,`leaves`.`approval_status` AS `approval_status`,(to_days(`leaves`.`till_date`) - to_days(`leaves`.`from_date`)) AS `days` from `leaves` ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `leaves_remaining`
 --
 DROP TABLE IF EXISTS `leaves_remaining`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_remaining`  AS  select `employee`.`emp_id` AS `emp_id`,`leave_limit`.`leave_type` AS `leave_type`,`leave_limit`.`leave_limit` AS `leave_limit`,count(`leaves`.`emp_id`) AS `leaves_taken`,(`leave_limit`.`leave_limit` - count(`leaves`.`emp_id`)) AS `leaves_remaining` from ((`employee` left join `leave_limit` on((`employee`.`pay_grade` = `leave_limit`.`pay_grade`))) left join `leaves` on(((`employee`.`emp_id` = `leaves`.`emp_id`) and (`leave_limit`.`leave_type` = `leaves`.`leave_type`) and (`leaves`.`approval_status` = 'True')))) group by `employee`.`emp_id`,`leave_limit`.`leave_type` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_remaining`  AS  select `employee`.`emp_id` AS `emp_id`,`leave_limit`.`leave_type` AS `leave_type`,`leave_limit`.`leave_limit` AS `leave_limit`,ifnull((sum(`leaves_days`.`days`) + 1),0) AS `leaves_taken`,(`leave_limit`.`leave_limit` - ifnull((sum(`leaves_days`.`days`) + 1),0)) AS `leaves_remaining` from ((`employee` left join `leave_limit` on((`employee`.`pay_grade` = `leave_limit`.`pay_grade`))) left join `leaves_days` on(((`employee`.`emp_id` = `leaves_days`.`emp_id`) and (`leave_limit`.`leave_type` = `leaves_days`.`leave_type`) and (`leaves_days`.`approval_status` = 'True')))) group by `employee`.`emp_id`,`leave_limit`.`leave_type` ;
 
 -- --------------------------------------------------------
 
@@ -517,6 +558,12 @@ ALTER TABLE `leave_type`
   ADD PRIMARY KEY (`leave_type`);
 
 --
+-- Indexes for table `migration_versions`
+--
+ALTER TABLE `migration_versions`
+  ADD PRIMARY KEY (`version`);
+
+--
 -- Indexes for table `pay_grade`
 --
 ALTER TABLE `pay_grade`
@@ -567,7 +614,7 @@ ALTER TABLE `job_title`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
