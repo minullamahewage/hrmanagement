@@ -162,6 +162,8 @@ class Employee
     //  */
     // private $attribute;
 
+    private $cusAttr;
+
     /**
      * Constructor
      */
@@ -396,6 +398,14 @@ class Employee
         $this->jobTitle = $jobTitle;
 
         return $this;
+    }
+
+    public function getCusAtrr(){
+        return $this->cusAttr;
+    }
+
+    public function setCusAttr($cusAttr){
+        $this->cusAttr = $cusAttr;
     }
 
     // /**

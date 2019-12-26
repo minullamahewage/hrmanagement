@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 25, 2019 at 10:07 AM
+-- Generation Time: Dec 26, 2019 at 12:33 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -26,6 +26,8 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `branch`
+--
+-- Creation: Dec 18, 2019 at 10:36 AM
 --
 
 CREATE TABLE `branch` (
@@ -51,6 +53,8 @@ INSERT INTO `branch` (`branch_id`, `name`, `line_1`, `line_2`, `city`, `country`
 --
 -- Table structure for table `department`
 --
+-- Creation: Dec 18, 2019 at 06:01 AM
+--
 
 CREATE TABLE `department` (
   `dept_id` int(11) NOT NULL,
@@ -71,6 +75,8 @@ INSERT INTO `department` (`dept_id`, `dept_name`, `building`, `floor`) VALUES
 
 --
 -- Table structure for table `dependent`
+--
+-- Creation: Dec 09, 2019 at 11:11 AM
 --
 
 CREATE TABLE `dependent` (
@@ -100,6 +106,8 @@ INSERT INTO `dependent` (`dependent_id`, `nic`, `emp_id`, `name`, `email`, `rela
 --
 -- Table structure for table `emergency_contact`
 --
+-- Creation: Dec 18, 2019 at 06:13 AM
+--
 
 CREATE TABLE `emergency_contact` (
   `id` int(11) NOT NULL,
@@ -112,6 +120,8 @@ CREATE TABLE `emergency_contact` (
 
 --
 -- Table structure for table `employee`
+--
+-- Creation: Dec 23, 2019 at 09:51 AM
 --
 
 CREATE TABLE `employee` (
@@ -139,13 +149,16 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
-('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'married', '1', 2, 1, 'Level4', 1, '1'),
-('2', '9600000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '2015-01-01', 'Unmarried', '1', 2, 1, 'Level2', 5, '1');
+('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '2014-08-05', 'married', '1', 2, 1, 'Level4', 1, '1'),
+('2', '9600000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '2015-01-01', 'Unmarried', '1', 2, 1, 'Level2', 5, '1'),
+('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '1');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `employment_status`
+--
+-- Creation: Dec 21, 2019 at 11:25 AM
 --
 
 CREATE TABLE `employment_status` (
@@ -171,6 +184,8 @@ INSERT INTO `employment_status` (`id`, `emp_status`) VALUES
 --
 -- Table structure for table `employ_history`
 --
+-- Creation: Dec 23, 2019 at 01:30 PM
+--
 
 CREATE TABLE `employ_history` (
   `emp_history_id` int(11) NOT NULL,
@@ -192,15 +207,46 @@ INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`
 --
 -- Table structure for table `emp_custom`
 --
+-- Creation: Dec 09, 2019 at 11:11 AM
+--
 
 CREATE TABLE `emp_custom` (
   `attribute` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `emp_custom`
+--
+
+INSERT INTO `emp_custom` (`attribute`) VALUES
+('custom_attribute_1'),
+('custom_attribute_2');
+
+--
+-- Triggers `emp_custom`
+--
+DELIMITER $$
+CREATE TRIGGER `after_custom_attribute_insert` AFTER INSERT ON `emp_custom` FOR EACH ROW BEGIN
+    DECLARE n INT DEFAULT 0;
+	DECLARE i INT DEFAULT 0;
+    DECLARE empId VARCHAR(10);
+	SELECT COUNT(*) FROM employee INTO n;
+	SET i=0;
+	WHILE i<n DO 
+    	SELECT emp_id from employee limit i,1 into empId;
+  		INSERT INTO emp_data(emp_id, attribute) VALUES (empId, NEW.attribute);
+  		SET i = i + 1;
+	END WHILE;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `emp_data`
+--
+-- Creation: Dec 26, 2019 at 11:01 AM
 --
 
 CREATE TABLE `emp_data` (
@@ -209,10 +255,24 @@ CREATE TABLE `emp_data` (
   `value` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `emp_data`
+--
+
+INSERT INTO `emp_data` (`emp_id`, `attribute`, `value`) VALUES
+('1', 'custom_attribute_1', NULL),
+('1', 'custom_attribute_2', NULL),
+('2', 'custom_attribute_1', NULL),
+('2', 'custom_attribute_2', NULL),
+('3', 'custom_attribute_1', 'custom data 1_3'),
+('3', 'custom_attribute_2', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `emp_telephone`
+--
+-- Creation: Dec 09, 2019 at 11:11 AM
 --
 
 CREATE TABLE `emp_telephone` (
@@ -233,6 +293,8 @@ INSERT INTO `emp_telephone` (`emp_id`, `telephone`) VALUES
 
 --
 -- Table structure for table `job_title`
+--
+-- Creation: Dec 23, 2019 at 04:38 AM
 --
 
 CREATE TABLE `job_title` (
@@ -255,6 +317,8 @@ INSERT INTO `job_title` (`job_title_id`, `job_title`, `description`) VALUES
 
 --
 -- Table structure for table `leaves`
+--
+-- Creation: Dec 24, 2019 at 04:09 PM
 --
 
 CREATE TABLE `leaves` (
@@ -320,6 +384,8 @@ CREATE TABLE `leaves_remaining` (
 --
 -- Table structure for table `leave_limit`
 --
+-- Creation: Dec 18, 2019 at 07:22 AM
+--
 
 CREATE TABLE `leave_limit` (
   `pay_grade` varchar(10) NOT NULL,
@@ -345,6 +411,8 @@ INSERT INTO `leave_limit` (`pay_grade`, `leave_type`, `leave_limit`) VALUES
 --
 -- Table structure for table `leave_type`
 --
+-- Creation: Dec 09, 2019 at 11:11 AM
+--
 
 CREATE TABLE `leave_type` (
   `leave_type` varchar(15) NOT NULL DEFAULT '',
@@ -366,6 +434,8 @@ INSERT INTO `leave_type` (`leave_type`, `description`) VALUES
 --
 -- Table structure for table `migration_versions`
 --
+-- Creation: Dec 17, 2019 at 02:33 PM
+--
 
 CREATE TABLE `migration_versions` (
   `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -376,6 +446,8 @@ CREATE TABLE `migration_versions` (
 
 --
 -- Table structure for table `pay_grade`
+--
+-- Creation: Dec 17, 2019 at 02:59 PM
 --
 
 CREATE TABLE `pay_grade` (
@@ -407,6 +479,8 @@ CREATE TABLE `supervisor` (
 
 --
 -- Table structure for table `user`
+--
+-- Creation: Dec 23, 2019 at 12:03 PM
 --
 
 CREATE TABLE `user` (
@@ -521,7 +595,7 @@ ALTER TABLE `emp_custom`
 --
 ALTER TABLE `emp_data`
   ADD PRIMARY KEY (`emp_id`,`attribute`),
-  ADD KEY `attribute` (`attribute`);
+  ADD KEY `emp_data_ibfk_2` (`attribute`);
 
 --
 -- Indexes for table `emp_telephone`
@@ -655,7 +729,7 @@ ALTER TABLE `employ_history`
 --
 ALTER TABLE `emp_data`
   ADD CONSTRAINT `emp_data_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`),
-  ADD CONSTRAINT `emp_data_ibfk_2` FOREIGN KEY (`attribute`) REFERENCES `emp_custom` (`attribute`);
+  ADD CONSTRAINT `emp_data_ibfk_2` FOREIGN KEY (`attribute`) REFERENCES `emp_custom` (`attribute`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `emp_telephone`

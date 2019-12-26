@@ -41,11 +41,11 @@ class EmpDataModel{
         $stmt->execute();
     }
 
-    public function getDataByEmpId($empID, $em){
+    public function getDataByEmpId($empId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM emp_data where emp_id = :emp_ID";
+        $sql = "SELECT attribute, value FROM emp_data where emp_id = :emp_Id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':emp_ID', $empID);
+        $stmt->bindValue(':emp_Id', $empId);
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -54,6 +54,16 @@ class EmpDataModel{
         $conn = $em->getConnection();
         $sql = "SELECT * FROM emp_data where attribute = :attribute";
         $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':attribute', $attribute);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getEmpValueAttribute($empId, $attribute, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT value FROM emp_data where emp_id = :emp_id AND attribute = :attribute";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':emp_id', $empId);
         $stmt->bindValue(':attribute', $attribute);
         $stmt->execute();
         return $stmt->fetchAll();

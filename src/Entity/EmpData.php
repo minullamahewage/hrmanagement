@@ -33,7 +33,7 @@ class EmpData
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=50, nullable=false)
+     * @ORM\Column(name="value", type="string", length=50, nullable=true)
      */
     private $value;
 
@@ -67,7 +67,7 @@ class EmpData
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function setValue(?string $value): self
     {
         $this->value = $value;
         return $this;

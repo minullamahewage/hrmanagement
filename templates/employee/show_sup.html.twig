@@ -81,6 +81,12 @@
                 <th>Job Title</th>
                 <td>{{ employee.jobTitle }}</td>
             </tr>
+            {% for customData in custom_data %}            
+                <tr>
+                    <th>{{ customData.attribute|replace({'_' :' '  ,}) }}</th>
+                    <td>{{ customData.value }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 

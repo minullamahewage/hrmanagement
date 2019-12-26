@@ -17,12 +17,12 @@
         <tbody>
         {% for emp_datum in emp_datas %}
             <tr>
-                <td>{{ emp_datum.attribute }}</td>
-                <td>{{ emp_datum.emp_id }}</td>
-                <td>{{ emp_datum.value }}</td>
+                <td>{{ emp_data.attribute }}</td>
+                <td>{{ emp_data.emp_id }}</td>
+                <td>{{ emp_data.value }}</td>
                 <td>
-                    <a href="{{ path('emp_data_show', {'attribute': emp_datum.attribute}) }}">show</a>
-                    <a href="{{ path('emp_data_edit', {'attribute': emp_datum.attribute}) }}">edit</a>
+                    <a href="{{ path('emp_data_show', {'attribute': emp_data.attribute}) }}">show</a>
+                    <a href="{{ path('emp_data_edit', {'attribute': emp_data.attribute}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

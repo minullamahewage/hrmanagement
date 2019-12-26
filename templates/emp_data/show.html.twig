@@ -9,22 +9,22 @@
         <tbody>
             <tr>
                 <th>Attribute</th>
-                <td>{{ emp_datum.attribute }}</td>
+                <td>{{ emp_data.attribute }}</td>
             </tr>
             <tr>
                 <th>Emp_id</th>
-                <td>{{ emp_datum.empId }}</td>
+                <td>{{ emp_data.empId }}</td>
             </tr>
             <tr>
                 <th>Value</th>
-                <td>{{ emp_datum.value }}</td>
+                <td>{{ emp_data.value }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('emp_data_index') }}">back to list</a>
 
-    <a href="{{ path('emp_data_edit', {'attribute': emp_datum.attribute}) }}">edit</a>
+    <a href="{{ path('emp_data_edit', {'attribute': emp_data.attribute}) }}">edit</a>
 
     {{ include('emp_data/_delete_form.html.twig') }}
 {% endblock %}

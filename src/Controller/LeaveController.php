@@ -78,28 +78,6 @@ class LeaveController extends AbstractController
         ]);
     }
 
-    //admin edit leave form
-    // /**
-    //  * @Route("/{leaveFormId}/edit", name="leave_edit", methods={"GET","POST"})
-    //  */
-    // public function edit(Request $request, Leave $leave): Response
-    // {
-    //     $form = $this->createForm(LeaveType::class, $leave);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $this->getDoctrine()->getManager()->flush();
-
-    //         return $this->redirectToRoute('leave_index');
-    //     }
-
-    //     return $this->render('leave/edit.html.twig', [
-    //         'leave' => $leave,
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
-
-
     //admin delete leave form
     /**
      * @Route("/{leaveFormId}", name="leave_delete", methods={"DELETE"})

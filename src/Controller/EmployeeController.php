@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Employee;
+use App\Entity\EmpData;
 use App\Form\EmployeeType;
 use App\Model\EmployeeModel;
 use App\Model\JobTitleModel;
 use App\Model\EmploymentStatusModel;
 use App\Model\EmpTelephoneModel;
+use App\Model\EmpCustomModel;
+use App\Model\EmpDataModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,33 +29,39 @@ class EmployeeController extends AbstractController
      */
     public function index(): Response
     {
-        // $employees = $this->getDoctrine()
-        //     ->getRepository(Employee::class)
-        //     ->findAll();
         $employeeModel = new EmployeeModel();
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $employeeModel->getAllEmployees($entityManager);
+        //custom attribute list
+        $empCustomModel = new EmpCustomModel();
+        $customAtrtibutes = $empCustomModel->getAllCustomAttributes($entityManager);
 
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
         $empTelephoneModel = new EmpTelephoneModel();
+        $empDataModel = new EmpDataModel();
         foreach ($employees as &$employee){
+            //job title
             $jobTitleId = $employee['job_title_id'];
             $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
             $employee['job_title'] = $jobTitle;
-
+            //employment status
             $empStatusId = $employee['emp_status_id'];
             $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
             $employee["emp_status"] = $empStatus;
-
+            //adding employee telephone no.s to employee array
             $empId = $employee['emp_id'];
             $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
             $employee["emp_telephone"] = $empTelephone;
+            //custom attributes
+            $empCusAttr = $empDataModel->getDataByEmpId($empId, $entityManager);
+            $employee["emp_cus_attr"] = $empCusAttr;
         }
 
         return $this->render('employee/index.html.twig', [
             'employees' => $employees,
+            'cus_attr' => $customAtrtibutes,
         ]);
     }
 
@@ -61,28 +71,42 @@ class EmployeeController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $employee = new Employee();
         $form = $this->createForm(EmployeeType::class, $employee);
+        $empCustomModel = new EmpCustomModel();
+        $cusAttr = $empCustomModel->getAllCustomAttributes($entityManager);
+        foreach($cusAttr as $customAttribute){
+            $form->add($customAttribute['attribute'], TextType::class, array(
+                "mapped" => false,
+                "required" =>false,   
+            ));
+        }        
         $form->handleRequest($request);
-        
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager = $this->getDoctrine()->getManager();
             $employeeModel = new EmployeeModel();
-            //Getting job title id from job title id for sql
+            $empDataModel = new EmpDataModel();
             $jobTitleModel = new JobTitleModel();
+            $employmentStatusModel = new EmploymentStatusModel();
+            //Getting job title id from job title for sql
             $jobTitle = $employee->getJobTitle();
             $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle, $entityManager);
             $employee->setJobTitleId(strval($jobTitleId));
-            //Getting employment status id from id
-            $employmentStatusModel = new EmploymentStatusModel();
+            //Getting employment status id from employment status           
             $empStatus = $employee->getEmpStatus();
             $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
             $employee->setEmpStatusId(strval($empStatusId));
             //adding employee to db
             $employeeModel->addEmployee($employee, $entityManager);
-
+            //adding custom attribute data to db
+            foreach($cusAttr as $customAttribute){
+                $cusAttrData = $form->get($customAttribute['attribute'])->getData();
+                $empData = new EmpData();
+                $empData->setEmpId($employee->getEmpId());
+                $empData->setAttribute($customAttribute['attribute']);
+                $empData->setValue($cusAttrData);
+                $empDataModel->addEmpData($empData, $entityManager);
+            }
             return $this->redirectToRoute('employee_index');
         }
 
@@ -92,92 +116,64 @@ class EmployeeController extends AbstractController
         ]);
     }
 
-
-    //admin show individual employee details
-    /**
-     * @Route("/admin/{empId}", name="admin_show", methods={"GET"})
-     */
-    public function showAdmin(Employee $employee): Response
-    {
-        //changing job title id and emp status id to job title and emp status
-        $entityManager = $this->getDoctrine()->getManager();
-        $jobTitleModel = new JobTitleModel();
-        $empStatusModel = new EmploymentStatusModel();
-        $empTelephoneModel = new EmpTelephoneModel();
-        //job title
-        $jobTitleId = $employee->getJobTitleId();
-        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
-        $employee->setJobTitle($jobTitle);
-        //emply status
-        $empStatusId = $employee->getEmpStatusId();
-        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
-        $employee->setEmpStatus($empStatus);
-        //emp telephone
-        $empId = $employee->getEmpId();
-        $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
-        return $this->render('employee/show_admin.html.twig', [
-            'employee' => $employee,
-            'emp_telephone' => $empTelephone,
-        ]);
-    }
-
-    //employee show personal details
-    /**
-     * @Route("/{empId}", name="employee_show", methods={"GET"})
-     */
-    public function show(Employee $employee): Response
-    {
-        //changing job title id and emp status id to job title and emp status
-        $entityManager = $this->getDoctrine()->getManager();
-        $jobTitleModel = new JobTitleModel();
-        $empStatusModel = new EmploymentStatusModel();
-        $empTelephoneModel = new EmpTelephoneModel();
-        //job title
-        $jobTitleId = $employee->getJobTitleId();
-        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
-        $employee->setJobTitle($jobTitle);
-        //emply status
-        $empStatusId = $employee->getEmpStatusId();
-        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
-        $employee->setEmpStatus($empStatus);
-        //emp telephone
-        $empId = $employee->getEmpId();
-        $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
-
-        //check if supervisor
-        $employeeModel = new EmployeeModel();
-        if(count($employeeModel->getSubordinates($empId, $entityManager))){
-            return $this->render('employee/show_sup.html.twig', [
-                'employee' => $employee,
-                'emp_telephone' => $empTelephone,
-            ]);
-
-        }
-        else{
-            return $this->render('employee/show.html.twig', [
-                'employee' => $employee,
-                'emp_telephone' => $empTelephone,
-            ]);
-        }
-        // return $this->render('employee/show.html.twig', [
-        //     'employee' => $employee,
-        //     'emp_telephone' => $empTelephone,
-        // ]);
-    }
-
     //admin employee details edit
     /**
      * @Route("/{empId}/edit", name="employee_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Employee $employee): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        //changing job title id and emp status id to job title and emp status
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        $jobTitleId = $employee->getJobTitleId();
+        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+        $employee->setJobTitle($jobTitle);
+
+        $empStatusId = $employee->getEmpStatusId();
+        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+        $employee->setEmpStatus($empStatus);
+
         $form = $this->createForm(EmployeeType::class, $employee);
+        $empCustomModel = new EmpCustomModel();
+        $empDataModel = new EmpDataModel();
+        $cusAttr = $empCustomModel->getAllCustomAttributes($entityManager);
+        foreach($cusAttr as $customAttribute){
+            $cusAttrData = $empDataModel->getEmpValueAttribute($employee->getEmpId(), $customAttribute['attribute'],  $entityManager);
+            // var_dump($cusAttrData); exit;
+            $form->add($customAttribute['attribute'], TextType::class, array(
+                "mapped" => false,
+                "required" =>false,
+                "data" =>  $cusAttrData[0]['value'], 
+            ));
+        }      
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            
             $employeeModel = new EmployeeModel();
+            //Getting job title id from job title for sql
+            $jobTitleModel = new JobTitleModel();
+            $jobTitle = $employee->getJobTitle();
+            $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle, $entityManager);
+            $employee->setJobTitleId(strval($jobTitleId));
+            //Getting employment status id from employment status
+            $employmentStatusModel = new EmploymentStatusModel();
+            $empStatus = $employee->getEmpStatus();
+            $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
+            $employee->setEmpStatusId(strval($empStatusId));
             $employeeModel->changeEmployee($employee, $entityManager);
+
+            //changing custom attribute data on db
+            foreach($cusAttr as $customAttribute){
+                $cusAttrData = $form->get($customAttribute['attribute'])->getData();
+                $empData = new EmpData();
+                $empData->setEmpId($employee->getEmpId());
+                $empData->setAttribute($customAttribute['attribute']);
+                $empData->setValue($cusAttrData);
+                $empDataModel->changeEmpData($empData, $entityManager);
+            }
 
             return $this->redirectToRoute('employee_index');
         }
@@ -187,6 +183,13 @@ class EmployeeController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    
+
+    
+
+    
 
     //admin employee delete
     /**
@@ -201,6 +204,84 @@ class EmployeeController extends AbstractController
         }
 
         return $this->redirectToRoute('employee_index');
+    }
+
+    //admin show individual employee details
+    /**
+     * @Route("/admin/{empId}", name="admin_show", methods={"GET"})
+     */
+    public function showAdmin(Employee $employee): Response
+    {
+        $empId = $employee->getEmpId();
+        $entityManager = $this->getDoctrine()->getManager();
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        $empDataModel = new EmpDataModel();
+        //changing job title id and emp status id to job title and emp status       
+        //job title
+        $jobTitleId = $employee->getJobTitleId();
+        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+        $employee->setJobTitle($jobTitle);
+        //emply status
+        $empStatusId = $employee->getEmpStatusId();
+        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+        $employee->setEmpStatus($empStatus);
+        //emp telephone
+        $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
+        //emp custom attributes
+        $customData = $empDataModel->getDataByEmpId($empId, $entityManager);
+        // var_dump($customData); exit;
+        return $this->render('employee/show_admin.html.twig', [
+            'employee' => $employee,
+            'emp_telephone' => $empTelephone,
+            'custom_data' => $customData,
+        ]);
+    }
+
+    //employee show personal details
+    /**
+     * @Route("/{empId}", name="employee_show", methods={"GET"})
+     */
+    public function show(Employee $employee): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        $empDataModel = new EmpDataModel();
+        //changing job title id and emp status id to job title and emp status
+        
+        //job title
+        $jobTitleId = $employee->getJobTitleId();
+        $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+        $employee->setJobTitle($jobTitle);
+        //emply status
+        $empStatusId = $employee->getEmpStatusId();
+        $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+        $employee->setEmpStatus($empStatus);
+        //emp telephone
+        $empId = $employee->getEmpId();
+        $empTelephone = $empTelephoneModel->getEmpTelephone($empId, $entityManager);
+        //emp custom attributes
+        $customData = $empDataModel->getDataByEmpId($empId, $entityManager);
+        //check if supervisor
+        $employeeModel = new EmployeeModel();
+        if(count($employeeModel->getSubordinates($empId, $entityManager))){
+            return $this->render('employee/show_sup.html.twig', [
+                'employee' => $employee,
+                'emp_telephone' => $empTelephone,
+                'custom_data' => $customData,
+            ]);
+
+        }
+        else{
+            return $this->render('employee/show.html.twig', [
+                'employee' => $employee,
+                'emp_telephone' => $empTelephone,
+                'custom_data' => $customData,
+            ]);
+        }
     }
 
     //supervisor view subordinates

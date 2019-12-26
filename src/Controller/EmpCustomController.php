@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+//admin only
 /**
  * @Route("/empcustom")
  */
@@ -46,6 +48,8 @@ class EmpCustomController extends AbstractController
             //$entityManager->persist($empCustom);
             //$entityManager->flush();
             $empCustomModel = new EmpCustomModel();
+            $empCustomAttr = str_replace(' ','_', $empCustom->getAttribute());
+            $empCustom->setAttribute($empCustomAttr);
             $empCustomModel->addCustomAttribute($empCustom, $entityManager);
 
             return $this->redirectToRoute('emp_custom_index');
@@ -64,26 +68,6 @@ class EmpCustomController extends AbstractController
     {
         return $this->render('emp_custom/show.html.twig', [
             'emp_custom' => $empCustom,
-        ]);
-    }
-
-    /**
-     * @Route("/{attribute}/edit", name="emp_custom_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, EmpCustom $empCustom): Response
-    {
-        $form = $this->createForm(EmpCustomType::class, $empCustom);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('emp_custom_index');
-        }
-
-        return $this->render('emp_custom/edit.html.twig', [
-            'emp_custom' => $empCustom,
-            'form' => $form->createView(),
         ]);
     }
 
