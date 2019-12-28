@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\LeaveType;
 use App\Form\LeaveTypeType;
+use App\Model\LeaveTypeModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,9 @@ class LeaveTypeController extends AbstractController
      */
     public function index(): Response
     {
-        $leaveTypes = $this->getDoctrine()
-            ->getRepository(LeaveType::class)
-            ->findAll();
+        $entityManager = $this->getDoctrine()->getManager();
+        $leaveTypeModel = new LeaveTypeModel();
+        $leaveTypes = $leaveTypeModel->getAllLeaveTypes($entityManager);
 
         return $this->render('leave_type/index.html.twig', [
             'leave_types' => $leaveTypes,
@@ -39,9 +40,8 @@ class LeaveTypeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($leaveType);
-            $entityManager->flush();
-
+            $leaveTypeModel = new LeaveTypeModel();
+            $leaveTypeModel->addLeaveType($leaveType,$entityManager);
             return $this->redirectToRoute('leave_type_index');
         }
 
@@ -88,8 +88,8 @@ class LeaveTypeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$leaveType->getLeaveType(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($leaveType);
-            $entityManager->flush();
+            $leaveTypeModel = new LeaveTypeModel();
+            $leaveTypeModel->deleteLeaveType($leaveType,$entityManager);
         }
 
         return $this->redirectToRoute('leave_type_index');

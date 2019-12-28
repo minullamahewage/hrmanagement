@@ -12,6 +12,7 @@ class LeaveTypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('leaveType')
             ->add('description')
         ;
     }

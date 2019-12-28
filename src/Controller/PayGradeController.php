@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\PayGrade;
-use App\Form\PayGrade1Type;
+use App\Form\PayGradeType;
+use App\Model\PayGradeModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,9 @@ class PayGradeController extends AbstractController
      */
     public function index(): Response
     {
-        $payGrades = $this->getDoctrine()
-            ->getRepository(PayGrade::class)
-            ->findAll();
-
+        $entityManager = $this->getDoctrine()->getManager();
+        $payGradeModel = new PayGradeModel();
+        $payGrades = $payGradeModel->getAllPayGrades($entityManager);
         return $this->render('pay_grade/index.html.twig', [
             'pay_grades' => $payGrades,
         ]);
@@ -34,13 +34,14 @@ class PayGradeController extends AbstractController
     public function new(Request $request): Response
     {
         $payGrade = new PayGrade();
-        $form = $this->createForm(PayGrade1Type::class, $payGrade);
+        $entityManager = $this->getDoctrine()->getManager();
+        $payGradeModel = new PayGradeModel();
+        $form = $this->createForm(PayGradeType::class, $payGrade);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($payGrade);
-            $entityManager->flush();
+            $payGradeModel->addPayGrade($payGrade, $entityManager);
 
             return $this->redirectToRoute('pay_grade_index');
         }

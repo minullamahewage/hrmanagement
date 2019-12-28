@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Employee;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,6 +14,12 @@ class EmployeeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->branchChoices = $options['branch_choices'];
+        $this->deptChoices = $options['dept_choices'];
+        $this->jobTitleChoices = $options['jobTitle_choices'];
+        $this->payGradeChoices = $options['payGrade_choices'];
+        $this->empStatusChoices = $options['empStatus_choices'];
+                
         $builder
             ->add('empId')
             ->add('nic')
@@ -22,13 +30,34 @@ class EmployeeType extends AbstractType
             ->add('city')
             ->add('country')
             ->add('postalCode')
-            ->add('dob')
-            ->add('maritalStatus')
-            ->add('branchId')
-            ->add('deptId')
-            ->add('jobTitle')
-            ->add('payGrade')
-            ->add('empStatus')
+            ->add('dob', DateType::class,[
+                'widget' =>'single_text',
+                'help' =>'yyyy/mm/dd',
+            ])
+            ->add('maritalStatus', ChoiceType::class,[
+                'choices' => [
+                    'Married' => 'Married',
+                    'Unmarried' => 'Unmarried'
+                ],
+                'expanded' =>true,
+                'multiple' =>false,
+
+            ])
+            ->add('branchId', ChoiceType::class,[
+                'choices' => $this->branchChoices,
+            ])
+            ->add('deptId', ChoiceType::class,[
+                'choices' =>$this->deptChoices,
+            ])
+            ->add('jobTitle', ChoiceType::class,[
+                'choices' =>$this->jobTitleChoices,
+            ])
+            ->add('payGrade', ChoiceType::class,[
+                'choices' =>$this->payGradeChoices,
+            ])
+            ->add('empStatus', ChoiceType::class,[
+                'choices' =>$this->empStatusChoices,
+            ])
             ->add('supervisorId')
             
             
@@ -40,6 +69,11 @@ class EmployeeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Employee::class,
+            'branch_choices' =>null,
+            'dept_choices' =>null,
+            'jobTitle_choices' => null,
+            'payGrade_choices' => null,
+            'empStatus_choices' => null,
         ]);
     }
 }

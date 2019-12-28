@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Leave;
 use App\Form\LeaveType;
+use App\Model\EmployeeModel;
 use App\Model\LeaveModel;
+use App\Model\LeaveTypeModel;
+use App\Model\LeaveLimitModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,12 +43,25 @@ class LeaveController extends AbstractController
      */
     public function new(Request $request,$empId): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $leaveModel = new LeaveModel();
+        $leaveTypeModel = new LeaveTypeModel();
+        $leaveLimitModel = new LeaveLimitModel();
+        $employeeModel = new EmployeeModel();
         $leave = new Leave();
-        $form = $this->createForm(LeaveType::class, $leave);
+        $payGrade = ($employeeModel->getEmpPayGrade($empId, $entityManager))[0]['pay_grade'];
+        //getting data from db for leave type select drop down
+        $leaveTypes = $leaveLimitModel->getPayGradeLeaveTypes($payGrade, $entityManager);
+        foreach($leaveTypes as &$leaveType){
+            $leaveTypeChoices[$leaveType['leave_type']] = $leaveType['leave_type'];
+        }
+        $form = $this->createForm(LeaveType::class, $leave, array(
+            'leaveType_choices' =>$leaveTypeChoices,
+        ));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $leaveModel = new LeaveModel();
+            
+            
             $remainingLeaves = $leaveModel->checkRemLeaves($empId, $leave->getLeaveType(), $entityManager);
             $days = ($leave->getTillDate()->diff($leave->getFromDate()))->format('%a');
             // var_dump($remainingLeaves); exit;
@@ -131,28 +147,26 @@ class LeaveController extends AbstractController
 
     //supervisor approve leave 
     /**
-     * @Route("/approve/{leaveFormId}-{empId}", name="leave_approve", methods={"APPROVE"})
+     * @Route("/approve/{leaveFormId}-{empId}-{supId}", name="leave_approve", methods={"APPROVE"})
      */
-    public function approve(Request $request, Leave $leave, $leaveFormId, $empId): Response
+    public function approve(Request $request, Leave $leave, $leaveFormId, $empId, $supId): Response
     {
         if ($this->isCsrfTokenValid('approve'.$leave->getLeaveFormId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $leaveModel = new LeaveModel();
             $remainingLeaves = $leaveModel->checkRemLeaves($empId, $leave->getLeaveType(), $entityManager);
             $days = ($leave->getTillDate()->diff($leave->getFromDate()))->format('%a');
-            // var_dump($days); exit;
+            //var_dump($supId); exit;
             if ($remainingLeaves - $days>0){
                 $leave->setEmpId($empId);
                 $leaveModel->approveLeave($leaveFormId, $entityManager);
-                return $this->redirectToRoute('leave_requests',array('empId'=> $empId));
+                return $this->redirectToRoute('leave_requests',array('empId'=> $supId));
             }
             else{
                 // var_dump("failed"); exit;
                 return new Response('No leaves remaining from this type');
             }  
         }
-
-        return $this->redirectToRoute('leave_requests', array('empId' => $empId));
     }
 
     //supervisor deny leave 

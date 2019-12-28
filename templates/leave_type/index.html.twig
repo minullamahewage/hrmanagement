@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>LeaveType</th>
+                <th>Leave Type</th>
                 <th>Description</th>
                 <th>actions</th>
             </tr>
@@ -16,11 +16,11 @@
         <tbody>
         {% for leave_type in leave_types %}
             <tr>
-                <td>{{ leave_type.leaveType }}</td>
+                <td>{{ leave_type.leave_type }}</td>
                 <td>{{ leave_type.description }}</td>
                 <td>
-                    <a href="{{ path('leave_type_show', {'leaveType': leave_type.leaveType}) }}">show</a>
-                    <a href="{{ path('leave_type_edit', {'leaveType': leave_type.leaveType}) }}">edit</a>
+                    <a href="{{ path('leave_type_show', {'leaveType': leave_type.leave_type}) }}">show</a>
+                    {# <a href="{{ path('leave_type_edit', {'leaveType': leave_type.leave_type}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}

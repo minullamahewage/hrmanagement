@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\Employee;
 use App\Entity\EmpData;
 use App\Form\EmployeeType;
+use App\Model\BranchModel;
+use App\Model\DepartmentModel;
 use App\Model\EmployeeModel;
-use App\Model\JobTitleModel;
 use App\Model\EmploymentStatusModel;
 use App\Model\EmpTelephoneModel;
 use App\Model\EmpCustomModel;
 use App\Model\EmpDataModel;
+use App\Model\JobTitleModel;
+use App\Model\PayGradeModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,8 +76,54 @@ class EmployeeController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $employee = new Employee();
-        $form = $this->createForm(EmployeeType::class, $employee);
+        $employeeModel = new EmployeeModel();
+        $empDataModel = new EmpDataModel();
         $empCustomModel = new EmpCustomModel();
+        $branchModel = new BranchModel();
+        $deptModel = new DepartmentModel();
+        $jobTitleModel = new JobTitleModel();
+        $payGradeModel = new PayGradeModel();
+        $employmentStatusModel = new EmploymentStatusModel();
+        //Getting data from db for select drop down
+        //branchId
+        $branchIds = $branchModel->getAllBranches($entityManager);
+        $branchChoices;
+        foreach($branchIds as &$branch){
+            $branchChoices[$branch['branch_id'].'-'.$branch['name']] = $branch['branch_id'];
+        }
+        //deptId
+        $deptIds = $deptModel->getAllDepartments($entityManager);
+        $deptChoices;
+        foreach($deptIds as &$dept){
+            $deptChoices[$dept['dept_id'].'-'.$dept['dept_name']] = $dept['dept_id'];
+        }
+        //jobTitle
+        $jobTitles = $jobTitleModel->getAllJobTitles($entityManager);
+        $jobTitleChoices;
+        foreach($jobTitles as &$jobTitle){
+            $jobTitleChoices[$jobTitle['job_title']] = $jobTitle['job_title'];
+        }
+        //payGrade
+        $payGrades = $payGradeModel->getAllPayGrades($entityManager);
+        $payGradeChoices;
+        foreach($payGrades as &$payGrade){
+            $payGradeChoices[$payGrade['pay_grade']] = $payGrade['pay_grade'];
+        }
+        //employment Status
+        $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+        $empStatusChoices;
+        foreach($empStatuses as &$empStatus){
+            $empStatusChoices[$empStatus['emp_status']] = $empStatus['emp_status'];
+        }
+        $form = $this->createForm(EmployeeType::class, $employee, array(
+            'branch_choices' =>$branchChoices,
+            'dept_choices' =>$deptChoices,
+            'jobTitle_choices' => $jobTitleChoices,
+            'payGrade_choices' => $payGradeChoices,
+            'empStatus_choices' => $empStatusChoices,
+        ));
+
+        //adding fields for custom attributes
         $cusAttr = $empCustomModel->getAllCustomAttributes($entityManager);
         foreach($cusAttr as $customAttribute){
             $form->add($customAttribute['attribute'], TextType::class, array(
@@ -84,10 +133,7 @@ class EmployeeController extends AbstractController
         }        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $employeeModel = new EmployeeModel();
-            $empDataModel = new EmpDataModel();
-            $jobTitleModel = new JobTitleModel();
-            $employmentStatusModel = new EmploymentStatusModel();
+            
             //Getting job title id from job title for sql
             $jobTitle = $employee->getJobTitle();
             $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle, $entityManager);
@@ -123,21 +169,65 @@ class EmployeeController extends AbstractController
     public function edit(Request $request, Employee $employee): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
-        //changing job title id and emp status id to job title and emp status
+        $employeeModel = new EmployeeModel();
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
         $empTelephoneModel = new EmpTelephoneModel();
+        $empCustomModel = new EmpCustomModel();
+        $empDataModel = new EmpDataModel();
+        $branchModel = new BranchModel();
+        $deptModel = new DepartmentModel();
+        $jobTitleModel = new JobTitleModel();
+        $payGradeModel = new PayGradeModel();
+        $employmentStatusModel = new EmploymentStatusModel();
+        //changing job title id  job title       
         $jobTitleId = $employee->getJobTitleId();
         $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
         $employee->setJobTitle($jobTitle);
-
+        //changing  emp status id to emp status
         $empStatusId = $employee->getEmpStatusId();
         $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
         $employee->setEmpStatus($empStatus);
 
-        $form = $this->createForm(EmployeeType::class, $employee);
-        $empCustomModel = new EmpCustomModel();
-        $empDataModel = new EmpDataModel();
+        //Getting data from db for select drop down
+        //branchId
+        $branchIds = $branchModel->getAllBranches($entityManager);
+        $branchChoices;
+        foreach($branchIds as &$branch){
+            $branchChoices[$branch['branch_id'].'-'.$branch['name']] = $branch['branch_id'];
+        }
+        //deptId
+        $deptIds = $deptModel->getAllDepartments($entityManager);
+        $deptChoices;
+        foreach($deptIds as &$dept){
+            $deptChoices[$dept['dept_id'].'-'.$dept['dept_name']] = $dept['dept_id'];
+        }
+        //jobTitle
+        $jobTitles = $jobTitleModel->getAllJobTitles($entityManager);
+        $jobTitleChoices;
+        foreach($jobTitles as &$jobTitle){
+            $jobTitleChoices[$jobTitle['job_title']] = $jobTitle['job_title'];
+        }
+        //payGrade
+        $payGrades = $payGradeModel->getAllPayGrades($entityManager);
+        $payGradeChoices;
+        foreach($payGrades as &$payGrade){
+            $payGradeChoices[$payGrade['pay_grade']] = $payGrade['pay_grade'];
+        }
+        //employment Status
+        $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+        $empStatusChoices;
+        foreach($empStatuses as &$empStatus){
+            $empStatusChoices[$empStatus['emp_status']] = $empStatus['emp_status'];
+        }
+        $form = $this->createForm(EmployeeType::class, $employee, array(
+            'branch_choices' =>$branchChoices,
+            'dept_choices' =>$deptChoices,
+            'jobTitle_choices' => $jobTitleChoices,
+            'payGrade_choices' => $payGradeChoices,
+            'empStatus_choices' => $empStatusChoices,
+        ));
+        
         $cusAttr = $empCustomModel->getAllCustomAttributes($entityManager);
         foreach($cusAttr as $customAttribute){
             $cusAttrData = $empDataModel->getEmpValueAttribute($employee->getEmpId(), $customAttribute['attribute'],  $entityManager);
@@ -152,14 +242,11 @@ class EmployeeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $employeeModel = new EmployeeModel();
             //Getting job title id from job title for sql
-            $jobTitleModel = new JobTitleModel();
             $jobTitle = $employee->getJobTitle();
             $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle, $entityManager);
             $employee->setJobTitleId(strval($jobTitleId));
             //Getting employment status id from employment status
-            $employmentStatusModel = new EmploymentStatusModel();
             $empStatus = $employee->getEmpStatus();
             $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
             $employee->setEmpStatusId(strval($empStatusId));

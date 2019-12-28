@@ -47,6 +47,7 @@ class LeaveType
     public function setLeaveType(?string $leaveType): self
     {
         $this->leaveType = $leaveType;
+        return $this;
     }
 
     public function getDescription(): ?string

@@ -70,7 +70,7 @@ class EmployeeModel{
 
     public function deleteEmployee($employee, $em){
         $conn = $em->getConnection();
-        $sql = "DELETE FROM employee where emp_id = :emp_id";
+        $sql = "DELETE FROM employee WHERE emp_id = :emp_id";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':emp_id',$employee->getEmpId());
         $stmt->execute();
@@ -79,6 +79,15 @@ class EmployeeModel{
     public function getSubordinates($empId, $em){
         $conn = $em->getConnection();
         $sql = "SELECT employee.* FROM employee, supervisor WHERE employee.emp_id = supervisor.emp_id AND supervisor.supervisor_id = :emp_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':emp_id', $empId);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getEmpPayGrade($empId, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT pay_grade FROM employee WHERE emp_id = :emp_id";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':emp_id', $empId);
         $stmt->execute();

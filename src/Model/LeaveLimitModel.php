@@ -42,4 +42,13 @@ class LeaveLimitModel{
         $stmt->bindValue(':leave_type', $leaveLimit->getLeaveType());
         $stmt->execute();
     }
+
+    public function getPayGradeLeaveTypes($payGrade, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM leave_limit WHERE pay_grade = :pay_grade";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':pay_grade', $payGrade);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
