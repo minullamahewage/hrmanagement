@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 26, 2019 at 12:33 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.2
+-- Generation Time: Dec 28, 2019 at 03:39 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,8 +26,6 @@ SET time_zone = "+00:00";
 
 --
 -- Table structure for table `branch`
---
--- Creation: Dec 18, 2019 at 10:36 AM
 --
 
 CREATE TABLE `branch` (
@@ -53,8 +51,6 @@ INSERT INTO `branch` (`branch_id`, `name`, `line_1`, `line_2`, `city`, `country`
 --
 -- Table structure for table `department`
 --
--- Creation: Dec 18, 2019 at 06:01 AM
---
 
 CREATE TABLE `department` (
   `dept_id` int(11) NOT NULL,
@@ -75,8 +71,6 @@ INSERT INTO `department` (`dept_id`, `dept_name`, `building`, `floor`) VALUES
 
 --
 -- Table structure for table `dependent`
---
--- Creation: Dec 09, 2019 at 11:11 AM
 --
 
 CREATE TABLE `dependent` (
@@ -106,8 +100,6 @@ INSERT INTO `dependent` (`dependent_id`, `nic`, `emp_id`, `name`, `email`, `rela
 --
 -- Table structure for table `emergency_contact`
 --
--- Creation: Dec 18, 2019 at 06:13 AM
---
 
 CREATE TABLE `emergency_contact` (
   `id` int(11) NOT NULL,
@@ -121,21 +113,19 @@ CREATE TABLE `emergency_contact` (
 --
 -- Table structure for table `employee`
 --
--- Creation: Dec 23, 2019 at 09:51 AM
---
 
 CREATE TABLE `employee` (
   `emp_id` varchar(10) NOT NULL DEFAULT '',
-  `NIC` varchar(12) DEFAULT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `addr_line_1` varchar(30) DEFAULT NULL,
-  `addr_line_2` varchar(30) DEFAULT NULL,
-  `city` varchar(30) DEFAULT NULL,
-  `country` varchar(30) DEFAULT NULL,
-  `postal_code` varchar(10) DEFAULT NULL,
-  `dob` date DEFAULT NULL,
-  `marital_status` varchar(10) DEFAULT NULL,
+  `NIC` varchar(12) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `addr_line_1` varchar(30) NOT NULL,
+  `addr_line_2` varchar(30) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `country` varchar(30) NOT NULL,
+  `postal_code` varchar(10) NOT NULL,
+  `dob` date NOT NULL,
+  `marital_status` varchar(10) NOT NULL,
   `branch_id` varchar(10) DEFAULT NULL,
   `dept_id` int(11) DEFAULT NULL,
   `job_title_id` int(11) NOT NULL,
@@ -149,16 +139,14 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
-('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '2014-08-05', 'married', '1', 2, 1, 'Level4', 1, '1'),
-('2', '9600000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '2015-01-01', 'Unmarried', '1', 2, 1, 'Level2', 5, '1'),
+('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'Unmarried', '1', 2, 1, 'Level4', 1, '1'),
+('2', '9700000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '1997-01-30', 'Unmarried', '1', 1, 1, 'Level2', 5, '1'),
 ('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '1');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `employment_status`
---
--- Creation: Dec 21, 2019 at 11:25 AM
 --
 
 CREATE TABLE `employment_status` (
@@ -184,8 +172,6 @@ INSERT INTO `employment_status` (`id`, `emp_status`) VALUES
 --
 -- Table structure for table `employ_history`
 --
--- Creation: Dec 23, 2019 at 01:30 PM
---
 
 CREATE TABLE `employ_history` (
   `emp_history_id` int(11) NOT NULL,
@@ -206,8 +192,6 @@ INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`
 
 --
 -- Table structure for table `emp_custom`
---
--- Creation: Dec 09, 2019 at 11:11 AM
 --
 
 CREATE TABLE `emp_custom` (
@@ -246,8 +230,6 @@ DELIMITER ;
 --
 -- Table structure for table `emp_data`
 --
--- Creation: Dec 26, 2019 at 11:01 AM
---
 
 CREATE TABLE `emp_data` (
   `emp_id` varchar(10) NOT NULL,
@@ -272,8 +254,6 @@ INSERT INTO `emp_data` (`emp_id`, `attribute`, `value`) VALUES
 --
 -- Table structure for table `emp_telephone`
 --
--- Creation: Dec 09, 2019 at 11:11 AM
---
 
 CREATE TABLE `emp_telephone` (
   `emp_id` varchar(10) NOT NULL DEFAULT '',
@@ -293,8 +273,6 @@ INSERT INTO `emp_telephone` (`emp_id`, `telephone`) VALUES
 
 --
 -- Table structure for table `job_title`
---
--- Creation: Dec 23, 2019 at 04:38 AM
 --
 
 CREATE TABLE `job_title` (
@@ -317,8 +295,6 @@ INSERT INTO `job_title` (`job_title_id`, `job_title`, `description`) VALUES
 
 --
 -- Table structure for table `leaves`
---
--- Creation: Dec 24, 2019 at 04:09 PM
 --
 
 CREATE TABLE `leaves` (
@@ -346,10 +322,13 @@ INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leav
 (11, '2', '2019-12-02', '2019-12-04', 'No-pay', 'False'),
 (12, '1', '2014-01-01', '2014-01-02', 'Annual', 'False'),
 (13, '1', '2014-01-02', '2014-01-03', 'Annual', 'False'),
-(14, '1', '2014-01-02', '2014-01-03', 'Annual', 'Pending'),
+(14, '1', '2014-01-02', '2014-01-03', 'Annual', 'False'),
 (15, '2', '2014-01-01', '2014-01-10', 'Annual', 'True'),
-(17, '2', '2014-01-01', '2014-01-02', 'No-pay', 'Pending'),
-(18, '2', '2014-01-01', '2014-01-02', 'No-pay', 'Pending');
+(17, '2', '2014-01-01', '2014-01-02', 'No-pay', 'True'),
+(18, '2', '2014-01-01', '2014-01-02', 'No-pay', 'False'),
+(19, '1', '2019-12-01', '2019-12-02', 'No-pay', 'True'),
+(20, '3', '2019-12-15', '2019-12-16', 'No-pay', 'True'),
+(21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -384,8 +363,6 @@ CREATE TABLE `leaves_remaining` (
 --
 -- Table structure for table `leave_limit`
 --
--- Creation: Dec 18, 2019 at 07:22 AM
---
 
 CREATE TABLE `leave_limit` (
   `pay_grade` varchar(10) NOT NULL,
@@ -411,8 +388,6 @@ INSERT INTO `leave_limit` (`pay_grade`, `leave_type`, `leave_limit`) VALUES
 --
 -- Table structure for table `leave_type`
 --
--- Creation: Dec 09, 2019 at 11:11 AM
---
 
 CREATE TABLE `leave_type` (
   `leave_type` varchar(15) NOT NULL DEFAULT '',
@@ -434,8 +409,6 @@ INSERT INTO `leave_type` (`leave_type`, `description`) VALUES
 --
 -- Table structure for table `migration_versions`
 --
--- Creation: Dec 17, 2019 at 02:33 PM
---
 
 CREATE TABLE `migration_versions` (
   `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -446,8 +419,6 @@ CREATE TABLE `migration_versions` (
 
 --
 -- Table structure for table `pay_grade`
---
--- Creation: Dec 17, 2019 at 02:59 PM
 --
 
 CREATE TABLE `pay_grade` (
@@ -480,23 +451,21 @@ CREATE TABLE `supervisor` (
 --
 -- Table structure for table `user`
 --
--- Creation: Dec 23, 2019 at 12:03 PM
---
 
 CREATE TABLE `user` (
-  `username` varchar(30) NOT NULL DEFAULT '',
-  `password` varchar(100) DEFAULT NULL,
-  `emp_id` varchar(10) DEFAULT NULL,
-  `type` varchar(10) NOT NULL
+  `id` int(11) NOT NULL,
+  `username` varchar(180) DEFAULT NULL,
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`roles`)),
+  `password` text NOT NULL,
+  `emp_id` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `emp_id`, `type`) VALUES
-('test1', 'test1', '1', 'admin'),
-('test2', 'test2', '2', 'admin');
+INSERT INTO `user` (`id`, `username`, `roles`, `password`, `emp_id`) VALUES
+(1, 'test1', '[]', '$2y$13$2Q8G/0Hfs5c7VzXKTQQrs.wG.kMlMRSmK/K.f/65vQunho5TGJHmW', '1');
 
 -- --------------------------------------------------------
 
@@ -505,7 +474,7 @@ INSERT INTO `user` (`username`, `password`, `emp_id`, `type`) VALUES
 --
 DROP TABLE IF EXISTS `leaves_days`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_days`  AS  select `leaves`.`leave_form_id` AS `leave_form_id`,`leaves`.`emp_id` AS `emp_id`,`leaves`.`leave_type` AS `leave_type`,`leaves`.`approval_status` AS `approval_status`,(to_days(`leaves`.`till_date`) - to_days(`leaves`.`from_date`)) AS `days` from `leaves` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_days`  AS  select `leaves`.`leave_form_id` AS `leave_form_id`,`leaves`.`emp_id` AS `emp_id`,`leaves`.`leave_type` AS `leave_type`,`leaves`.`approval_status` AS `approval_status`,to_days(`leaves`.`till_date`) - to_days(`leaves`.`from_date`) AS `days` from `leaves` ;
 
 -- --------------------------------------------------------
 
@@ -514,7 +483,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `leaves_remaining`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_remaining`  AS  select `employee`.`emp_id` AS `emp_id`,`leave_limit`.`leave_type` AS `leave_type`,`leave_limit`.`leave_limit` AS `leave_limit`,ifnull((sum(`leaves_days`.`days`) + 1),0) AS `leaves_taken`,(`leave_limit`.`leave_limit` - ifnull((sum(`leaves_days`.`days`) + 1),0)) AS `leaves_remaining` from ((`employee` left join `leave_limit` on((`employee`.`pay_grade` = `leave_limit`.`pay_grade`))) left join `leaves_days` on(((`employee`.`emp_id` = `leaves_days`.`emp_id`) and (`leave_limit`.`leave_type` = `leaves_days`.`leave_type`) and (`leaves_days`.`approval_status` = 'True')))) group by `employee`.`emp_id`,`leave_limit`.`leave_type` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `leaves_remaining`  AS  select `employee`.`emp_id` AS `emp_id`,`leave_limit`.`leave_type` AS `leave_type`,`leave_limit`.`leave_limit` AS `leave_limit`,ifnull(sum(`leaves_days`.`days`) + 1,0) AS `leaves_taken`,`leave_limit`.`leave_limit` - ifnull(sum(`leaves_days`.`days`) + 1,0) AS `leaves_remaining` from ((`employee` left join `leave_limit` on(`employee`.`pay_grade` = `leave_limit`.`pay_grade`)) left join `leaves_days` on(`employee`.`emp_id` = `leaves_days`.`emp_id` and `leave_limit`.`leave_type` = `leaves_days`.`leave_type` and `leaves_days`.`approval_status` = 'True')) group by `employee`.`emp_id`,`leave_limit`.`leave_type` ;
 
 -- --------------------------------------------------------
 
@@ -566,8 +535,8 @@ ALTER TABLE `employee`
   ADD KEY `pay_grade` (`pay_grade`),
   ADD KEY `superviser_id` (`supervisor_id`),
   ADD KEY `emp_status_id` (`emp_status_id`),
-  ADD KEY `employee_ibfk_7` (`dept_id`),
-  ADD KEY `job_title_id` (`job_title_id`);
+  ADD KEY `job_title_id` (`job_title_id`),
+  ADD KEY `employee_ibfk_7` (`dept_id`);
 
 --
 -- Indexes for table `employment_status`
@@ -647,7 +616,8 @@ ALTER TABLE `pay_grade`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`),
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
   ADD KEY `emp_id` (`emp_id`);
 
 --
@@ -688,7 +658,13 @@ ALTER TABLE `job_title`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -710,11 +686,9 @@ ALTER TABLE `emergency_contact`
 -- Constraints for table `employee`
 --
 ALTER TABLE `employee`
-  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employee_ibfk_10` FOREIGN KEY (`emp_status_id`) REFERENCES `employment_status` (`id`),
-  ADD CONSTRAINT `employee_ibfk_11` FOREIGN KEY (`job_title_id`) REFERENCES `job_title` (`job_title_id`),
-  ADD CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`pay_grade`) REFERENCES `pay_grade` (`pay_grade`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`supervisor_id`) REFERENCES `employee` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_4` FOREIGN KEY (`pay_grade`) REFERENCES `pay_grade` (`pay_grade`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_6` FOREIGN KEY (`supervisor_id`) REFERENCES `employee` (`emp_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_ibfk_7` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON UPDATE CASCADE;
 
 --
