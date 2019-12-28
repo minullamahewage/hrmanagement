@@ -3,91 +3,136 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
- *
- * @ORM\Table(name="user", indexes={@ORM\Index(name="emp_id", columns={"emp_id"})})
- * @ORM\Entity
+ * 
+ * @ORM\Table(name="user", indexes={@ORM\Index(name="primary", columns={"id"}), @ORM\Index(name="username", columns={"username"}), @ORM\Index(name="emp_id", columns={"emp_id"})} )
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
-class User
+class User implements UserInterface
 {
     /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=30, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var integer
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * 
      */
-    private $username = '';
+    private $id;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="password", type="string", length=100, nullable=true)
+     * @var string
+     * 
+     * @ORM\Column(type="string", length=180, unique=true, nullable=false)
+     */
+    private $username;
+
+    /**
+     * 
+     * @ORM\Column(name="roles", type="json", nullable=false)
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(name="password", type="string", nullable=false)
      */
     private $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=10, nullable=false)
-     */
-    private $type;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="emp_id", type="string", length=10, nullable=false)
+     * 
      */
-    private $empId;
+    private $empId = '';
 
-    public function getUsername(): ?string
+    public function getId(): ?int
     {
-        return $this->username;
+        return $this->id;
     }
 
-    public function setUsername(?string $username): self
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        return $this->password;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setPassword(?string $password): self
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function getType(): ?string
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
     {
-        return $this->type;
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    public function setType(string $type): self
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
     {
-        $this->type = $type;
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function getEmpId(): ?string
+    public function getEmpId(): string
     {
         return $this->empId;
     }
 
-    public function setEmpId(?string $empId): self
+    public function setEmpId(string $empId): self
     {
         $this->empId = $empId;
 
         return $this;
     }
-
-
 }

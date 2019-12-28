@@ -147,21 +147,6 @@ class Employee
      */
     private $jobTitle;
 
-    // /**
-    //  * @var \Doctrine\Common\Collections\Collection
-    //  *
-    //  * @ORM\ManyToMany(targetEntity="EmpCustom", inversedBy="emp")
-    //  * @ORM\JoinTable(name="emp_custom_data",
-    //  *   joinColumns={
-    //  *     @ORM\JoinColumn(name="emp_id", referencedColumnName="emp_id")
-    //  *   },
-    //  *   inverseJoinColumns={
-    //  *     @ORM\JoinColumn(name="attribute", referencedColumnName="attribute")
-    //  *   }
-    //  * )
-    //  */
-    // private $attribute;
-
     private $cusAttr;
 
     /**
