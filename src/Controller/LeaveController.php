@@ -20,7 +20,7 @@ class LeaveController extends AbstractController
 {
     //admin show all leave forms
     /**
-     * @Route("/", name="leave_index", methods={"GET"})
+     * @Route("/admin", name="leave_index", methods={"GET"})
      */
     public function index(): Response
     {
@@ -85,7 +85,7 @@ class LeaveController extends AbstractController
 
     //admin show leave form 
     /**
-     * @Route("/{leaveFormId}", name="leave_show", methods={"GET"})
+     * @Route("/admin/{leaveFormId}", name="leave_show", methods={"GET"})
      */
     public function show(Leave $leave): Response
     {
@@ -96,7 +96,7 @@ class LeaveController extends AbstractController
 
     //admin delete leave form
     /**
-     * @Route("/{leaveFormId}", name="leave_delete", methods={"DELETE"})
+     * @Route("/admin/{leaveFormId}", name="leave_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Leave $leave): Response
     {
@@ -110,7 +110,7 @@ class LeaveController extends AbstractController
     }
     //admin show leaves
     /**
-     * @Route("/show/{empId}", name="leave_emp_admin", methods={"GET"})
+     * @Route("/admin/show/{empId}", name="leave_emp_admin", methods={"GET"})
      */
     public function adminShowLeaves($empId): Response
     {

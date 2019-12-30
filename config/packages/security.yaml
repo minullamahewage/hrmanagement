@@ -55,7 +55,7 @@ security:
         - { path: ^/jobtitle, roles: ROLE_ADMIN }
         - { path: ^/leave/emp, roles: ROLE_USER }
         - { path: ^/leave/supervisor, roles: ROLE_SUPERVISOR }
-        - { path: ^/leave, roles: ROLE_ADMIN }
+        - { path: ^/leave/admin, roles: ROLE_ADMIN }
         - { path: ^/leavelimit, roles: ROLE_ADMIN }
         - { path: ^/leavetype, roles: ROLE_ADMIN }
         - { path: ^/paygrade, roles: ROLE_ADMIN }
