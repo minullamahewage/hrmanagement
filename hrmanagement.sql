@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 30, 2019 at 08:10 AM
+-- Generation Time: Dec 30, 2019 at 08:42 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -337,7 +337,8 @@ INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leav
 (18, '2', '2014-01-01', '2014-01-02', 'No-pay', 'False'),
 (19, '1', '2019-12-01', '2019-12-02', 'No-pay', 'True'),
 (20, '3', '2019-12-15', '2019-12-16', 'No-pay', 'True'),
-(21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'False');
+(21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'False'),
+(22, '1', '2019-12-30', '2019-12-31', 'Annual', 'True');
 
 -- --------------------------------------------------------
 
@@ -669,7 +670,7 @@ ALTER TABLE `job_title`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `user`
