@@ -128,6 +128,9 @@ class EmployHistoryController extends AbstractController
      */
     public function empEmployHistory($empId): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
         $employHistoryModel = new EmployHistoryModel();
         $entityManager = $this->getDoctrine()->getManager();
         $employHistories = $employHistoryModel->getEmployHistory($empId,$entityManager);

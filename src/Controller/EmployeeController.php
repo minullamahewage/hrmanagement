@@ -328,11 +328,18 @@ class EmployeeController extends AbstractController
 
     //employee show personal details
     /**
-     * @Route("/{empId}", name="employee_show", methods={"GET"})
+     * @Route("/", name="employee_show", methods={"GET"})
      */
-    public function show(Employee $employee): Response
+    public function show(): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
+        // var_dump($empId); exit;
+        $employeeModel = new EmployeeModel();
+        
         $entityManager = $this->getDoctrine()->getManager();
+        $employee = $employeeModel->getEmployee($empId, $entityManager);
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
         $empTelephoneModel = new EmpTelephoneModel();
@@ -373,10 +380,13 @@ class EmployeeController extends AbstractController
 
     //supervisor view subordinates
     /**
-     * @Route("/subordinate/{empId}", name="employee_subordinate", methods={"GET"})
+     * @Route("/subordinate/", name="employee_subordinate", methods={"GET"})
      */
-    public function showSubordinates($empId): Response
+    public function showSubordinates(): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
         //changing job title id and emp status id to job title and emp status
         $entityManager = $this->getDoctrine()->getManager();
         $employeeModel = new EmployeeModel();

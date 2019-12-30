@@ -1,6 +1,9 @@
 <?php
 namespace App\Model;
 
+use App\Entity\Employee;
+use \DateTime;
+
 class EmployeeModel{
 
     public function getAllEmployees($em){
@@ -92,6 +95,34 @@ class EmployeeModel{
         $stmt->bindValue(':emp_id', $empId);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    public function getEmployee($empId,$em){
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM employee WHERE emp_id=:emp_id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('emp_id', $empId);
+        $stmt->execute();
+        $employeeArray = $stmt->fetchAll()[0];
+        $employee = new Employee();
+        $employee->setEmpId($employeeArray['emp_id']);
+        $employee->setNic($employeeArray['NIC']);
+        $employee->setName($employeeArray['name']);
+        $employee->setEmail($employeeArray['email']);
+        $employee->setAddrLine1($employeeArray['addr_line_1']);
+        $employee->setAddrLine2($employeeArray['addr_line_2']);
+        $employee->setCity($employeeArray['city']);
+        $employee->setCountry($employeeArray['country']);
+        $employee->setPostalCode($employeeArray['postal_code']);
+        $employee->setDob(DateTime::createFromFormat('Y-m-d',$employeeArray['dob']));
+        $employee->setMaritalStatus($employeeArray['marital_status']);
+        $employee->setBranchId($employeeArray['branch_id']);
+        $employee->setDeptId($employeeArray['dept_id']);
+        $employee->setJobTitleId($employeeArray['job_title_id']);
+        $employee->setPayGrade($employeeArray['pay_grade']);
+        $employee->setEmpStatusId($employeeArray['emp_status_id']);
+        $employee->setSupervisorId($employeeArray['supervisor_id']);
+        return $employee;
     }
 
 }

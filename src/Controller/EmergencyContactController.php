@@ -115,9 +115,9 @@ class EmergencyContactController extends AbstractController
      */
     public function empEmergencyContacts($empId): Response
     {
-        // $emergencyContacts = $this->getDoctrine()
-        //     ->getRepository(EmergencyContact::class)
-        //     ->findAll();
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
         $entityManager = $this->getDoctrine()->getManager();
         $emergencyContactModel = new EmergencyContactModel();
         $emergencyContacts = $emergencyContactModel->getEmpEmergencyContacts($empId,$entityManager);

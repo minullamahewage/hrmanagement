@@ -108,12 +108,11 @@ class LeaveController extends AbstractController
 
         return $this->redirectToRoute('leave_index');
     }
-
-    //employee show leaves
+    //admin show leaves
     /**
-     * @Route("/emp/{empId}", name="leave_emp", methods={"GET"})
+     * @Route("/show/{empId}", name="leave_emp_admin", methods={"GET"})
      */
-    public function empLeaves($empId): Response
+    public function adminShowLeaves($empId): Response
     {
     
         $leaveModel = new LeaveModel();
@@ -128,13 +127,39 @@ class LeaveController extends AbstractController
         ]);
     }
 
-    //supervisor view leave requests
+    //employee show leaves
     /**
-     * @Route("/supervisor/requests/{empId}", name="leave_requests", methods={"GET"})
+     * @Route("/emp/{empId}", name="leave_emp", methods={"GET"})
      */
-    public function leaveRequests($empId): Response
+    public function empLeaves($empId): Response
     {
     
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
+
+        $leaveModel = new LeaveModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
+        $leavesRemaining  = $leaveModel->getEmpRemLeaves($empId,$entityManager);
+
+        return $this->render('leave/emp.html.twig', [
+            'leaves' => $leaves,
+            'leaves_remaining' =>$leavesRemaining,
+            'emp_id' =>$empId,
+        ]);
+    }
+
+    //supervisor view leave requests
+    /**
+     * @Route("/supervisor/requests/", name="leave_requests", methods={"GET"})
+     */
+    public function leaveRequests(): Response
+    {
+    
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
         $leaveModel = new LeaveModel();
         $entityManager = $this->getDoctrine()->getManager();
         $leaves = $leaveModel->getLeaveRequests($empId,$entityManager);
@@ -147,10 +172,13 @@ class LeaveController extends AbstractController
 
     //supervisor approve leave 
     /**
-     * @Route("/supervisor/approve/{leaveFormId}-{empId}-{supId}", name="leave_approve", methods={"APPROVE"})
+     * @Route("/supervisor/approve/{leaveFormId}-{empId}", name="leave_approve", methods={"APPROVE"})
      */
-    public function approve(Request $request, Leave $leave, $leaveFormId, $empId, $supId): Response
+    public function approve(Request $request, Leave $leave, $leaveFormId, $empId): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $supId = $user->getEmpId();
         if ($this->isCsrfTokenValid('approve'.$leave->getLeaveFormId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $leaveModel = new LeaveModel();
@@ -171,16 +199,19 @@ class LeaveController extends AbstractController
 
     //supervisor deny leave 
     /**
-     * @Route("/supervisor/deny/{leaveFormId}-{empId}", name="leave_deny", methods={"DENY"})
+     * @Route("/supervisor/deny/{leaveFormId}", name="leave_deny", methods={"DENY"})
      */
-    public function deny(Request $request, Leave $leave, $leaveFormId, $empId): Response
+    public function deny(Request $request, Leave $leave, $leaveFormId): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $supId = $user->getEmpId();
         if ($this->isCsrfTokenValid('deny'.$leave->getLeaveFormId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $leaveModel = new LeaveModel();
             $leaveModel->denyLeave($leaveFormId, $entityManager);
         }
 
-        return $this->redirectToRoute('leave_requests', array('empId' => $empId));
+        return $this->redirectToRoute('leave_requests', array('empId' => $supId));
     }
 }
