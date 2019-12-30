@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 28, 2019 at 03:39 PM
+-- Generation Time: Dec 30, 2019 at 08:10 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `hrmanagement`
 --
+CREATE DATABASE IF NOT EXISTS `hrmanagement` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `hrmanagement`;
 
 -- --------------------------------------------------------
 
@@ -108,6 +110,13 @@ CREATE TABLE `emergency_contact` (
   `telephone` varchar(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `emergency_contact`
+--
+
+INSERT INTO `emergency_contact` (`id`, `emp_id`, `name`, `telephone`) VALUES
+(3, '2', 'Em Contact 1', '077123123');
+
 -- --------------------------------------------------------
 
 --
@@ -141,7 +150,7 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
 ('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'Unmarried', '1', 2, 1, 'Level4', 1, '1'),
 ('2', '9700000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '1997-01-30', 'Unmarried', '1', 1, 1, 'Level2', 5, '1'),
-('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '1');
+('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '2');
 
 -- --------------------------------------------------------
 
@@ -328,7 +337,7 @@ INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leav
 (18, '2', '2014-01-01', '2014-01-02', 'No-pay', 'False'),
 (19, '1', '2019-12-01', '2019-12-02', 'No-pay', 'True'),
 (20, '3', '2019-12-15', '2019-12-16', 'No-pay', 'True'),
-(21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'Pending');
+(21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'False');
 
 -- --------------------------------------------------------
 
@@ -465,7 +474,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `roles`, `password`, `emp_id`) VALUES
-(1, 'test1', '[]', '$2y$13$2Q8G/0Hfs5c7VzXKTQQrs.wG.kMlMRSmK/K.f/65vQunho5TGJHmW', '1');
+(2, 'admin', '[\"ROLE_ADMIN\"]', '$2y$13$2qOkf6WN.6/4NxSR30ep2.k.l.dGnqtLEKCRL.mkxinbGPIuYBrem', '1'),
+(3, 'test2', '[\"ROLE_SUPERVISOR\"]', '$2y$13$uuzTpEmSO2C9jMB3HUE4bu5nDmo3.yDUxk8VV9GvCooFAmL0X/VkC', '2'),
+(4, 'test3', '[\"ROLE_EMPLOYEE\"]', '$2y$13$MlNe6dtdvyqKz29HFJtmAeS8jjsVeQqFMS1f9i.eBO6GIf/nBPSXy', '3');
 
 -- --------------------------------------------------------
 
@@ -634,7 +645,7 @@ ALTER TABLE `dependent`
 -- AUTO_INCREMENT for table `emergency_contact`
 --
 ALTER TABLE `emergency_contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `employment_status`
@@ -664,7 +675,7 @@ ALTER TABLE `leaves`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
