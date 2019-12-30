@@ -3,11 +3,11 @@ namespace App\Model;
 
 class ReportModel{
 
-    public function getEmpByBranch($branch, $em){
+    public function getEmpByBranch($branchId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT emp_id, name,job_title_id FROM employee where branch_id = :branch_id ORDER BY emp_id ASC";
+        $sql = "SELECT * FROM employee where branch_id = :branch_id ORDER BY emp_id ASC";
         $stmt=$conn->prepare($sql);
-        $stmt->bindValue(':branch_id',$branch->getBranchID());
+        $stmt->bindValue(':branch_id',$branchId);
         $stmt->execute();
         return $stmt->fetchAll();
     }

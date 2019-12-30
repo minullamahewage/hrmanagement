@@ -91,8 +91,8 @@ class ReportController extends AbstractController
         //branchId
         $branchIds = $branchModel->getAllBranches($entityManager);
         $branchChoices;
-        foreach($branchIds as &$branch){
-            $branchChoices[$branch['branch_id'].'-'.$branch['name']] = $branch['branch_id'];
+        foreach($branchIds as &$branch1){
+            $branchChoices[$branch1['branch_id'].'-'.$branch1['name']] = $branch1['branch_id'];
         }
         // //deptId
         // $deptIds = $deptModel->getAllDepartments($entityManager);
@@ -139,8 +139,9 @@ class ReportController extends AbstractController
     {
         $employeeModel = new EmployeeModel();
         $branchModel = new BranchModel();
+        $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
-        $employees = $branchModel->getEmpByBranch($branchId, $entityManager);
+        $employees = $reportModel->getEmpByBranch($branchId, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();

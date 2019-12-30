@@ -18,9 +18,8 @@ class ReportBranchType extends AbstractType
         $builder
             ->add('branchId', ChoiceType::class,[
                 'choices' => $this->branchChoices,
+                'label' => 'Branch',
             ])
-            
-            
         ;
     }
 
@@ -28,7 +27,7 @@ class ReportBranchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Branch::class,
-            'branch_choices' =>null
+            'branch_choices' =>null,
         ]);
     }
 }
