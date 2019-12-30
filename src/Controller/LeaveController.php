@@ -130,7 +130,7 @@ class LeaveController extends AbstractController
 
     //supervisor view leave requests
     /**
-     * @Route("/requests/{empId}", name="leave_requests", methods={"GET"})
+     * @Route("/supervisor/requests/{empId}", name="leave_requests", methods={"GET"})
      */
     public function leaveRequests($empId): Response
     {
@@ -147,7 +147,7 @@ class LeaveController extends AbstractController
 
     //supervisor approve leave 
     /**
-     * @Route("/approve/{leaveFormId}-{empId}-{supId}", name="leave_approve", methods={"APPROVE"})
+     * @Route("/supervisor/approve/{leaveFormId}-{empId}-{supId}", name="leave_approve", methods={"APPROVE"})
      */
     public function approve(Request $request, Leave $leave, $leaveFormId, $empId, $supId): Response
     {
@@ -171,7 +171,7 @@ class LeaveController extends AbstractController
 
     //supervisor deny leave 
     /**
-     * @Route("/deny/{leaveFormId}-{empId}", name="leave_deny", methods={"DENY"})
+     * @Route("/supervisor/deny/{leaveFormId}-{empId}", name="leave_deny", methods={"DENY"})
      */
     public function deny(Request $request, Leave $leave, $leaveFormId, $empId): Response
     {

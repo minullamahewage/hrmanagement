@@ -56,7 +56,7 @@ class EmpDataController extends AbstractController
     }
 
     /**
-     * @Route("/{attribute}", name="emp_data_show", methods={"GET"})
+     * @Route("/{empId}-{attribute}", name="emp_data_show", methods={"GET"})
      */
     public function show(EmpData $empData): Response
     {
@@ -66,7 +66,7 @@ class EmpDataController extends AbstractController
     }
 
     /**
-     * @Route("/{attribute}/edit", name="emp_data_edit", methods={"GET","POST"})
+     * @Route("/{empId}-{attribute}/edit", name="emp_data_edit", methods={"GET","POST"})
      */
 
     public function edit(Request $request, EmpData $empData): Response
@@ -89,7 +89,7 @@ class EmpDataController extends AbstractController
     }
 
     /**
-     * @Route("/{attribute}", name="emp_data_delete", methods={"DELETE"})
+     * @Route("/{attribute}-{empId}", name="emp_data_delete", methods={"DELETE"})
      */
     public function delete(Request $request, EmpData $empData): Response
     //public function delete(Request $request, EmpData $empData): Response

@@ -3,6 +3,10 @@ security:
         App\Entity\User:
             algorithm: auto
 
+    role_hierarchy:
+        ROLE_EMPLOYEE: ROLE_USER
+        ROLE_SUPERVISOR: ROLE_USER
+        ROLE_ADMIN: ROLE_USER, ROLE_SUPERVISOR
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -33,5 +37,30 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/employee/admin, roles: ROLE_ADMIN }
+        
+        - { path: ^/employee/subordinate, roles: ROLE_SUPERVISOR }
+        - { path: ^/employee, roles: ROLE_USER }
+        - { path: ^/branch, roles: ROLE_ADMIN }
+        - { path: ^/department, roles: ROLE_ADMIN }
+        - { path: ^/dependent/admin, roles: ROLE_ADMIN }
+        - { path: ^/dependent/emp, roles: ROLE_USER }
+        - { path: ^/emergencycontact/admin, roles: ROLE_ADMIN }
+        - { path: ^/emergenecycontact/emp, roles: ROLE_USER }
+        - { path: ^/empcustom, roles: ROLE_ADMIN }
+        - { path: ^/empdata, roles: ROLE_ADMIN }
+        - { path: ^/employhistory/emp, roles: ROLE_USER }
+        - { path: ^/employhistory, roles: ROLE_ADMIN }
+        - { path: ^/employmentstatus, roles: ROLE_ADMIN }
+        - { path: ^/emptelephone, roles: ROLE_ADMIN }
+        - { path: ^/jobtitle, roles: ROLE_ADMIN }
+        - { path: ^/leave/emp, roles: ROLE_USER }
+        - { path: ^/leave/supervisor, roles: ROLE_SUPERVISOR }
+        - { path: ^/leave, roles: ROLE_ADMIN }
+        - { path: ^/leavelimit, roles: ROLE_ADMIN }
+        - { path: ^/leavetype, roles: ROLE_ADMIN }
+        - { path: ^/paygrade, roles: ROLE_ADMIN }
+        - { path: ^/register, roles: ROLE_ADMIN }
+
+
+

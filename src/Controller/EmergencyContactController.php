@@ -17,7 +17,7 @@ class EmergencyContactController extends AbstractController
 {
     //admin show all emergency contacts
     /**
-     * @Route("/", name="emergency_contact_index", methods={"GET"})
+     * @Route("/admin", name="emergency_contact_index", methods={"GET"})
      */
     public function index(): Response
     {
@@ -35,7 +35,7 @@ class EmergencyContactController extends AbstractController
 
     //admin add emergency contact
     /**
-     * @Route("/new", name="emergency_contact_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="emergency_contact_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -60,7 +60,7 @@ class EmergencyContactController extends AbstractController
 
     //admin show emergenecy contact details
     /**
-     * @Route("/{id}", name="emergency_contact_show", methods={"GET"})
+     * @Route("/admin/{id}", name="emergency_contact_show", methods={"GET"})
      */
     public function show(EmergencyContact $emergencyContact): Response
     {
@@ -71,7 +71,7 @@ class EmergencyContactController extends AbstractController
 
     //admin edit emergency contact details
     /**
-     * @Route("/{id}/edit", name="emergency_contact_edit", methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="emergency_contact_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, EmergencyContact $emergencyContact): Response
     {
@@ -94,7 +94,7 @@ class EmergencyContactController extends AbstractController
 
     //admin delete emergency contact
     /**
-     * @Route("/{id}", name="emergency_contact_delete", methods={"DELETE"})
+     * @Route("/admin/{id}", name="emergency_contact_delete", methods={"DELETE"})
      */
     public function delete(Request $request, EmergencyContact $emergencyContact): Response
     {

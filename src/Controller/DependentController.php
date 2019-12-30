@@ -17,16 +17,12 @@ class DependentController extends AbstractController
 {
     //admin view all dependents
     /**
-     * @Route("/", name="dependent_index", methods={"GET"})
+     * @Route("/admin", name="dependent_index", methods={"GET"})
      */
     public function index(): Response
     {
         $entityManager=$this->getDoctrine()->getManager();
         $dependentModel=new DependentModel();
-
-        //$dependents = $this->getDoctrine()
-          //  ->getRepository(Dependent::class)
-            //->findAll();
         $dependents=$dependentModel->getAllDependents($entityManager);
         return $this->render('dependent/index.html.twig', [
             'dependents' => $dependents,
@@ -35,7 +31,7 @@ class DependentController extends AbstractController
 
     //admin add new dependent
     /**
-     * @Route("/new", name="dependent_new", methods={"GET","POST"})
+     * @Route("/admin/new", name="dependent_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -60,7 +56,7 @@ class DependentController extends AbstractController
 
     //admin show dependent details
     /**
-     * @Route("/{dependentId}", name="dependent_show", methods={"GET"})
+     * @Route("/admin/{dependentId}", name="dependent_show", methods={"GET"})
      */
     public function show(Dependent $dependent): Response
     {
@@ -71,7 +67,7 @@ class DependentController extends AbstractController
 
     //admin edit dependent details
     /**
-     * @Route("/{dependentId}/edit", name="dependent_edit", methods={"GET","POST"})
+     * @Route("/admin/{dependentId}/edit", name="dependent_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Dependent $dependent): Response
     {
@@ -94,7 +90,7 @@ class DependentController extends AbstractController
 
     //admin delete dependent
     /**
-     * @Route("/{dependentId}", name="dependent_delete", methods={"DELETE"})
+     * @Route("/admin/{dependentId}", name="dependent_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Dependent $dependent): Response
     {

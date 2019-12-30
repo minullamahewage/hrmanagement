@@ -8,16 +8,18 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Telephone</th>
                 <th>EmpId</th>
+                <th>Telephone</th>
+                
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for emp_telephone in emp_telephones %}
             <tr>
-                <td>{{ emp_telephone.telephone }}</td>
                 <td>{{ emp_telephone.emp_id }}</td>
+                <td>{{ emp_telephone.telephone }}</td>
+                
                 <td>
                     <a href="{{ path('emp_telephone_show', {'telephone': emp_telephone.telephone}) }}">show</a>
                     <a href="{{ path('emp_telephone_edit', {'telephone': emp_telephone.telephone}) }}">edit</a>
