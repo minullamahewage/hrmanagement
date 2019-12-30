@@ -14,7 +14,7 @@ class ReportModel{
 
     public function getEmpByDepartment($departmentId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employee where department_id = :department_id ORDER BY emp_id ASC";
+        $sql = "SELECT * FROM employee where dept_id = :department_id ORDER BY emp_id ASC";
         $stmt=$conn->prepare($sql);
         $stmt->bindValue(':department_id',$departmentId);
         $stmt->execute();
@@ -23,7 +23,7 @@ class ReportModel{
 
     public function getEmpByJobTitle($jobTitleId, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employee where jobTitle_id = :jobTitle_id ORDER BY emp_id ASC";
+        $sql = "SELECT * FROM employee where job_title_id = :jobTitle_id ORDER BY emp_id ASC";
         $stmt=$conn->prepare($sql);
         $stmt->bindValue(':jobTitle_id',$jobTitleId);
         $stmt->execute();

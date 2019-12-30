@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Employees by Branch{% endblock %}
+{% block title %}Employees by Job Title{% endblock %}
 
 {% block body %}
-    <h1>Employees by Branch</h1>
+    <h1>Employees by Job Title</h1>
 
     <table class="table">
         <thead>
@@ -12,11 +12,11 @@
                 <th>Nic</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>BranchId</th>
                 <th>PayGrade</th>
                 <th>SupervisorId</th>
                 <th>DeptId</th>
                 <th>Employment Status</th>
-                <th>Job Title</th>
             </tr>
         </thead>
         <tbody>
@@ -26,11 +26,11 @@
                 <td>{{ employee.NIC }}</td>
                 <td>{{ employee.name }}</td>
                 <td>{{ employee.email }}</td>
+                <td>{{ employee.branch_id }}</td>
                 <td>{{ employee.pay_grade }}</td>
                 <td>{{ employee.supervisor_id }}</td>
                 <td>{{ employee.dept_id }}</td>
                 <td>{{ employee.emp_status }}</td>
-                <td>{{ employee.job_title }}</td>
             </tr>
         {% else %}
             <tr>
