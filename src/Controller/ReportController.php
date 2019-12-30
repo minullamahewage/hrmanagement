@@ -5,6 +5,7 @@ use App\Entity\Branch;
 use App\Entity\Employee;
 use App\Entity\EmpData;
 use App\Form\ReportsForm\ReportBranchType;
+use App\Form\ReportsForm\ReportDeptType;
 use App\Model\BranchModel;
 use App\Model\DepartmentModel;
 use App\Model\EmployeeModel;
@@ -95,11 +96,11 @@ class ReportController extends AbstractController
             $branchChoices[$branch1['branch_id'].'-'.$branch1['name']] = $branch1['branch_id'];
         }
         // //deptId
-        // $deptIds = $deptModel->getAllDepartments($entityManager);
-        // $deptChoices;
-        // foreach($deptIds as &$dept){
-        //     $deptChoices[$dept['dept_id'].'-'.$dept['dept_name']] = $dept['dept_id'];
-        // }
+         $deptIds = $deptModel->getAllDepartments($entityManager);
+         $deptChoices;
+         foreach($deptIds as &$dept1){
+             $deptChoices[$dept1['dept_id'].'-'.$dept1['dept_name']] = $dept1['dept_id'];
+         }
         // //jobTitle
         // $jobTitles = $jobTitleModel->getAllJobTitles($entityManager);
         // $jobTitleChoices;
@@ -129,6 +130,20 @@ class ReportController extends AbstractController
 
         return $this->render('report/index.html.twig', [
             'form_branch' => $formBranch->createView(),
+        ]);
+
+        
+        $formDept = $this->createForm(ReportDeptType::class, $dept, array(
+            'dept_choices' =>$deptChoices,
+        ));     
+        $formDept->handleRequest($request);
+        if ($formDept->isSubmitted() && $formDept->isValid()) {
+            $deptId = $dept->getDeptId();
+            return $this->redirectToRoute('report_dept', array('deptId' =>$deptId));
+        }
+
+        return $this->render('report/index.html.twig', [
+            'form_dept' => $formDept->createView(),
         ]);
     }
 
@@ -164,4 +179,35 @@ class ReportController extends AbstractController
         ]);
     }
     
+    /**
+     * @Route("/dept/{deptId}", name="report_dept", methods={"GET"})
+     */
+    public function showEmpByDept($deptId): Response
+    {
+        $employeeModel = new EmployeeModel();
+        $branchModel = new BranchModel();
+        $reportModel = new ReportModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $employees = $reportModel->getEmpByDept($deptId, $entityManager);
+        //changing job title id and emp status id to job title and emp status
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        $empDataModel = new EmpDataModel();
+        foreach ($employees as &$employee){
+            //job title
+            $jobTitleId = $employee['job_title_id'];
+            $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+            $employee['job_title'] = $jobTitle;
+            //employment status
+            $empStatusId = $employee['emp_status_id'];
+            $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+            $employee["emp_status"] = $empStatus;
+        }
+
+
+        return $this->render('report/dept.html.twig', [
+            'employees' => $employees,
+        ]);
+    }
 }
