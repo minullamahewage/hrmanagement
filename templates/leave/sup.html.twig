@@ -159,16 +159,16 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Employee Details</h4>
+                <h4 class="card-title"> Leave Requests</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                 
-                <h1>Employee ID {{emp_id}}</h1>
-                <h1>Leave Requests</h1>
+                <h2>Employee ID {{emp_id}}</h2>
+                <h3>Leave Requests</h3>
 
                   <table class="table tablesorter " id="">
                         <thead>
@@ -190,8 +190,10 @@
                                 <td>{{ leave.emp_id }}</td>
                                 <td>{{ leave.leave_type }}</td>
                                 <td>{{ leave.approval_status }}</td>
-                                <td>
+                                <td  >
                                     {{ include('leave/_approve_leave.html.twig') }}
+                                </td>    
+                                <td>
                                     {{ include('leave/_deny_leave.html.twig') }}
                                 </td>
                             </tr>
