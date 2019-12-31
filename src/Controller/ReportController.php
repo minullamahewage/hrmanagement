@@ -114,6 +114,7 @@ class ReportController extends AbstractController
          $jobTitleChoices;
          foreach($jobTitles as &$jobTitle1){
              $jobTitleChoices[$jobTitle1['job_title']] = $jobTitle1['job_title'];
+             
          }
         // //payGrade
          $payGrades = $payGradeModel->getAllPayGrades($entityManager);
@@ -155,18 +156,17 @@ class ReportController extends AbstractController
             return $this->redirectToRoute('report_dept', array('deptId' =>$deptId));
         }
 
-        $formJobTitle->handleRequest($request);
-        if ($formJobTitle->isSubmitted() && $formJobTitle->isValid()) {
-            $jobTitleId = $jobTitle->getJobTitleId();
-            return $this->redirectToRoute('report_jobTitle', array('jobTitleId' =>$jobTitleId));
-        }
-
         // $formJobTitle->handleRequest($request);
         // if ($formJobTitle->isSubmitted() && $formJobTitle->isValid()) {
-        //     $jobTitle1 = $jobTitle->getJobTitle();
-        //     $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle1, $em);
+        //     $jobTitleId = $jobTitle->getJobTitleId();
         //     return $this->redirectToRoute('report_jobTitle', array('jobTitleId' =>$jobTitleId));
         // }
+
+        $formJobTitle->handleRequest($request);
+        if ($formJobTitle->isSubmitted() && $formJobTitle->isValid()) {
+            $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle->getJobTitle(), $entityManager);
+            return $this->redirectToRoute('report_jobTitle', array('jobTitleId' =>$jobTitleId));
+        }
 
         $formPayGrade->handleRequest($request);
         if ($formPayGrade->isSubmitted() && $formPayGrade->isValid()) {
@@ -255,7 +255,7 @@ class ReportController extends AbstractController
         $branchModel = new BranchModel();
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
-        $employees = $reportModel->getEmpByJobTitle($jobTitleId, $em);
+        $employees = $reportModel->getEmpByJobTitle($jobTitleId, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
@@ -287,7 +287,7 @@ class ReportController extends AbstractController
         $branchModel = new BranchModel();
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
-        $employees = $reportModel->getEmpByPayGrade($payGrade2, $em);
+        $employees = $reportModel->getEmpByPayGrade($payGrade, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
