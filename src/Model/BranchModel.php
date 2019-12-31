@@ -35,6 +35,16 @@ class BranchModel{
 
     }
 
+    public function getBranchName($branchId, $em){
+        $conn = $em->getConnection();
+        $sql = "SELECT name from branch WHERE branch_id = :branchId";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':branchId' , $branchId);
+        $stmt->execute();
+        return $stmt->fetchAll()[0]['name'];
+
+    }
+
     // public function getBranch($branch_id, $em){
     //     $conn = $em->getConnection();
     //     $sql = "SELECT brnach"

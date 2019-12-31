@@ -28,5 +28,6 @@ class PayGradeModel {
         $stmt->bindValue(':pay_grade', $payGrade->getPayGrade());
         $stmt->execute();
     }
+    
 }
 

@@ -192,6 +192,7 @@ class ReportController extends AbstractController
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $reportModel->getEmpByBranch($branchId, $entityManager);
+        $branch = $branchModel->getBranchName($branchId,$entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
@@ -211,6 +212,7 @@ class ReportController extends AbstractController
 
         return $this->render('report/branch.html.twig', [
             'employees' => $employees,
+            'branch' => $branch
         ]);
     }
     
@@ -221,9 +223,11 @@ class ReportController extends AbstractController
     {
         $employeeModel = new EmployeeModel();
         $branchModel = new BranchModel();
+        $deptModel = new DepartmentModel();
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $reportModel->getEmpByDepartment($deptId, $entityManager);
+        $deptName = $deptModel->getDepartmentName($deptId, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
@@ -243,6 +247,7 @@ class ReportController extends AbstractController
 
         return $this->render('report/dept.html.twig', [
             'employees' => $employees,
+            'deptName' => $deptName[0]['dept_name']
         ]);
     }
 
@@ -258,6 +263,7 @@ class ReportController extends AbstractController
         $employees = $reportModel->getEmpByJobTitle($jobTitleId, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
+        $title = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
         $empStatusModel = new EmploymentStatusModel();
         $empTelephoneModel = new EmpTelephoneModel();
         $empDataModel = new EmpDataModel();
@@ -275,6 +281,7 @@ class ReportController extends AbstractController
 
         return $this->render('report/jobTitle.html.twig', [
             'employees' => $employees,
+            'jobTitle' => $title
         ]);
     }
 
@@ -307,6 +314,7 @@ class ReportController extends AbstractController
 
         return $this->render('report/payGrade.html.twig', [
             'employees' => $employees,
+            'payGrade' => $payGrade
         ]);
     }
     
