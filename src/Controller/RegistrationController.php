@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Model\UserModel;
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +21,10 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
+        $userModel = new UserModel();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -31,11 +34,19 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
+            if($user->getRoles()[0]=='ROLE_MANAGER'){
+                if($userModel->checkManager($entityManager)){
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                }
+                else{
+                    return new Response('HR Manager Already Exists');
+                }
+            }
+            else{
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
             // do anything else you need here, like send an email
 
             // return $guardHandler->authenticateUserAndHandleSuccess(
@@ -44,6 +55,7 @@ class RegistrationController extends AbstractController
             //     $authenticator,
             //     'main' // firewall name in security.yaml
             // );
+            return $this->redirectToRoute('employee_index');
         }
 
         return $this->render('registration/register.html.twig', [

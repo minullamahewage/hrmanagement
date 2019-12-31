@@ -49,9 +49,9 @@ class RegistrationFormType extends AbstractType
                 'entry_type'   => ChoiceType::class,
                 'entry_options'  => [
                     'choices'  => [
-                        'Admin' => 'ROLE_ADMIN',
                         'Supervisor'     => 'ROLE_SUPERVISOR',
                         'Employee'    => 'ROLE_EMPLOYEE',
+                        'HR Manager' => 'ROLE_MANAGER',
                         
                     ],
                 ],])

@@ -66,6 +66,20 @@ class UserModel {
         $stmt->execute();
     }
 
+    public function checkManager($em){
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM user WHERE roles = :roles";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':roles', '["ROLE_MANAGER"]');
+        $stmt->execute();
+        if($stmt->rowCount()>0){
+            return False;
+        }
+        else{
+            return True;
+        }
+    }
+
     
 }
 
