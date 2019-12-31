@@ -32,6 +32,15 @@
           </a>
         </div>
         <ul class="nav">
+        {% if (roles[0] == "ROLE_MANAGER" or roles[0] == "ROLE_ADMIN") %}
+          <li>
+            <a href="{{ url('employee_index') }}">
+              <i class="tim-icons icon-atom"></i>
+              <p>Admin Home</p>
+            </a>
+          </li>
+        {% endif %}
+          <li>
           <li class="active ">
             <a href="">
               <i class="tim-icons icon-chart-pie-36"></i>
@@ -137,7 +146,7 @@
                   </a>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
+                  <li class="nav-link"><a href="{{ path('employee_show') }}" class="nav-item dropdown-item">Profile</a></li>
                   <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
                   <li class="dropdown-divider"></li>
                   <li class="nav-link"><a href="/logout" class="nav-item dropdown-item">Log out</a></li>

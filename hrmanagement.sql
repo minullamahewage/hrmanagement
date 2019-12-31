@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 30, 2019 at 08:42 AM
+-- Generation Time: Dec 31, 2019 at 04:17 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -67,7 +67,8 @@ CREATE TABLE `department` (
 
 INSERT INTO `department` (`dept_id`, `dept_name`, `building`, `floor`) VALUES
 (1, 'Finance', 'Main', 'Second'),
-(2, 'Human Resource', 'Main', 'First');
+(2, 'Human Resource', 'Main', 'First'),
+(3, 'IT', 'Main', 'Second');
 
 -- --------------------------------------------------------
 
@@ -148,9 +149,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
-('1', '9600000001', 'Test Employee One', 'test1@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'Unmarried', '1', 2, 1, 'Level4', 1, '1'),
+('0', '9600000000', 'Admin', 'admin@gmail.com', '10', 'Road 0', 'Colombo', 'Sri Lanka', '10000', '1996-01-01', 'Married', '1', 3, 5, 'Level4', 5, '0'),
+('1', '9600000001', 'HR Manager', 'hrmanager@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'Unmarried', '1', 2, 2, 'Level4', 1, '1'),
 ('2', '9700000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '1997-01-30', 'Unmarried', '1', 1, 1, 'Level2', 5, '1'),
-('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '2');
+('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '2'),
+('4', '9600000004', 'test4', 'test4@gmail.com', '20', 'Road 4', 'Colombo 4', 'Sri Lanka', '10004', '1997-04-04', 'Married', '2', 1, 4, 'Level4', 1, '2');
 
 -- --------------------------------------------------------
 
@@ -251,12 +254,16 @@ CREATE TABLE `emp_data` (
 --
 
 INSERT INTO `emp_data` (`emp_id`, `attribute`, `value`) VALUES
+('0', 'custom_attribute_1', NULL),
+('0', 'custom_attribute_2', NULL),
 ('1', 'custom_attribute_1', NULL),
 ('1', 'custom_attribute_2', NULL),
 ('2', 'custom_attribute_1', NULL),
 ('2', 'custom_attribute_2', NULL),
 ('3', 'custom_attribute_1', 'custom data 1_3'),
-('3', 'custom_attribute_2', NULL);
+('3', 'custom_attribute_2', NULL),
+('4', 'custom_attribute_1', NULL),
+('4', 'custom_attribute_2', NULL);
 
 -- --------------------------------------------------------
 
@@ -298,7 +305,8 @@ INSERT INTO `job_title` (`job_title_id`, `job_title`, `description`) VALUES
 (1, 'Accountant', NULL),
 (2, 'HR Manager', NULL),
 (3, 'QA Engineer', NULL),
-(4, 'Software Engineer', NULL);
+(4, 'Software Engineer', NULL),
+(5, 'DB Admin', 'database admin');
 
 -- --------------------------------------------------------
 
@@ -475,9 +483,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `roles`, `password`, `emp_id`) VALUES
-(2, 'admin', '[\"ROLE_ADMIN\"]', '$2y$13$2qOkf6WN.6/4NxSR30ep2.k.l.dGnqtLEKCRL.mkxinbGPIuYBrem', '1'),
-(3, 'test2', '[\"ROLE_SUPERVISOR\"]', '$2y$13$uuzTpEmSO2C9jMB3HUE4bu5nDmo3.yDUxk8VV9GvCooFAmL0X/VkC', '2'),
-(4, 'test3', '[\"ROLE_EMPLOYEE\"]', '$2y$13$MlNe6dtdvyqKz29HFJtmAeS8jjsVeQqFMS1f9i.eBO6GIf/nBPSXy', '3');
+(4, 'test3', '[\"ROLE_EMPLOYEE\"]', '$2y$13$MlNe6dtdvyqKz29HFJtmAeS8jjsVeQqFMS1f9i.eBO6GIf/nBPSXy', '3'),
+(8, 'HRManager', '[\"ROLE_MANAGER\"]', '$2y$13$U6Gvp95WdT5l35zOPjta.OTdlcll8a01l715UNTSRvmCe6JM4q16q', '2'),
+(9, 'admin', '[\"ROLE_ADMIN\"]', '$2y$13$.Rzb27qtCCTWoNUzvjx/SugKQ5EcV0y1T7EYhNUoSIKsKaCa1Spfy', '0'),
+(10, 'employee', '[\"ROLE_EMPLOYEE\"]', '$2y$13$cjdtHXFm5j/zYFMn89.mHeuDcIAnEzjgf0n5.QeQ7IMpqNpEz0uX2', '4');
 
 -- --------------------------------------------------------
 
@@ -664,7 +673,7 @@ ALTER TABLE `employ_history`
 -- AUTO_INCREMENT for table `job_title`
 --
 ALTER TABLE `job_title`
-  MODIFY `job_title_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `job_title_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `leaves`
@@ -676,7 +685,7 @@ ALTER TABLE `leaves`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

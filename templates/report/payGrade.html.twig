@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Employees by Branch{% endblock %}
+{% block title %}Employees by Pay Grade{% endblock %}
 
 {% block body %}
-    <h1>Employees by Branch</h1>
-    <h2>{{ branch }} Branch <h2>
+    <h1>Employees by Pay Grade</h1>
+    <h2>Pay Grade - {{payGrade}}</h2>
     <table class="table">
         <thead>
             <tr>
@@ -12,7 +12,7 @@
                 <th>Nic</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>PayGrade</th>
+                <th>BranchId</th>
                 <th>SupervisorId</th>
                 <th>DeptId</th>
                 <th>Employment Status</th>
@@ -26,7 +26,7 @@
                 <td>{{ employee.NIC }}</td>
                 <td>{{ employee.name }}</td>
                 <td>{{ employee.email }}</td>
-                <td>{{ employee.pay_grade }}</td>
+                <td>{{ employee.branch_id }}</td>
                 <td>{{ employee.supervisor_id }}</td>
                 <td>{{ employee.dept_id }}</td>
                 <td>{{ employee.emp_status }}</td>

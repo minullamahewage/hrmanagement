@@ -32,7 +32,7 @@ class ReportModel{
 
     public function getEmpByPayGrade($payGrade, $em){
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM employee where payGrade = :payGrade ORDER BY emp_id ASC";
+        $sql = "SELECT * FROM employee where pay_grade = :payGrade ORDER BY emp_id ASC";
         $stmt=$conn->prepare($sql);
         $stmt->bindValue(':payGrade',$payGrade);
         $stmt->execute();

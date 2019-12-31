@@ -16,7 +16,7 @@ class ReportJobTitleType extends AbstractType
         $this->jobTitleChoices = $options['jobTitle_choices'];
                 
         $builder
-            ->add('jobTitleId', ChoiceType::class,[
+            ->add('jobTitle', ChoiceType::class,[
                 'choices' => $this->jobTitleChoices,
                 'label' => 'Job Title',
             ])

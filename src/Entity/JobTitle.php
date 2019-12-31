@@ -40,6 +40,12 @@ class JobTitle
         return $this->jobTitleId;
     }
 
+    // public function setJobTitleId(?int $jobTitleId): self
+    // {
+    //     $this->jobTitleId = $jobTitleId;
+    //     return $this;
+    // }
+
     public function getJobTitle(): ?string
     {
         return $this->jobTitle;

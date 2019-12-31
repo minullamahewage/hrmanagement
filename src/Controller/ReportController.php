@@ -6,9 +6,11 @@ use App\Entity\Department;
 use App\Entity\Employee;
 use App\Entity\EmpData;
 use App\Entity\JobTitle;
+use App\Entity\PayGrade;
 use App\Form\ReportsForm\ReportBranchType;
 use App\Form\ReportsForm\ReportDeptType;
 use App\Form\ReportsForm\ReportJobTitleType;
+use App\Form\ReportsForm\ReportPayGradeType;
 use App\Model\BranchModel;
 use App\Model\DepartmentModel;
 use App\Model\EmployeeModel;
@@ -83,6 +85,7 @@ class ReportController extends AbstractController
         $branch = new Branch();
         $dept = new Department();
         $jobTitle = new JobTitle();
+        $payGrade = new PayGrade();
         $employee = new Employee();
         $reportModel = new ReportModel();
         $employeeModel = new EmployeeModel();
@@ -111,13 +114,14 @@ class ReportController extends AbstractController
          $jobTitleChoices;
          foreach($jobTitles as &$jobTitle1){
              $jobTitleChoices[$jobTitle1['job_title']] = $jobTitle1['job_title'];
+             
          }
         // //payGrade
-        // $payGrades = $payGradeModel->getAllPayGrades($entityManager);
-        // $payGradeChoices;
-        // foreach($payGrades as &$payGrade){
-        //     $payGradeChoices[$payGrade['pay_grade']] = $payGrade['pay_grade'];
-        // }
+         $payGrades = $payGradeModel->getAllPayGrades($entityManager);
+         $payGradeChoices;
+         foreach($payGrades as &$payGrade1){
+             $payGradeChoices[$payGrade1['pay_grade']] = $payGrade1['pay_grade'];
+         }
         // //employment Status
         // $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
         // $empStatusChoices;
@@ -134,6 +138,10 @@ class ReportController extends AbstractController
 
         $formJobTitle = $this->createForm(ReportJobTitleType::class, $jobTitle, array(
             'jobTitle_choices' =>$jobTitleChoices,
+        ));
+        
+        $formPayGrade = $this->createForm(ReportPayGradeType::class, $payGrade, array(
+            'payGrade_choices' =>$payGradeChoices,
         )); 
 
         $formBranch->handleRequest($request);
@@ -148,21 +156,30 @@ class ReportController extends AbstractController
             return $this->redirectToRoute('report_dept', array('deptId' =>$deptId));
         }
 
+        // $formJobTitle->handleRequest($request);
+        // if ($formJobTitle->isSubmitted() && $formJobTitle->isValid()) {
+        //     $jobTitleId = $jobTitle->getJobTitleId();
+        //     return $this->redirectToRoute('report_jobTitle', array('jobTitleId' =>$jobTitleId));
+        // }
+
         $formJobTitle->handleRequest($request);
         if ($formJobTitle->isSubmitted() && $formJobTitle->isValid()) {
-            $jobTitleId = $jobTitle->getDeptId();
+            $jobTitleId = $jobTitleModel->getJobTitleId($jobTitle->getJobTitle(), $entityManager);
             return $this->redirectToRoute('report_jobTitle', array('jobTitleId' =>$jobTitleId));
+        }
+
+        $formPayGrade->handleRequest($request);
+        if ($formPayGrade->isSubmitted() && $formPayGrade->isValid()) {
+            $payGrade2 = $payGrade->getPayGrade();
+            return $this->redirectToRoute('report_payGrade', array('payGrade' =>$payGrade2));
         }
 
         return $this->render('report/index.html.twig', [
             'form_dept' => $formDept->createView(),
             'form_branch' => $formBranch->createView(),
             'form_jobTitle' => $formJobTitle->createView(),
+            'form_payGrade' => $formPayGrade->createView(),
         ]);
-
-        // return $this->render('report/index.html.twig', [
-        //     'form_dept' => $formDept->createView(),
-        // ]);
     }
 
     /**
@@ -175,6 +192,7 @@ class ReportController extends AbstractController
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $reportModel->getEmpByBranch($branchId, $entityManager);
+        $branch = $branchModel->getBranchName($branchId,$entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
@@ -194,6 +212,7 @@ class ReportController extends AbstractController
 
         return $this->render('report/branch.html.twig', [
             'employees' => $employees,
+            'branch' => $branch
         ]);
     }
     
@@ -204,9 +223,11 @@ class ReportController extends AbstractController
     {
         $employeeModel = new EmployeeModel();
         $branchModel = new BranchModel();
+        $deptModel = new DepartmentModel();
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $reportModel->getEmpByDepartment($deptId, $entityManager);
+        $deptName = $deptModel->getDepartmentName($deptId, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
@@ -226,6 +247,7 @@ class ReportController extends AbstractController
 
         return $this->render('report/dept.html.twig', [
             'employees' => $employees,
+            'deptName' => $deptName[0]['dept_name']
         ]);
     }
 
@@ -238,9 +260,10 @@ class ReportController extends AbstractController
         $branchModel = new BranchModel();
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
-        $employees = $reportModel->getEmpByJobTitle($jobTitleId, $em);
+        $employees = $reportModel->getEmpByJobTitle($jobTitleId, $entityManager);
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
+        $title = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
         $empStatusModel = new EmploymentStatusModel();
         $empTelephoneModel = new EmpTelephoneModel();
         $empDataModel = new EmpDataModel();
@@ -258,6 +281,40 @@ class ReportController extends AbstractController
 
         return $this->render('report/jobTitle.html.twig', [
             'employees' => $employees,
+            'jobTitle' => $title
+        ]);
+    }
+
+    /**
+     * @Route("/payGrade/{payGrade}", name="report_payGrade", methods={"GET"})
+     */
+    public function showEmpByPayGrade($payGrade): Response
+    {
+        $employeeModel = new EmployeeModel();
+        $branchModel = new BranchModel();
+        $reportModel = new ReportModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $employees = $reportModel->getEmpByPayGrade($payGrade, $entityManager);
+        //changing job title id and emp status id to job title and emp status
+        $jobTitleModel = new JobTitleModel();
+        $empStatusModel = new EmploymentStatusModel();
+        $empTelephoneModel = new EmpTelephoneModel();
+        $empDataModel = new EmpDataModel();
+        foreach ($employees as &$employee){
+            //job title
+            $jobTitleId = $employee['job_title_id'];
+            $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
+            $employee['job_title'] = $jobTitle;
+            //employment status
+            $empStatusId = $employee['emp_status_id'];
+            $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
+            $employee["emp_status"] = $empStatus;
+        }
+
+
+        return $this->render('report/payGrade.html.twig', [
+            'employees' => $employees,
+            'payGrade' => $payGrade
         ]);
     }
     

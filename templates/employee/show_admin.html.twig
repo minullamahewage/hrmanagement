@@ -97,7 +97,7 @@
     <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">View Emergency Contacts</a><br>
     <a href="{{ url('employee_subordinate', {'empId': employee.empId}) }}">View Subordinates</a><br>
     <a href="{{ url('employhistory_emp', {'empId': employee.empId}) }}">View Employment History</a><br>
-    <a href="{{ url('leave_emp_admin', {'empId': employee:empId}) }}">View Leaves</a>
+    <a href="{{ url('leave_emp_admin', {'empId': employee.empId}) }}">View Leaves</a>
 
 
     {{ include('employee/_delete_form.html.twig') }}

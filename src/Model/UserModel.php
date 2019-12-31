@@ -7,7 +7,7 @@ class UserModel {
     public function getAllUsers($em){
 
         $conn = $em->getConnection();
-        $sql = "SELECT * FROM user ORDER BY type ASC";
+        $sql = "SELECT * FROM user ORDER BY username ASC";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt-> fetchAll();
@@ -28,42 +28,36 @@ class UserModel {
         // return $stmt-> fetchAll();
     }
 
-    // public function changeJobTitle($jobTitle,$em){
-    //     $conn= $em->getConnection();
-    //     $sql="UPDATE job_title SET job_title = :job_title, description = :description WHERE job_title_id= :job_title_id";
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->bindValue(':job_title', $jobTitle->getJobTitle());
-    //     $stmt->bindValue(':description', $jobTitle->getDescription());
-    //     $stmt->bindValue(':job_title_id', $jobTitle->getJobTitleId());
-    //     $stmt->execute();
-
-    // }
-
-    // public function getJobTitle($jobTitleId, $em){
-    //     $conn = $em->getConnection();
-    //     $sql = "SELECT job_title from job_title WHERE job_title_id = :job_title_id";
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->bindValue(':job_title_id' , $jobTitleId);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll()[0]['job_title'];
-
-    // }
-    // public function getJobTitleId($jobTitle, $em){
-    //     $conn = $em->getConnection();
-    //     $sql = "SELECT job_title_id from job_title WHERE job_title = :job_title";
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->bindValue(':job_title' , $jobTitle);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll()[0]['job_title_id'];
-
-    // }
-
-    public function deleteUser($user, $em){
+    public function deleteUser($userId, $em){
         $conn = $em->getConnection();
-        $sql = "DELETE FROM user WHERE username = :username";
+        $sql = "DELETE FROM user WHERE id = :userId";
         $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':username' , $user->getUsername());
+        $stmt->bindValue(':userId' , $userId);
         $stmt->execute();
+    }
+
+    public function checkManager($em){
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM user WHERE roles = :roles";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':roles', '["ROLE_MANAGER"]');
+        $stmt->execute();
+        if($stmt->rowCount()>0){
+            return False;
+        }
+        else{
+            return True;
+        }
+    }
+
+    public function getUser($userId,$em){
+
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM user WHERE id = :userId";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('userId', $userId);
+        $stmt->execute();
+        return $stmt-> fetchAll()[0];
     }
 
     
