@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employees by Pay Grade{% endblock %}
+
+{% block body %}
+    <h1>Employees by Pay Grade</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>EmpId</th>
+                <th>Nic</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>BranchId</th>
+                <th>SupervisorId</th>
+                <th>DeptId</th>
+                <th>Employment Status</th>
+                <th>Job Title</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td>{{ employee.emp_id }}</td>
+                <td>{{ employee.NIC }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.branch_id }}</td>
+                <td>{{ employee.supervisor_id }}</td>
+                <td>{{ employee.dept_id }}</td>
+                <td>{{ employee.emp_status }}</td>
+                <td>{{ employee.job_title }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('report_index') }}">back to report options</a>
+    
+{% endblock %}
+
