@@ -20,68 +20,104 @@
     -->
       <div class="sidebar-wrapper">
         <div class="logo">
-          <a href="javascript:void(0)" class="simple-text logo-mini">
+          {# <a href="javascript:void(0)" class="simple-text logo-mini">
             JA
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
             Jupiter Apparels
-          </a>
+          </a> #}
         </div>
         <ul class="nav">
-          <li class="active ">
+          <li>
+            <a href="{{ path('user_index') }}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{ path('employee_index') }}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Employees</p>
+            </a>
+          </li>
+          <li class="active">
             <a href="{{ path('branch_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Branches</p>
             </a>
           </li>
           <li>
-            <a href="./icons.html">
+            <a href="{{path('department_index')}}">
               <i class="tim-icons icon-atom"></i>
               <p>Departments</p>
             </a>
           </li>
           <li>
-            <a href="./map.html">
+            <a href="{{path('employment_status_index')}}">
               <i class="tim-icons icon-pin"></i>
-              <p>EmploymentStatus</p>
+              <p>Employment Status</p>
             </a>
           </li>
           <li>
-            <a href="./notifications.html">
+            <a href="{{path('job_title_index')}}">
               <i class="tim-icons icon-bell-55"></i>
-              <p>JobTitle</p>
+              <p>Job Title</p>
             </a>
           </li>
           <li>
-            <a href="./user.html">
+            <a href="{{path('pay_grade_index')}}">
               <i class="tim-icons icon-single-02"></i>
-              <p>User Profile</p>
+              <p>Pay Grades</p>
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="{{path('leave_index')}}">
               <i class="tim-icons icon-puzzle-10"></i>
-              <p>Branches</p>
+              <p>Leaves</p>
             </a>
           </li>
           <li>
-            <a href="./typography.html">
+            <a href="{{path('leave_type_index')}}">
               <i class="tim-icons icon-align-center"></i>
-              <p>Typography</p>
+              <p>Leave Type</p>
             </a>
           </li>
           <li>
-            <a href="./rtl.html">
+            <a href="{{path('leave_limit_index')}}">
               <i class="tim-icons icon-world"></i>
-              <p>RTL Support</p>
+              <p>Leave Limit</p>
             </a>
           </li>
-          <li class="active-pro">
+          <li>
+            <a href="{{path('emp_telephone_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employee Telephone</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('dependent_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Dependents</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('emergency_contact_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Emergency Contacts</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('employ_history_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employment History</p>
+            </a>
+          </li>
+          {# <li class="active-pro">
             <a href="./upgrade.html">
               <i class="tim-icons icon-spaceship"></i>
               <p>Upgrade to PRO</p>
             </a>
-          </li>
+          </li> #}
         </ul>
       </div>
     </div>
