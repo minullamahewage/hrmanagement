@@ -33,10 +33,34 @@
           </a>
         </div>
         <ul class="nav">
-          <li class="active">
-            <a href="">
+          <li >
+            <a href="{{ url('employee_show') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
-              <p>New Leave</p>
+              <p>Employee Details</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a href="{{ url('leave_new', {'empId': emp_id}) }}">
+              <i class="tim-icons icon-atom"></i>
+              <p>Request Leave</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url('emergency_contact_emp', {'empId': emp_id}) }}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>View Emergency Contacts</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url('employhistory_emp', {'empId': emp_id}) }}">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>View Employment History</p>
+            </a>
+          </li>
+          <li >
+            <a href="{{ url('leave_emp', {'empId': emp_id}) }}">
+              <i class="tim-icons icon-align-center"></i>
+              <p>View Leaves</p>
             </a>
           </li>
           
