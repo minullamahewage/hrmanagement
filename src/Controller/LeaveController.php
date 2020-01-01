@@ -132,7 +132,7 @@ class LeaveController extends AbstractController
         $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
         $leavesRemaining  = $leaveModel->getEmpRemLeaves($empId,$entityManager);
 
-        return $this->render('leave/emp.html.twig', [
+        return $this->render('leave/emp_admin.html.twig', [
             'leaves' => $leaves,
             'leaves_remaining' =>$leavesRemaining,
             'emp_id' =>$empId,

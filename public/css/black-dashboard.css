@@ -136,6 +136,7 @@ ul,
 dl {
   margin-top: 0;
   margin-bottom: 1rem;
+  
 }
 
 ol ol,
@@ -4678,8 +4679,9 @@ input[type="button"].btn-block {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
-  margin-bottom: 0;
+  margin-bottom: 30;
   list-style: none;
+  padding-bottom: 20px;
 }
 
 .nav-link {
@@ -4700,10 +4702,12 @@ input[type="button"].btn-block {
 
 .nav-tabs {
   border-bottom: 0.0625rem solid #e3e3e3;
+  
 }
 
 .nav-tabs .nav-item {
   margin-bottom: -0.0625rem;
+  
 }
 
 .nav-tabs .nav-link {
@@ -15924,7 +15928,7 @@ img {
 
 .navbar-nav li i {
   vertical-align: middle;
-  font-size: 20px;
+  font-size: 1000px;
 }
 
 @media screen and (max-width: 991px) {
