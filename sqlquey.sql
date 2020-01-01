@@ -35,3 +35,25 @@ BEGIN
 	END WHILE;
 END; ??
 DELIMITER ;
+
+//trigger for leave form dates
+DELIMITER ??
+CREATE TRIGGER check_leave_form_dates
+BEFORE INSERT ON leaves FOR EACH ROW
+BEGIN
+IF (NEW.till_date < NEW.from_date) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The Selected Date Combination is not Valid';
+  END IF;
+END; ??	
+DELIMITER ;
+
+//trigger for employ history_period
+DELIMITER ??
+CREATE TRIGGER check_employ_history_period
+BEFORE INSERT ON employ_history FOR EACH ROW
+BEGIN
+IF (NEW.to_date < NEW.from_date) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The Selected Period of Employment is not Valid';
+  END IF;
+END; ??	
+DELIMITER ;

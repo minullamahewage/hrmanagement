@@ -2,10 +2,10 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 31, 2019 at 04:17 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Host: 127.0.0.1
+-- Generation Time: Jan 01, 2020 at 01:55 PM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -198,7 +198,20 @@ CREATE TABLE `employ_history` (
 --
 
 INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`, `emp_status_id`) VALUES
-(1, '1', '2015-12-18', '2018-12-01', 1);
+(1, '1', '2015-12-18', '2018-12-01', 1),
+(5, '2', '2020-01-14', '2020-01-01', NULL);
+
+--
+-- Triggers `employ_history`
+--
+DELIMITER $$
+CREATE TRIGGER `check_employ_history_period` BEFORE INSERT ON `employ_history` FOR EACH ROW BEGIN
+IF (NEW.to_date < NEW.from_date) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The Selected Period of Employment is not Valid';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -346,7 +359,20 @@ INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leav
 (19, '1', '2019-12-01', '2019-12-02', 'No-pay', 'True'),
 (20, '3', '2019-12-15', '2019-12-16', 'No-pay', 'True'),
 (21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'False'),
-(22, '1', '2019-12-30', '2019-12-31', 'Annual', 'True');
+(22, '1', '2019-12-30', '2019-12-31', 'Annual', 'True'),
+(23, '3', '2019-11-29', '2019-12-29', 'Annual', '0');
+
+--
+-- Triggers `leaves`
+--
+DELIMITER $$
+CREATE TRIGGER `check_leave_form_dates` BEFORE INSERT ON `leaves` FOR EACH ROW BEGIN
+IF (NEW.till_date < NEW.from_date) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Dates are not Valid';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -485,8 +511,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `roles`, `password`, `emp_id`) VALUES
 (4, 'test3', '[\"ROLE_EMPLOYEE\"]', '$2y$13$MlNe6dtdvyqKz29HFJtmAeS8jjsVeQqFMS1f9i.eBO6GIf/nBPSXy', '3'),
 (8, 'HRManager', '[\"ROLE_MANAGER\"]', '$2y$13$U6Gvp95WdT5l35zOPjta.OTdlcll8a01l715UNTSRvmCe6JM4q16q', '2'),
-(9, 'admin', '[\"ROLE_ADMIN\"]', '$2y$13$.Rzb27qtCCTWoNUzvjx/SugKQ5EcV0y1T7EYhNUoSIKsKaCa1Spfy', '0'),
-(10, 'employee', '[\"ROLE_EMPLOYEE\"]', '$2y$13$cjdtHXFm5j/zYFMn89.mHeuDcIAnEzjgf0n5.QeQ7IMpqNpEz0uX2', '4');
+(9, 'admin', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$TkkvLklMVWgzMFRadmFGRw$r79eLKWct5/fPBt5LwosyRp3vkDNZU1ZoHjROWTtSqE', '0'),
+(10, 'employee', '[\"ROLE_EMPLOYEE\"]', '$argon2id$v=19$m=65536,t=4,p=1$L2R6VXdlazY0eXdoU3BnQg$DToJvYDh6N0mM4Dxi2fgB++6TOMTc/1NNBBpCn/GWTg', '4');
 
 -- --------------------------------------------------------
 
@@ -667,7 +693,7 @@ ALTER TABLE `employment_status`
 -- AUTO_INCREMENT for table `employ_history`
 --
 ALTER TABLE `employ_history`
-  MODIFY `emp_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `emp_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `job_title`
@@ -679,7 +705,7 @@ ALTER TABLE `job_title`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `user`
