@@ -1,35 +1,3 @@
-{#{% extends 'base.html.twig' %}
-
-{% block title %}Employees by Department{% endblock %}
-
-{% block body %}
-    <h1></h1>
-    
-    <table class="table">
-        
-    </table>
-
-    
-    
-{% endblock %}
-
-
-
-
-
-  {% extends 'base.html.twig' %}
-
-{% block title %}Reports{% endblock %}
-
-{% block body %}
-    <h1>Reports</h1>
-    
-    
-    
-    
-
-    <a href="{{ path('leave_limit_index') }}">back to list</a> 
-{% endblock %}  #}
 
 
 {% extends 'base.html.twig' %}
@@ -217,58 +185,49 @@
               <div class="card-header">
                 <h4 class="card-title">Employees by Department</h4>
               </div>
-
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table tablesorter " id="">
                   <h2>{{deptName}} Department</h2>
                       <thead>
-            <tr>
-                <th>EmpId</th>
-                <th>Nic</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>BranchId</th>
-                <th>PayGrade</th>
-                <th>SupervisorId</th>
-                <th>Employment Status</th>
-                <th>Job Title</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for employee in employees %}
-            <tr>
-                <td>{{ employee.emp_id }}</td>
-                <td>{{ employee.NIC }}</td>
-                <td>{{ employee.name }}</td>
-                <td>{{ employee.email }}</td>
-                <td>{{ employee.branch_id }}</td>
-                <td>{{ employee.pay_grade }}</td>
-                <td>{{ employee.supervisor_id }}</td>
-                <td>{{ employee.emp_status }}</td>
-                <td>{{ employee.job_title }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="18">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>  
-        
-                                         
+                        <tr>
+                            <th>EmpId</th>
+                            <th>Nic</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>BranchId</th>
+                            <th>PayGrade</th>
+                            <th>SupervisorId</th>
+                            <th>Employment Status</th>
+                            <th>Job Title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for employee in employees %}
+                        <tr>
+                            <td>{{ employee.emp_id }}</td>
+                            <td>{{ employee.NIC }}</td>
+                            <td>{{ employee.name }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.branch_id }}</td>
+                            <td>{{ employee.pay_grade }}</td>
+                            <td>{{ employee.supervisor_id }}</td>
+                            <td>{{ employee.emp_status }}</td>
+                            <td>{{ employee.job_title }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="18">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>                                          
                     </table>    
                     <a href="{{ path('report_index') }}">back to report options</a>
                 </div>
               </div>
-
             </div>
-          </div>
-
-          
+          </div>       
         </div>
-
-
-
       </div>
       <footer class="footer">
         <div class="container-fluid">
