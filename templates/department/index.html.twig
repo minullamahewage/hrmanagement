@@ -202,8 +202,8 @@
                                 <td>{{ department.building }} </td>
                                 <td>{{ department.floor }} </td>
                                 <td>
-                                    <button class="btn"><a href="{{ path('department_show', {'deptId': department.dept_id}) }}">Show</a></button>
-                                    <button class="btn"><a href="{{ path('department_edit', {'deptId': department.dept_id}) }}">Edit</a></button>
+                                    <button class="btn" onclick="window.location.href='{{ path('department_show', {'deptId': department.dept_id}) }}';">Show</button>
+                                    <button class="btn" onclick="window.location.href='{{ path('department_edit', {'deptId': department.dept_id}) }}';">Edit</button>
                                 </td>
                             </tr>
                         {% else %}
@@ -213,7 +213,8 @@
                         {% endfor %}
                         </tbody>                  
                     </table>
-                    <a href="{{ path('department_new') }}">Add a New Department</a>
+                    <button class="btn" onclick="window.location.href='{{ path('department_new') }}';">Add a New Department</button>
+                    <button class="btn" onclick="window.location.href='{{ path('branch_new') }}';">Edit</button>
                 </div>
               </div>
             </div>

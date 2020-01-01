@@ -202,8 +202,8 @@
                             </tr>    
                         </tbody>                
                     </table>
-                    <button class="btn"><a class="urlcustom" href="{{ path('department_edit', {'deptId': department.deptId}) }}">Edit</a><br></button>
-                    <button class="btn"><a class="urlcustom" href="{{ path('department_index') }}">Go Back</a></button>
+                    <button class="btn" onclick="window.location.href='{{ path('department_edit', {'deptId': department.deptId}) }}';">Edit</button>
+                    <button class="btn" onclick="window.location.href='{{ path('department_index') }}';">Go Back</button>
                 </div>
               </div>
             </div>

@@ -201,7 +201,7 @@
                                 <td>{{ user.emp_id }}</td>
                                 <td>{{ user.roles }} </td>
                                 <td>
-                                    <a href="{{ path('user_show', {'userId': user.id}) }}">Show</a>
+                                    <button class="btn" onclick="window.location.href='{{ path('user_show', {'userId': user.id}) }}';">Show</button>
                                 </td>
                             </tr>
                         {% else %}
@@ -211,7 +211,7 @@
                         {% endfor %}
                         </tbody>                  
                     </table>
-                    <a href="{{ path('app_register') }}">Add a New User</a>
+                    <button class="btn" onclick="window.location.href='{{ path('app_register') }}';">Add a New User</button>
                 </div>
               </div>
             </div>
