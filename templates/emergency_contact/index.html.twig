@@ -195,8 +195,7 @@
                                 <th>Name</th>
                                 <th>Telephone</th>
                                 <th>Employee ID</th>
-                                <th>actions</th>
-                            </tr>
+                                <th>actions</th                            </tr>
                         </thead>
                         <tbody>
                         {% for emergency_contact in emergency_contacts %}
@@ -205,8 +204,8 @@
                                 <td>{{ emergency_contact.telephone }}</td>
                                 <td>{{ emergency_contact.emp_id }} </td>
                                 <td>
-                                    <a href="{{ path('emergency_contact_show', {'id': emergency_contact.id}) }}">Show</a>
-                                    <a href="{{ path('emergency_contact_edit', {'id': emergency_contact.id}) }}">Edit</a>
+                                    <button class="btn" onclick="window.location.href='{{ path('emergency_contact_show', {'id': emergency_contact.id}) }}';">Show</button>
+                                    <button class="btn" onclick="window.location.href='{{ path('emergency_contact_edit', {'id': emergency_contact.id}) }}';">Edit</button>
                                 </td>
                             </tr>
                         {% else %}
@@ -216,6 +215,7 @@
                         {% endfor %}
                         </tbody>                  
                     </table>
+                    <button class="btn" onclick="window.location.href='{{ path('emergency_contact_new') }}';">Create New Emergency Contact</button>
                 </div>
               </div>
             </div>
