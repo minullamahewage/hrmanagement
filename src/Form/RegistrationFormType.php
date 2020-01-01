@@ -52,10 +52,13 @@ class RegistrationFormType extends AbstractType
                     'choices'  => [
                         'Supervisor'     => 'ROLE_SUPERVISOR',
                         'Employee'    => 'ROLE_EMPLOYEE',
-                        'HR Manager' => 'ROLE_MANAGER',
+                        'HR Manager' => 'ROLE_HRMANAGER',
+                        'Manager' => 'ROLE_MANAGER'
                         
                     ],
-                ],])
+                ],
+                'allow_add'=> true,
+                ])
 
         ;
     }
