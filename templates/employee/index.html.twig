@@ -208,6 +208,7 @@
             <div class="card ">
               <div class="card-header">
                 <h4 class="card-title"> Employees</h4>
+                <button class="btn" onclick="window.location.href='{{ path('employee_new') }}';">Create New</button>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -230,7 +231,6 @@
                             <th>DeptId</th>
                             <th>Employment Status</th>
                             <th>Job Title</th>
-                            <th>actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -257,8 +257,10 @@
                             <td>{{ employee.emp_status }}</td>
                             <td>{{ employee.job_title }}</td>
                             <td>
-                                <a href="{{ path('admin_show', {'empId': employee.emp_id}) }}">show</a>
-                                <a href="{{ path('employee_edit', {'empId': employee.emp_id}) }}">edit</a>
+                                <button class="btn" onclick="window.location.href='{{ path('admin_show', {'empId': employee.emp_id}) }}';">Show</button>
+                            </td>
+                            <td>
+                                <button class="btn" onclick="window.location.href='{{ path('employee_edit', {'empId': employee.emp_id}) }}';">Edit</button>
                             </td>
                         </tr>
                     {% else %}
@@ -268,7 +270,7 @@
                     {% endfor %}
                     </tbody>                  
                     </table>
-                    <a href="{{ path('employee_new') }}">Create new</a> 
+                    
                 </div>
               </div>
             </div>

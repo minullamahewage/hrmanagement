@@ -30,6 +30,8 @@ class EmployHistoryController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $employHistories = $employHistoryModel->getAllEmployHistories($entityManager);
 
+       
+
         foreach ($employHistories as &$employHistory){
             $empStatusId = $employHistory['emp_status_id'];
             $empStatus = $employStatusModel->getEmploymentStatus($empStatusId, $entityManager);
@@ -48,17 +50,27 @@ class EmployHistoryController extends AbstractController
     public function new(Request $request): Response
     {
         $employHistory = new EmployHistory();
+        $employmentStatusModel = new EmploymentStatusModel();
         $employHistoryModel = new EmployHistoryModel();
-        $form = $this->createForm(EmployHistoryType::class, $employHistory);
+        $entityManager = $this->getDoctrine()->getManager();
+         // //employment Status
+         $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+         $empStatusChoices;
+         foreach($empStatuses as &$empStatus){
+             $empStatusChoices[$empStatus['id'].'-'.$empStatus['emp_status']] = $empStatus['id'];
+         }
+         $form = $this->createForm(EmployHistoryType::class,$employHistory, array(
+            'emp_status_choices' =>$empStatusChoices,
+        )); 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            //$employHistory->get
             //Getting employment status id from id
             // $employmentStatusModel = new EmploymentStatusModel();
             // $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
             // $employHistory->setEmpStatusId(strval($empStatusId));
-
+            // var_dump($employHistory); exit;
             $employHistoryModel->addEmployHistory($employHistory, $entityManager);
 
             return $this->redirectToRoute('employ_history_index');
@@ -87,7 +99,18 @@ class EmployHistoryController extends AbstractController
      */
     public function edit(Request $request, EmployHistory $employHistory): Response
     {
-        $form = $this->createForm(EmployHistoryType::class, $employHistory);
+        $employmentStatusModel = new EmploymentStatusModel();
+        $employHistoryModel = new EmployHistoryModel();
+        $entityManager = $this->getDoctrine()->getManager();
+         // //employment Status
+         $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+         $empStatusChoices;
+         foreach($empStatuses as &$empStatus){
+             $empStatusChoices[$empStatus['id'].'-'.$empStatus['emp_status']] = $empStatus['id'];
+         }
+         $form = $this->createForm(EmployHistoryType::class,$employHistory, array(
+            'emp_status_choices' =>$empStatusChoices,
+        )); 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

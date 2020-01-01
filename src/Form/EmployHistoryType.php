@@ -6,12 +6,15 @@ use App\Entity\EmployHistory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EmployHistoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->empStatusChoices = $options['emp_status_choices'];
+
         $builder
         ->add('fromDate', DateType::class,[
             'widget' =>'single_text',
@@ -21,8 +24,11 @@ class EmployHistoryType extends AbstractType
             'widget' =>'single_text',
             'help' =>'yyyy/mm/dd',
         ])
-            ->add('empStatusId')
-            ->add('emp_id')
+        ->add('empStatusId', ChoiceType::class,[
+            'choices' => $this->empStatusChoices,
+            'label' => 'Employment Status',
+        ])
+        ->add('emp_id')
         ;
     }
 
@@ -30,6 +36,7 @@ class EmployHistoryType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EmployHistory::class,
+            'emp_status_choices' =>null,
         ]);
     }
 }

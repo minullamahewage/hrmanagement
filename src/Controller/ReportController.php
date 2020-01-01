@@ -127,11 +127,11 @@ class ReportController extends AbstractController
              $payGradeChoices[$payGrade1['pay_grade']] = $payGrade1['pay_grade'];
          }
         // //employment Status
-        // $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
-        // $empStatusChoices;
-        // foreach($empStatuses as &$empStatus){
-        //     $empStatusChoices[$empStatus['emp_status']] = $empStatus['emp_status'];
-        // }
+         $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+         $empStatusChoices;
+         foreach($empStatuses as &$empStatus){
+             $empStatusChoices[$empStatus['id'].'-'.$empStatus['emp_status']] = $empStatus['emp_status'];
+         }
         $formBranch = $this->createForm(ReportBranchType::class, $branch, array(
             'branch_choices' =>$branchChoices,
         )); 

@@ -20,7 +20,7 @@ class EmployHistoryModel{
         $stmt->bindValue(':emp_id', $employHistory->getEmpId());
         $stmt->bindValue(':to_date',$employHistory->getToDate()->format('Y-m-d'));
         $stmt->bindValue(':from_date', $employHistory->getFromDate()->format('Y-m-d'));
-        $stmt->bindValue(':emp_status_id', $employHistory->getEmpStatus());
+        $stmt->bindValue(':emp_status_id', $employHistory->getEmpStatusId());
         $stmt->execute();
     }
 
@@ -31,7 +31,7 @@ class EmployHistoryModel{
         $stmt->bindValue(':emp_id', $employHistory->getEmpId());
         $stmt->bindValue(':to_date', $employHistory->getToDate()->format('Y-m-d'));
         $stmt->bindValue(':from_date', $employHistory->getFromDate()->format('Y-m-d'));
-        $stmt->bindValue(':emp_status_id', $employHistory->getEmpStatus());
+        $stmt->bindValue(':emp_status_id', $employHistory->getEmpStatusId());
         $stmt->execute();
     }
 
