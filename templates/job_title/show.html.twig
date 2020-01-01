@@ -204,24 +204,20 @@
                                     </tr>
                                     <tr>
                                         <th>Job Title</th>
-                                        <td>{{ branch.line1 }},  {{ branch.line2 }},  {{ branch.city }}</td>
+                                        <td>{{ job_title.jobTitle }}</td>
                                     </tr> 
                                     <tr>
-                                        <th>Country</th>
-                                        <td>{{ branch.country }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>PostalCode</th>
-                                        <td>{{ branch.postalCode }}</td>
+                                        <th>Description</th>
+                                        <td>{{ job_title.description }}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
                         <div>
-                        <a class="btn btn-fill btn-primary" href="{{ path('branch_edit', {'branchId': branch.branchId}) }}">Edit</a>                        
-                        {{ include('branch/_delete_form.html.twig') }}
+                        <a class="btn btn-fill btn-primary" href="{{ path('job_title_edit', {'jobTitleId': job_title.jobTitleId}) }}">Edit</a>                        
+                        {{ include('job_title/_delete_form.html.twig') }}
                         </div>
-                        <a href="{{ path('branch_index') }}">Back to Branch list</a>
+                        <a href="{{ path('job_title_index') }}">Back to Job Titles</a>
                     </div>
                 </div>
             </div>
