@@ -21,7 +21,7 @@ class LeaveLimit
      * @ORM\Id
      * 
      */
-    private $leaveType = '';
+    private $leaveType;
     /**
      * @var string
      *
@@ -29,7 +29,7 @@ class LeaveLimit
      * @ORM\Id
      * 
      */
-    private $payGrade = '';
+    private $payGrade;
 
     /**
      * @var integer|null
@@ -54,6 +54,7 @@ class LeaveLimit
     public function setLeaveType(?string $leaveType): self
     {
         $this->leaveType = $leaveType;
+        return $this;
     }
 
     public function getPayGrade(): ?string

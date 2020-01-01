@@ -133,10 +133,10 @@
                   </a>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
+                  <li class="nav-link"><a href="{{path('employee_show')}}" class="nav-item dropdown-item">Profile</a></li>
                   <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
                   <li class="dropdown-divider"></li>
-                  <li class="nav-link"><a href="/logout" class="nav-item dropdown-item">Log out</a></li>
+                  <li class="nav-link"><a href="{{path('app_logout')}}" class="nav-item dropdown-item">Log out</a></li>
                 </ul>
               </li>
               <li class="separator d-lg-none"></li>
@@ -192,8 +192,7 @@
                                 <td>{{ leave.approval_status }}</td>
                                 <td  >
                                     {{ include('leave/_approve_leave.html.twig') }}
-                                </td>    
-                                <td>
+                                    <br>
                                     {{ include('leave/_deny_leave.html.twig') }}
                                 </td>
                             </tr>
