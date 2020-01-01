@@ -34,7 +34,7 @@
         <ul class="nav">
         {% if (roles[0] == "ROLE_MANAGER" or roles[0] == "ROLE_ADMIN") %}
           <li>
-            <a href="{{ url('employee_index') }}">
+            <a href="{{ path('employee_index') }}">
               <i class="tim-icons icon-atom"></i>
               <p>Admin Home</p>
             </a>
@@ -42,49 +42,49 @@
         {% endif %}
           <li>
           <li class="active ">
-            <a href=href="{{ url('employee_show') }}">
+            <a href="{{ path('employee_show') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Employee Details</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('leave_new', {'empId': employee.empId}) }}">
+            <a href="{{ path('leave_new', {'empId': employee.empId}) }}">
               <i class="tim-icons icon-atom"></i>
               <p>Request Leave</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('dependent_emp', {'empId': employee.empId}) }}">
+            <a href="{{ path('dependent_emp', {'empId': employee.empId}) }}">
               <i class="tim-icons icon-pin"></i>
               <p>View Dependents</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">
+            <a href="{{ path('emergency_contact_emp', {'empId': employee.empId}) }}">
               <i class="tim-icons icon-bell-55"></i>
               <p>View Emergency Contacts</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('employee_subordinate') }}">
+            <a href="{{ path('employee_subordinate') }}">
               <i class="tim-icons icon-single-02"></i>
               <p>View Subordinates</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('employhistory_emp', {'empId': employee.empId}) }}">
+            <a href="{{ path('employhistory_emp', {'empId': employee.empId}) }}">
               <i class="tim-icons icon-puzzle-10"></i>
               <p>View Employment History</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('leave_emp', {'empId': employee.empId}) }}">
+            <a href="{{ path('leave_emp', {'empId': employee.empId}) }}">
               <i class="tim-icons icon-align-center"></i>
               <p>View Leaves</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('leave_requests') }}">
+            <a href="{{ path('leave_requests') }}">
               <i class="tim-icons icon-world"></i>
               <p>View Leave Requests</p>
             </a>

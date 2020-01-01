@@ -36,7 +36,7 @@ class DependentType extends AbstractType
                 
                     new Length([
                         'min' => 10,
-                        'minMessage' => 'Your nic should be at least {{ limit }} characters'
+                        'minMessage' => 'Your telephone number should be at least {{ limit }} characters'
                         
             ])]])
             ->add('addrLine1')

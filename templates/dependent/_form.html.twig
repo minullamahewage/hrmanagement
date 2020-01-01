@@ -1,4 +1,83 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.nic) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.nic) }}       
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.name) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.name) }}   
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.email) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.email) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.relationship) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.relationship) }}
+    </div>
+</div>
+
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.telephone) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.telephone) }}
+    </div>
+</div>
+
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.addrLine1) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.addrLine1) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.addrLine2) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.addrLine2) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.city) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.city) }}
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.country) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.country) }}
+    </div>
+</div>
+     <div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.postalCode) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.postalCode) }}
+    </div>
+</div>
+          <div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.empid) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.empid) }}
+    </div>
+</div>
+     
+<button class="btn btn-fill btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
