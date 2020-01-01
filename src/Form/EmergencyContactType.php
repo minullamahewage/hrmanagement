@@ -6,6 +6,9 @@ use App\Entity\EmergencyContact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
 
 class EmergencyContactType extends AbstractType
 {
@@ -13,7 +16,14 @@ class EmergencyContactType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('telephone')
+            ->add('telephone',NumberType::class,[
+                'constraints' => [
+                
+                    new Length([
+                        'min' => 10,
+                        'minMessage' => 'Your telephone number should be at least {{ limit }} characters'
+                        
+                    ])]])
             ->add('emp_id')
         ;
     }
