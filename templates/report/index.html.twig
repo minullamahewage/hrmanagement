@@ -34,34 +34,27 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
     -->
       <div class="sidebar-wrapper">
-        <div class="logo">
-          <a href="javascript:void(0)" class="simple-text logo-mini">
-            JA
-          </a>
-          <a href="javascript:void(0)" class="simple-text logo-normal">
-            Jupiter Apparels
-          </a> 
-        </div>
+        
         <ul class="nav">
-          <li class="active ">
-            <a href="">
+           <li class=''>
+            <a href="{{ path('user_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Reports</p>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="">
+            <a href="{{ path('employee_index') }}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Employees</p>
             </a>
           </li>
           <li>
-            <a href="{{ path('employee_index') }}">
-              <i class="tim-icons icon-minimal-left"></i>
-              <p>Go Back</p>
-            </a>
-          </li>
-           {# <li>
             <a href="{{ path('branch_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Branches</p>
             </a>
           </li>
-          <li>
+          <li >
             <a href="{{path('department_index')}}">
               <i class="tim-icons icon-atom"></i>
               <p>Departments</p>
@@ -127,12 +120,12 @@
               <p>Employment History</p>
             </a>
           </li>
-          {# <li class="active-pro">
-            <a href="./upgrade.html">
-              <i class="tim-icons icon-spaceship"></i>
-              <p>Upgrade to PRO</p>
+          <li class="active">
+            <a href="{{ path('report_index') }}">
+              <i class="tim-icons icon-notes"></i>
+              <p>Reports</p>
             </a>
-          </li> #}
+          </li>
         </ul>
       </div>
     </div>
