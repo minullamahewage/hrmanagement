@@ -490,5 +490,8 @@ iframe {
   }
 }
 
-
+a{
+  color: white; 
+  font-style: bold;
+}
 

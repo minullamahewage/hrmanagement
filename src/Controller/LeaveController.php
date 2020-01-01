@@ -43,6 +43,9 @@ class LeaveController extends AbstractController
      */
     public function new(Request $request,$empId): Response
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $empId = $user->getEmpId();
         $entityManager = $this->getDoctrine()->getManager();
         $leaveModel = new LeaveModel();
         $leaveTypeModel = new LeaveTypeModel();

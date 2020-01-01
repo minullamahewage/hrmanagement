@@ -194,7 +194,6 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Employment Status</th>
-                                <th>actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -203,7 +202,10 @@
                                 <td>{{ employment_status.id}}</td>
                                 <td>{{ employment_status.emp_status }}</td>
                                 <td>
-                                    <a href="{{ path('employment_status_show', {'id': employment_status.id}) }}">Show</a>
+                                    <button class="btn" ><a href="{{ path('employment_status_show', {'id': employment_status.id}) }}">Show</a></button>
+                                </td>
+                                <td>
+                                    {{ include('employment_status/_delete_form.html.twig') }}
                                 </td>
                             </tr>
                         {% else %}
