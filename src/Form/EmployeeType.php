@@ -6,9 +6,13 @@ use App\Entity\Employee;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+
 
 class EmployeeType extends AbstractType
 {
@@ -22,18 +26,29 @@ class EmployeeType extends AbstractType
                 
         $builder
             ->add('empId')
-            ->add('nic')
+            ->add('nic', TextType::class,[
+                'constraints' => [
+                
+                    new Length([
+                        'min' => 10,
+                        'minMessage' => 'Your nic should be at least {{ limit }} characters',
+                        'max' => 12,
+                        'minMessage' => 'Your nic should be less than {{ limit }} characters'
+                        
+            ])]])
             ->add('name')
-            ->add('email')
+            ->add('email', EmailType::class)
             ->add('addrLine1')
             ->add('addrLine2')
             ->add('city')
             ->add('country')
-            ->add('postalCode')
-            ->add('dob', DateType::class,[
-                'widget' =>'single_text',
-                'help' =>'yyyy/mm/dd',
-            ])
+            ->add('postalCode', NumberType::class)
+            ->add('dob', DateType::Class, array(
+                'widget' => 'choice',
+                'years' => range(date('Y')-100, date('Y')-18),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
+              ))
             ->add('maritalStatus', ChoiceType::class,[
                 'choices' => [
                     'Married' => 'Married',
