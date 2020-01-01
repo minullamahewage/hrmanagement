@@ -12,7 +12,14 @@ class EmpTelephoneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('telephone')
+            ->add('telephone',NumberType::class,[
+                'constraints' => [
+                
+                    new Length([
+                        'min' => 10,
+                        'minMessage' => 'Your telephone number should be at least {{ limit }} characters'
+                        
+            ])]])
             ->add('empId')
         ;
     }
