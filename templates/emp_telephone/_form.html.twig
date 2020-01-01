@@ -1,4 +1,18 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.telephone) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.telephone) }}       
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.empId) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.empId) }}   
+    </div>
+</div>
+
+<button class="btn btn-fill btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
