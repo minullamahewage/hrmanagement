@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add {% endblock %}
+{% block title %}Department{% endblock %}
 
 {% block stylesheets %}
     <!--     Fonts and icons     -->
@@ -133,7 +133,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Departments</a>
+            <a class="navbar-brand" href="javascript:void(0)">{{department.deptName}} Department </a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -181,40 +181,29 @@
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Departments</h4>
+                <h4 class="card-title">{{department.deptName}} Department </h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table tablesorter " id="">
-                        <thead class=" text-primary">
+                        <tbody class=" text-primary">
                             <tr>
                                 <th>Dept Id</th>
+                                <td>{{ department.deptId}}</td>
+                            </tr>    
                                 <th>Department Name</th>
+                                <td>{{ department.deptName }}</td>
+                            </tr>
                                 <th>Building</th>
-                                <th>Floor</th>
-                                <th>actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for department in departments %}
-                            <tr>
-                                <td>{{ department.dept_id}}</td>
-                                <td>{{ department.dept_name }}</td>
                                 <td>{{ department.building }} </td>
+                            </tr>
+                                <th>Floor</th>
                                 <td>{{ department.floor }} </td>
-                                <td>
-                                    <a href="{{ path('department_show', {'deptId': department.dept_id}) }}">Show</a>
-                                    <a href="{{ path('department_edit', {'deptId': department.dept_id}) }}">Edit</a>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="7">no records found</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>                  
+                            </tr>    
+                        </tbody>                
                     </table>
-                    <a href="{{ path('department_new') }}">Add a New Department</a>
+                    <a href="{{ path('department_edit', {'deptId': department.deptId}) }}">Edit</a><br>
+                    <a href="{{ path('department_index') }}">Go Back</a>
                 </div>
               </div>
             </div>
