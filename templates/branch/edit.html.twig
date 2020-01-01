@@ -21,68 +21,104 @@
     -->
       <div class="sidebar-wrapper">
         <div class="logo">
-          <a href="javascript:void(0)" class="simple-text logo-mini">
+          {# <a href="javascript:void(0)" class="simple-text logo-mini">
             JA
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
             Jupiter Apparels
-          </a>
+          </a> #}
         </div>
         <ul class="nav">
           <li>
-            <a href="./dashboard.html">
+            <a href="{{ path('user_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Dashboard</p>
+              <p>Users</p>
             </a>
           </li>
           <li>
-            <a href="./icons.html">
-              <i class="tim-icons icon-atom"></i>
-              <p>Icons</p>
+            <a href="{{ path('employee_index') }}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Employees</p>
             </a>
           </li>
-          <li>
-            <a href="./map.html">
-              <i class="tim-icons icon-pin"></i>
-              <p>Maps</p>
-            </a>
-          </li>
-          <li>
-            <a href="./notifications.html">
-              <i class="tim-icons icon-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li>
-            <a href="./user.html">
-              <i class="tim-icons icon-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li class="active ">
+          <li class="active">
             <a href="{{ path('branch_index') }}">
-              <i class="tim-icons icon-puzzle-10"></i>
+              <i class="tim-icons icon-chart-pie-36"></i>
               <p>Branches</p>
             </a>
           </li>
           <li>
-            <a href="./typography.html">
-              <i class="tim-icons icon-align-center"></i>
-              <p>Typography</p>
+            <a href="{{path('department_index')}}">
+              <i class="tim-icons icon-atom"></i>
+              <p>Departments</p>
             </a>
           </li>
           <li>
-            <a href="./rtl.html">
-              <i class="tim-icons icon-world"></i>
-              <p>RTL Support</p>
+            <a href="{{path('employment_status_index')}}">
+              <i class="tim-icons icon-pin"></i>
+              <p>Employment Status</p>
             </a>
           </li>
-          <li class="active-pro">
+          <li>
+            <a href="{{path('job_title_index')}}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Job Title</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('pay_grade_index')}}">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Pay Grades</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('leave_index')}}">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>Leaves</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('leave_type_index')}}">
+              <i class="tim-icons icon-align-center"></i>
+              <p>Leave Type</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('leave_limit_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Leave Limit</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('emp_telephone_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employee Telephone</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('dependent_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Dependents</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('emergency_contact_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Emergency Contacts</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('employ_history_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employment History</p>
+            </a>
+          </li>
+          {# <li class="active-pro">
             <a href="./upgrade.html">
               <i class="tim-icons icon-spaceship"></i>
               <p>Upgrade to PRO</p>
             </a>
-          </li>
+          </li> #}
         </ul>
       </div>
     </div>
@@ -107,27 +143,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto">
-              <li class="search-bar input-group">
-                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split" ></i>
-                  <span class="d-lg-none d-md-block">Search</span>
-                </button>
-              </li>
-              <li class="dropdown nav-item">
-                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                  <div class="notification d-none d-lg-block d-xl-block"></div>
-                  <i class="tim-icons icon-sound-wave"></i>
-                  <p class="d-lg-none">
-                    Notifications
-                  </p>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
-                  <li class="nav-link"><a href="#" class="nav-item dropdown-item">Test Notification</a></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Test Notification</a></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Test Notification</a></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Test Notification</a></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Test Notification</a></li>
-                </ul>
-              </li>
               <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                   <div class="photo">
@@ -139,10 +154,9 @@
                   </p>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
+                  <li class="nav-link"><a href="{{ path('employee_show') }}" class="nav-item dropdown-item">Profile</a></li>
                   <li class="dropdown-divider"></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
+                  <li class="nav-link"><a href="{{ path('app_logout') }}" class="nav-item dropdown-item">Log out</a></li>
                 </ul>
               </li>
               <li class="separator d-lg-none"></li>

@@ -96,7 +96,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         /** @var User $user */
         $user = $token->getUser();
-        if($user->getUserName()=="admin"){
+        if($user->getRoles()[0]=="ROLE_MANAGER"){
             return new RedirectResponse($this->urlGenerator->generate('employee_index'));
         }
         else{
