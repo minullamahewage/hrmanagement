@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Leaves per Period by Department{% endblock %}
+{% block title %}Leaves by Department for Given Period{% endblock %}
 
 {% block body %}
-    <h1>Leaves per Period by Department</h1>
+    <h1>Leaves by Department for Given Period</h1>
+    <h2>Leaves of {{deptName}} Department from {{beginDate}} to {{endDate}}</h2>
     <table class="table">
         <thead>
         <tr>

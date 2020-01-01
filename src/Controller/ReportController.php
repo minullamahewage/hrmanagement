@@ -185,7 +185,7 @@ class ReportController extends AbstractController
 
         $formLeaves->handleRequest($request);
         if ($formLeaves->isSubmitted() && $formLeaves->isValid()) {
-            $deptId = $dept->getDeptId();
+            $deptId = $formLeaves->get('deptId')->getData();
             $beginDate1 = $formLeaves->get('beginDate')->getData();
             $endDate1 = $formLeaves->get('endDate')->getData();
             $beginDate = $beginDate1->format('Y-m-d');
@@ -340,34 +340,23 @@ class ReportController extends AbstractController
     }
 
     /**
-     * @Route("/leaves/{deptId}-{beginDate}-{endDate}", name="report_leaves", methods={"GET"})
+     * @Route("/leaves/{deptId}/{beginDate}/{endDate}", name="report_leaves", methods={"GET"})
      */
     public function showLeaves($deptId,$beginDate, $endDate): Response
     {
         $employeeModel = new EmployeeModel();
-        $branchModel = new BranchModel();
+        $deptModel = new DepartmentModel();
         $reportModel = new ReportModel();
         $entityManager = $this->getDoctrine()->getManager();
-        //var_dump($deptId."--".$beginDate."--".$endDate);exit;
+        $deptName = $deptModel->getDepartmentName($deptId, $entityManager);
         $leaves = $reportModel->getLeavesForPeriodByDept($deptId, $beginDate, $endDate, $entityManager);
         //changing job title id and emp status id to job title and emp status
-        $jobTitleModel = new JobTitleModel();
-        $empStatusModel = new EmploymentStatusModel();
-        $empTelephoneModel = new EmpTelephoneModel();
-        $empDataModel = new EmpDataModel();
-        // foreach ($employees as &$employee){
-        //     //job title
-        //     $jobTitleId = $employee['job_title_id'];
-        //     $jobTitle = $jobTitleModel->getJobTitle($jobTitleId, $entityManager);
-        //     $employee['job_title'] = $jobTitle;
-        //     //employment status
-        //     $empStatusId = $employee['emp_status_id'];
-        //     $empStatus = $empStatusModel->getEmploymentStatus($empStatusId, $entityManager);
-        //     $employee["emp_status"] = $empStatus;
-        //}
-
+        
         return $this->render('report/leaves.html.twig', [
-            'leaves' => $leaves
+            'leaves' => $leaves,
+            'beginDate' => $beginDate, 
+            'endDate' => $endDate,
+            'deptName' => $deptName[0]['dept_name']
         ]);
     }
     

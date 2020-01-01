@@ -20,16 +20,21 @@ class ReportLeavesType extends AbstractType
                 'choices' => $this->deptChoices,
                 'label' => 'Department',
                 'mapped' => false
+                
             ])
             ->add('beginDate', DateType::class,[
-                'widget' =>'single_text',
-                'help' =>'yyyy/mm/dd',
-                'mapped' => false
+                'widget' =>'choice',
+                'mapped' => false,
+                'years' => range(date('Y')-10, date('Y')),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
             ])
             ->add('endDate', DateType::class,[
-                'widget' =>'single_text',
-                'help' =>'yyyy/mm/dd',
-                'mapped' => false
+                'widget' =>'choice',
+                'mapped' => false,
+                'years' => range(date('Y')-10, date('Y')),
+                'months' => range(date('m'), 12),
+                'days' => range(date('d'), 31),
             ])
         ;
     }
