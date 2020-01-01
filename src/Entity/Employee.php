@@ -26,56 +26,56 @@ class Employee
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NIC", type="string", length=12, nullable=true)
+     * @ORM\Column(name="NIC", type="string", length=12, nullable=false)
      */
     private $nic;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=50, nullable=true)
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
      */
     private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="addr_line_1", type="string", length=30, nullable=true)
+     * @ORM\Column(name="addr_line_1", type="string", length=30, nullable=false)
      */
     private $addrLine1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="addr_line_2", type="string", length=30, nullable=true)
+     * @ORM\Column(name="addr_line_2", type="string", length=30, nullable=false)
      */
     private $addrLine2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="city", type="string", length=30, nullable=true)
+     * @ORM\Column(name="city", type="string", length=30, nullable=false)
      */
     private $city;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="country", type="string", length=30, nullable=true)
+     * @ORM\Column(name="country", type="string", length=30, nullable=false)
      */
     private $country;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="postal_code", type="string", length=10, nullable=true)
+     * @ORM\Column(name="postal_code", type="string", length=10, nullable=false)
      */
     private $postalCode;
 

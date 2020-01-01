@@ -334,6 +334,8 @@ class EmployeeController extends AbstractController
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
+        $roles = $user->getRoles();
+        // var_dump($roles); exit;
         $empId = $user->getEmpId();
         // var_dump($empId); exit;
         $employeeModel = new EmployeeModel();
@@ -366,6 +368,7 @@ class EmployeeController extends AbstractController
                 'employee' => $employee,
                 'emp_telephone' => $empTelephone,
                 'custom_data' => $customData,
+                'roles' =>$roles,
             ]);
 
         }
@@ -374,6 +377,7 @@ class EmployeeController extends AbstractController
                 'employee' => $employee,
                 'emp_telephone' => $empTelephone,
                 'custom_data' => $customData,
+                'roles' =>$roles,
             ]);
         }
     }

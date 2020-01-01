@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
-
-
-
-{% block title %}Employee Details{% endblock %}
+{% block title %}Users{% endblock %}
 
 {% block stylesheets %}
     <!--     Fonts and icons     -->
@@ -24,54 +20,104 @@
     -->
       <div class="sidebar-wrapper">
         <div class="logo">
-          <a href="javascript:void(0)" class="simple-text logo-mini">
+          {# <a href="javascript:void(0)" class="simple-text logo-mini">
             JA
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
             Jupiter Apparels
-          </a>
+          </a> #}
         </div>
         <ul class="nav">
-        {% if (roles[0] == "ROLE_MANAGER" or roles[0] == "ROLE_ADMIN") %}
-          <li>
-            <a href="{{ url('employee_index') }}">
-              <i class="tim-icons icon-atom"></i>
-              <p>Admin Home</p>
-            </a>
-          </li>
-        {% endif %}
-          <li>
           <li class="active ">
-            <a href="">
+            <a href="{{ path('user_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Employee Details</p>
+              <p>Users</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('leave_new', {'empId': employee.empId}) }}">
+            <a href="{{ path('employee_index') }}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Employees</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{ path('branch_index') }}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Branches</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('department_index')}}">
               <i class="tim-icons icon-atom"></i>
-              <p>Request Leave</p>
+              <p>Departments</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">
+            <a href="{{path('employment_status_index')}}">
+              <i class="tim-icons icon-pin"></i>
+              <p>Employment Status</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('job_title_index')}}">
               <i class="tim-icons icon-bell-55"></i>
-              <p>View Emergency Contacts</p>
+              <p>Job Title</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('employhistory_emp', {'empId': employee.empId}) }}">
+            <a href="{{path('pay_grade_index')}}">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Pay Grades</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('leave_index')}}">
               <i class="tim-icons icon-puzzle-10"></i>
-              <p>View Employment History</p>
+              <p>Leaves</p>
             </a>
           </li>
           <li>
-            <a href="{{ url('leave_emp', {'empId': employee.empId}) }}">
+            <a href="{{path('leave_type_index')}}">
               <i class="tim-icons icon-align-center"></i>
-              <p>View Leaves</p>
+              <p>Leave Type</p>
             </a>
           </li>
-         
+          <li>
+            <a href="{{path('leave_limit_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Leave Limit</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('emp_telephone_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employee Telephone</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('dependent_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Dependents</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('emergency_contact_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Emergency Contacts</p>
+            </a>
+          </li>
+          <li>
+            <a href="{{path('employ_history_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employment History</p>
+            </a>
+          </li>
+          {# <li class="active-pro">
+            <a href="./upgrade.html">
+              <i class="tim-icons icon-spaceship"></i>
+              <p>Upgrade to PRO</p>
+            </a>
+          </li> #}
         </ul>
       </div>
     </div>
@@ -87,7 +133,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Employee Details</a>
+            <a class="navbar-brand" href="javascript:void(0)">Users</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -123,15 +169,15 @@
                     <img src="{{ asset('/img/anime3.png') }}" alt="Profile Photo">
                   </div>
                   <b class="caret d-none d-lg-block d-xl-block"></b>
-                  <a class="d-lg-none" href="/logout">
+                  <p class="d-lg-none">
                     Log out
-                  </a>
+                  </p>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
                   <li class="nav-link"><a href="{{ path('employee_show') }}" class="nav-item dropdown-item">Profile</a></li>
                   <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
                   <li class="dropdown-divider"></li>
-                  <li class="nav-link"><a href="/logout" class="nav-item dropdown-item">Log out</a></li>
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
                 </ul>
               </li>
               <li class="separator d-lg-none"></li>
@@ -154,97 +200,40 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Employee Details</h4>
+                <h4 class="card-title"> Users</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table tablesorter " id="">
-                        <tbody>
+                        <thead class=" text-primary">
                             <tr>
+                                <th>Username</th>
                                 <th>EmpId</th>
-                                <td>{{ employee.empId }}</td>
+                                <th>Roles</th>
+                                <th>actions</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
                             <tr>
-                                <th>Nic</th>
-                                <td>{{ employee.nic }}</td>
+                                <td>{{ user.username}}</td>
+                                <td>{{ user.emp_id }}</td>
+                                <td>{{ user.roles }} </td>
+                                <td>
+                                    <a href="{{ path('user_show', {'userId': user.id}) }}">Show</a>
+                                </td>
                             </tr>
+                        {% else %}
                             <tr>
-                                <th>Name</th>
-                                <td>{{ employee.name }}</td>
+                                <td colspan="7">no records found</td>
                             </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{{ employee.email }}</td>
-                            </tr>
-                            <tr>
-                                <th>AddrLine1</th>
-                                <td>{{ employee.addrLine1 }}</td>
-                            </tr>
-                            <tr>
-                                <th>AddrLine2</th>
-                                <td>{{ employee.addrLine2 }}</td>
-                            </tr>
-                            <tr>
-                                <th>City</th>
-                                <td>{{ employee.city }}</td>
-                            </tr>
-                            <tr>
-                                <th>Country</th>
-                                <td>{{ employee.country }}</td>
-                            </tr>
-                            <tr>
-                                <th>PostalCode</th>
-                                <td>{{ employee.postalCode }}</td>
-                            </tr>
-                            <tr>
-                                <th>Telephone No</th>
-                                {% for telephone in emp_telephone %}
-                                    <tr><th></th><td>{{telephone.telephone}}</td></tr>
-                                {% endfor %}
-                            </tr>
-                            <tr>
-                                <th>Dob</th>
-                                <td>{{ employee.dob ? employee.dob|date('Y-m-d') : '' }}</td>
-                            </tr>
-                            <tr>
-                                <th>MaritalStatus</th>
-                                <td>{{ employee.maritalStatus }}</td>
-                            </tr>
-                            <tr>
-                                <th>BranchId</th>
-                                <td>{{ employee.branchId }}</td>
-                            </tr>
-                            <tr>
-                                <th>PayGrade</th>
-                                <td>{{ employee.payGrade }}</td>
-                            </tr>
-                            <tr>
-                                <th>SupervisorId</th>
-                                <td>{{ employee.supervisorId }}</td>
-                            </tr>
-                            <tr>
-                                <th>DeptId</th>
-                                <td>{{ employee.deptId }}</td>
-                            </tr>
-                            <tr>
-                                <th>Employment Status</th>
-                                <td>{{ employee.empStatus }}</td>
-                            </tr>
-                            <tr>
-                                <th>Job Title</th>
-                                <td>{{ employee.jobTitle }}</td>
-                            </tr>
-                            {% for customData in custom_data %}            
-                                <tr>
-                                    <th>{{ customData.attribute|replace({'_' :' '  ,}) }}</th>
-                                    <td>{{ customData.value }}</td>
-                                </tr>
-                            {% endfor %}
+                        {% endfor %}
                         </tbody>                  
                     </table>
+                    <a href="{{ path('app_register') }}">Add a New User</a>
                 </div>
               </div>
             </div>
@@ -439,4 +428,3 @@
   </script>
                     
 {% endblock %}
-

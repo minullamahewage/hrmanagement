@@ -31,6 +31,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => "Pasword",
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
@@ -49,9 +50,9 @@ class RegistrationFormType extends AbstractType
                 'entry_type'   => ChoiceType::class,
                 'entry_options'  => [
                     'choices'  => [
-                        'Admin' => 'ROLE_ADMIN',
                         'Supervisor'     => 'ROLE_SUPERVISOR',
                         'Employee'    => 'ROLE_EMPLOYEE',
+                        'HR Manager' => 'ROLE_MANAGER',
                         
                     ],
                 ],])
