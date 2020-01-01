@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leaves per Period by Department{% endblock %}
+
+{% block body %}
+    <h1>Leaves per Period by Department</h1>
+    <table class="table">
+        <thead>
+        <tr>
+                <th>LeaveFormId</th>
+                <th>EmpId</th>
+                <th>FromDate</th>
+                <th>TillDate</th>
+                <th>LeaveType</th>
+                <th>ApprovalStatus</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.leave_form_id }}</td>
+                <td>{{ leave.emp_id }}</td>
+                <td>{{ leave.from_date }}</td>
+                <td>{{ leave.till_date }}</td>
+                <td>{{ leave.leave_type }}</td>
+                <td>{{ leave.approval_status }}</td>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('report_index') }}">back to report options</a>
+    
+{% endblock %}
+
