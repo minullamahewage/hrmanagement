@@ -30,6 +30,8 @@ class EmployHistoryController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $employHistories = $employHistoryModel->getAllEmployHistories($entityManager);
 
+       
+
         foreach ($employHistories as &$employHistory){
             $empStatusId = $employHistory['emp_status_id'];
             $empStatus = $employStatusModel->getEmploymentStatus($empStatusId, $entityManager);
@@ -49,9 +51,16 @@ class EmployHistoryController extends AbstractController
     {
         $employHistory = new EmployHistory();
         $employHistoryModel = new EmployHistoryModel();
-        $form = $this->createForm(EmployHistoryType::class, $employHistory);
+         // //employment Status
+         $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+         $empStatusChoices;
+         foreach($empStatuses as &$empStatus){
+             $empStatusChoices[$empStatus['id'].'-'.$empStatus['emp_status']] = $empStatus['emp_status'];
+         }
+        $form = $this->createForm(EmployHistoryType::class, array(
+            'emp_Status_Choices' =>$empStatusChoices,
+        )); 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             //Getting employment status id from id
