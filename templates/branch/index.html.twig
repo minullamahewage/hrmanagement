@@ -112,6 +112,12 @@
               <p>Employment History</p>
             </a>
           </li>
+          <li class="">
+            <a href="{{ path('report_index') }}">
+              <i class="tim-icons icon-notes"></i>
+              <p>Reports</p>
+            </a>
+          </li>
           {# <li class="active-pro">
             <a href="./upgrade.html">
               <i class="tim-icons icon-spaceship"></i>
@@ -202,7 +208,7 @@
                                 <td>{{ branch.line_1 }}, {{ branch.line_2 }}, {{ branch.city }}, {{ branch.country }}, {{ branch.postal_code }} </td>
                                 <td>
                                     <button class="btn" onclick="window.location.href='{{ path('branch_show', {'branchId': branch.branch_id}) }}';">Show</button>
-                                    <button class="btn" onclick="window.location.href='{{ path('branch_show', {'branchId': branch.branch_id}) }}';">Edit</button>
+                                    <button class="btn" onclick="window.location.href='{{ path('branch_edit', {'branchId': branch.branch_id}) }}';">Edit</button>
                                 </td>
                             </tr>
                         {% else %}
