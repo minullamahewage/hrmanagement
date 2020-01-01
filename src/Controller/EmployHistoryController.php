@@ -54,13 +54,10 @@ class EmployHistoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($employHistory);
-            // $entityManager->flush();
             //Getting employment status id from id
-            $employmentStatusModel = new EmploymentStatusModel();
-            $empStatus = $employee->getEmpStatus();
-            $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
-            $employHistory->setEmpStatusId(strval($empStatusId));
+            // $employmentStatusModel = new EmploymentStatusModel();
+            // $empStatusId = $employmentStatusModel->getEmploymentStatusId($empStatus, $entityManager);
+            // $employHistory->setEmpStatusId(strval($empStatusId));
 
             $employHistoryModel->addEmployHistory($employHistory, $entityManager);
 

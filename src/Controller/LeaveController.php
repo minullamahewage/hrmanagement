@@ -76,7 +76,12 @@ class LeaveController extends AbstractController
             }
             else{
                 // var_dump("failed"); exit;
-                return new Response('No leaves remaining from this type');
+                $this->addFlash(
+                    'notice', 'Not enough leaves remaining from this time'
+                );
+    
+                return $this->redirectToRoute('leave_new', array('empId'=>$empId));
+                // return new Response('No leaves remaining from this type');
             }  
         }
         return $this->render('leave/new.html.twig', [
@@ -123,7 +128,7 @@ class LeaveController extends AbstractController
         $leaves = $leaveModel->getEmpLeaves($empId,$entityManager);
         $leavesRemaining  = $leaveModel->getEmpRemLeaves($empId,$entityManager);
 
-        return $this->render('leave/emp.html.twig', [
+        return $this->render('leave/emp_admin.html.twig', [
             'leaves' => $leaves,
             'leaves_remaining' =>$leavesRemaining,
             'emp_id' =>$empId,
