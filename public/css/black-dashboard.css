@@ -15928,7 +15928,8 @@ img {
 
 .navbar-nav li i {
   vertical-align: middle;
-  font-size: 1000px;
+  font-size: 5px;
+  opacity: 0%;
 }
 
 @media screen and (max-width: 991px) {
