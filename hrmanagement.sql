@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 01, 2020 at 05:00 PM
+-- Generation Time: Jan 01, 2020 at 05:04 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `hrmanagement`
 --
+CREATE DATABASE IF NOT EXISTS `hrmanagement` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `hrmanagement`;
 
 -- --------------------------------------------------------
 
