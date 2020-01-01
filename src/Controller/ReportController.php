@@ -6,10 +6,12 @@ use App\Entity\Department;
 use App\Entity\Employee;
 use App\Entity\EmpData;
 use App\Entity\JobTitle;
+use App\Entity\Leave;
 use App\Entity\PayGrade;
 use App\Form\ReportsForm\ReportBranchType;
 use App\Form\ReportsForm\ReportDeptType;
 use App\Form\ReportsForm\ReportJobTitleType;
+use App\Form\ReportsForm\ReportLeavesType;
 use App\Form\ReportsForm\ReportPayGradeType;
 use App\Model\BranchModel;
 use App\Model\DepartmentModel;
@@ -19,6 +21,7 @@ use App\Model\EmpTelephoneModel;
 use App\Model\EmpCustomModel;
 use App\Model\EmpDataModel;
 use App\Model\JobTitleModel;
+use App\Model\LeaveModel;
 use App\Model\PayGradeModel;
 use App\Model\ReportModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,6 +89,7 @@ class ReportController extends AbstractController
         $dept = new Department();
         $jobTitle = new JobTitle();
         $payGrade = new PayGrade();
+        $leave = new Leave();
         $employee = new Employee();
         $reportModel = new ReportModel();
         $employeeModel = new EmployeeModel();
@@ -144,6 +148,11 @@ class ReportController extends AbstractController
             'payGrade_choices' =>$payGradeChoices,
         )); 
 
+        $formLeaves = $this->createForm(ReportLeavesType::class, $leave, array(
+            'dept_choices' =>$deptChoices,
+        )); 
+
+
         $formBranch->handleRequest($request);
         if ($formBranch->isSubmitted() && $formBranch->isValid()) {
             $branchId = $branch->getBranchId();
@@ -174,11 +183,22 @@ class ReportController extends AbstractController
             return $this->redirectToRoute('report_payGrade', array('payGrade' =>$payGrade2));
         }
 
+        $formLeaves->handleRequest($request);
+        if ($formLeaves->isSubmitted() && $formLeaves->isValid()) {
+            $deptId = $formLeaves->get('deptId')->getData();
+            $beginDate1 = $formLeaves->get('beginDate')->getData();
+            $endDate1 = $formLeaves->get('endDate')->getData();
+            $beginDate = $beginDate1->format('Y-m-d');
+            $endDate = $endDate1->format('Y-m-d');
+            return $this->redirectToRoute('report_leaves', array('deptId' =>$deptId,'beginDate' =>$beginDate, 'endDate' =>$endDate));
+        }
+
         return $this->render('report/index.html.twig', [
             'form_dept' => $formDept->createView(),
             'form_branch' => $formBranch->createView(),
             'form_jobTitle' => $formJobTitle->createView(),
             'form_payGrade' => $formPayGrade->createView(),
+            'form_leaves' => $formLeaves->createView()
         ]);
     }
 
@@ -228,6 +248,7 @@ class ReportController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $employees = $reportModel->getEmpByDepartment($deptId, $entityManager);
         $deptName = $deptModel->getDepartmentName($deptId, $entityManager);
+        //var_dump($leaves);exit;
         //changing job title id and emp status id to job title and emp status
         $jobTitleModel = new JobTitleModel();
         $empStatusModel = new EmploymentStatusModel();
@@ -315,6 +336,27 @@ class ReportController extends AbstractController
         return $this->render('report/payGrade.html.twig', [
             'employees' => $employees,
             'payGrade' => $payGrade
+        ]);
+    }
+
+    /**
+     * @Route("/leaves/{deptId}/{beginDate}/{endDate}", name="report_leaves", methods={"GET"})
+     */
+    public function showLeaves($deptId,$beginDate, $endDate): Response
+    {
+        $employeeModel = new EmployeeModel();
+        $deptModel = new DepartmentModel();
+        $reportModel = new ReportModel();
+        $entityManager = $this->getDoctrine()->getManager();
+        $deptName = $deptModel->getDepartmentName($deptId, $entityManager);
+        $leaves = $reportModel->getLeavesForPeriodByDept($deptId, $beginDate, $endDate, $entityManager);
+        //changing job title id and emp status id to job title and emp status
+        
+        return $this->render('report/leaves.html.twig', [
+            'leaves' => $leaves,
+            'beginDate' => $beginDate, 
+            'endDate' => $endDate,
+            'deptName' => $deptName[0]['dept_name']
         ]);
     }
     
