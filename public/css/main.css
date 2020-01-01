@@ -490,8 +490,8 @@ iframe {
   }
 }
 
-a{
+.urlcustom{
   color: white; 
-  font-style: bold;
+  text-decoration: none;
 }
 

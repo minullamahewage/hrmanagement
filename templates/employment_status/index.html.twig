@@ -202,7 +202,7 @@
                                 <td>{{ employment_status.id}}</td>
                                 <td>{{ employment_status.emp_status }}</td>
                                 <td>
-                                    <button class="btn" ><a href="{{ path('employment_status_show', {'id': employment_status.id}) }}">Show</a></button>
+                                    <button class="btn" ><a class="urlcustom" href="{{ path('employment_status_show', {'id': employment_status.id}) }}">Show</a></button>
                                 </td>
                                 <td>
                                     {{ include('employment_status/_delete_form.html.twig') }}
