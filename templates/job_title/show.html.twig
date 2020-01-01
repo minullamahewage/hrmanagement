@@ -1,6 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}JobTitle{% endblock %}
+{% block title %}Job Title{% endblock %}
+
+
+
+{% block stylesheets %}
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link rel="stylesheet" href="{{ asset('/css/nucleo-icons.css') }}" >
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('/css/black-dashboard.css?v=1.0.0') }}" >
+{% endblock %}
 
 {% block stylesheets %}
     <!--     Fonts and icons     -->
@@ -133,7 +145,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Users</a>
+            <a class="navbar-brand" href="javascript:void(0)">Job Titles</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -147,16 +159,7 @@
                   <span class="d-lg-none d-md-block">Search</span>
                 </button>
               </li>
-              <li class="dropdown nav-item">
-                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                  <div class="notification d-none d-lg-block d-xl-block"></div>
-                  <i class="tim-icons icon-sound-wave"></i>
-                  <p class="d-lg-none">
-                    Notifications
-                  </p>
-                </a>
-                </ul>
-              </li>
+              
               <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                   <div class="photo">
@@ -168,10 +171,10 @@
                   </p>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
-                  <li class="nav-link"><a href="{{ path('employee_show') }}" class="nav-item dropdown-item">Profile</a></li>
+                  <li class="nav-link"><a href="{{path('employee_show')}}" class="nav-item dropdown-item">Profile</a></li>
                   <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
                   <li class="dropdown-divider"></li>
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
+                  <li class="nav-link"><a href="{{path('app_logout')}}" class="nav-item dropdown-item">Log out</a></li>
                 </ul>
               </li>
               <li class="separator d-lg-none"></li>
@@ -199,31 +202,36 @@
           <div class="col-lg-4">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> JobTitle {{ job_title.jobTitle  }}</h4>
+                <h4 class="card-title">  {{ job_title.jobTitle  }}</h4>
               </div>
                 <div class="card-body">
                     <div class="table-responsive">
                             <table class="table tablesorter " id="">
                                 <tbody>
-            <tr>
-                <th>JobTitleId</th>
-                <td>{{ job_title.jobTitleId }}</td>
-            </tr>
-            <tr>
-                <th>JobTitle</th>
-                <td>{{ job_title.jobTitle }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ job_title.description }}</td>
-            </tr>
-        </tbody>
+                                    <tr>
+                                        <th>Job Title Id</th>
+                                        <td>{{ job_title.jobTitleId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Job Title</th>
+                                        <td>{{ branch.line1 }},  {{ branch.line2 }},  {{ branch.city }}</td>
+                                    </tr> 
+                                    <tr>
+                                        <th>Country</th>
+                                        <td>{{ branch.country }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PostalCode</th>
+                                        <td>{{ branch.postalCode }}</td>
+                                    </tr>
+                                </tbody>
                             </table>
 
-                        <div>                       
-                        {{ include('job_title/_delete_form.html.twig') }}
+                        <div>
+                        <a class="btn btn-fill btn-primary" href="{{ path('branch_edit', {'branchId': branch.branchId}) }}">Edit</a>                        
+                        {{ include('branch/_delete_form.html.twig') }}
                         </div>
-                        <a href="{{ path('job_title_index') }}">Back to JobTitle list</a>
+                        <a href="{{ path('branch_index') }}">Back to Branch list</a>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@
           </a>
         </div>
         <ul class="nav">
-        {% if (roles[0] == "ROLE_MANAGER" or roles[0] == "ROLE_ADMIN") %}
+        {% if (roles[0] == "ROLE_HRMANAGER" or roles[0] == "ROLE_ADMIN" or roles[0] == "ROLE_MANAGER") %}
           <li>
             <a href="{{ url('employee_index') }}">
               <i class="tim-icons icon-atom"></i>

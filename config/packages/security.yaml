@@ -7,7 +7,8 @@ security:
         ROLE_EMPLOYEE: ROLE_USER
         ROLE_SUPERVISOR: ROLE_USER
         ROLE_ADMIN: ROLE_USER, ROLE_SUPERVISOR
-        ROLE_MANAGER: ROLE_ADMIN
+        ROLE_HRMANAGER: ROLE_ADMIN
+        ROLE_MANAGER: ROLE_USER, ROLE_SUPERVISOR
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -38,22 +39,30 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/employee/admin, roles: ROLE_ADMIN }  
+        - { path: ^/employee/admin/new, roles: ROLE_ADMIN} 
+        - { path: ^/employee/admin, roles: [ROLE_MANAGER, ROLE_ADMIN] }  
         - { path: ^/employee/subordinate, roles: ROLE_SUPERVISOR }
         - { path: ^/employee, roles: ROLE_USER }
-        - { path: ^/branch, roles: ROLE_ADMIN }
-        - { path: ^/department, roles: ROLE_ADMIN }
-        - { path: ^/dependent/admin, roles: ROLE_ADMIN }
+        - { path: ^/branch/new, roles: ROLE_ADMIN }
+        - { path: ^/branch, roles: [ROLE_ADMIN, ROLE_MANAGER] }
+        - { path: ^/department/new, roles: ROLE_ADMIN }
+        - { path: ^/department, roles: [ROLE_ADMIN, ROLE_MANAGER] }
+        - { path: ^/dependent/admin/new, roles: ROLE_ADMIN }
+        - { path: ^/dependent/admin, roles:  [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/dependent/emp, roles: ROLE_USER }
-        - { path: ^/emergencycontact/admin, roles: ROLE_ADMIN }
+        - { path: ^/emergencycontact/admin/new, roles: ROLE_ADMIN }
+        - { path: ^/emergencycontact/admin, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/emergenecycontact/emp, roles: ROLE_USER }
-        - { path: ^/empcustom, roles: ROLE_ADMIN }
+        - { path: ^/empcustom/new, roles: ROLE_ADMIN }
+        - { path: ^/empcustom, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/empdata, roles: ROLE_ADMIN }
         - { path: ^/employhistory/emp, roles: ROLE_USER }
         - { path: ^/employhistory, roles: ROLE_ADMIN }
-        - { path: ^/employmentstatus, roles: ROLE_ADMIN }
+        - { path: ^/employmentstatus/new, roles: ROLE_ADMIN }
+        - { path: ^/employmentstatus, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/emptelephone, roles: ROLE_ADMIN }
-        - { path: ^/jobtitle, roles: ROLE_ADMIN }
+        - { path: ^/jobtitle/new, roles: ROLE_ADMIN }
+        - { path: ^/jobtitle, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/leave/emp, roles: ROLE_USER }
         - { path: ^/leave/supervisor, roles: ROLE_SUPERVISOR }
         - { path: ^/leave/admin, roles: ROLE_ADMIN }
