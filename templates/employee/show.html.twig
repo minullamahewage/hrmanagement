@@ -53,6 +53,12 @@
               <p>Request Leave</p>
             </a>
           </li>
+           <li >
+            <a href="{{ path('dependent_emp', {'empId': employee.empId}) }}">
+              <i class="tim-icons icon-pin"></i>
+              <p>View Dependents</p>
+            </a>
+          </li>
           <li>
             <a href="{{ url('emergency_contact_emp', {'empId': employee.empId}) }}">
               <i class="tim-icons icon-bell-55"></i>
