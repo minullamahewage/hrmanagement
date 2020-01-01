@@ -19,7 +19,7 @@ class EmpTelephone
      * @ORM\Id
      * 
      */
-    private $telephone = '';
+    private $telephone;
 
     /**
      * @var string

@@ -13,7 +13,14 @@ class EmergencyContactType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('telephone')
+            ->add('telephone',NumberType::class,[
+                'constraints' => [
+                
+                    new Length([
+                        'min' => 10,
+                        'minMessage' => 'Your telephone number should be at least {{ limit }} characters'
+                        
+            ])]]))
             ->add('emp_id')
         ;
     }
