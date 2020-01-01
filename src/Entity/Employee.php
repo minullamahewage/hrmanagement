@@ -26,7 +26,7 @@ class Employee
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NIC", type="string", length=12, nullable=flase)
+     * @ORM\Column(name="NIC", type="string", length=12, nullable=false)
      */
     private $nic;
 
