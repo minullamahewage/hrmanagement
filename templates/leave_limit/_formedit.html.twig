@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+ 
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.leaveLimit) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.leaveLimit) }}       
+    </div>
+</div>
+
+    <br>
+    <button class="btn btn-fill btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
