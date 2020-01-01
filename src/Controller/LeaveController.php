@@ -71,7 +71,11 @@ class LeaveController extends AbstractController
             // var_dump($remainingLeaves - $days);
             if ($remainingLeaves - $days>0){
                 $leave->setEmpId($empId);
+                try{
                 $leaveModel->addLeave($leave, $entityManager);
+                }catch(Exception $e) {
+                    var_dump($e->getMessage());exit;
+                }
                 return $this->redirectToRoute('leave_emp',array('empId'=> $empId));
             }
             else{
