@@ -38,5 +38,16 @@ class ReportModel{
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function getLeavesForPeriodByDept($deptId, $begin, $end, $em){ 
+        $conn = $em->getConnection();
+        $sql = "SELECT * FROM leaves where emp_id IN (SELECT emp_id from employee where dept_id = :deptId) AND (from_date BETWEEN :begin AND :end OR till_date BETWEEN :begin AND :end)";
+        $stmt=$conn->prepare($sql);
+        $stmt->bindValue(':deptId',$deptId);
+        $stmt->bindValue(':begin',$begin);
+        $stmt->bindValue(':end',$end);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
 
