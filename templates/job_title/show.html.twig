@@ -14,6 +14,16 @@
     <link rel="stylesheet" href="{{ asset('/css/black-dashboard.css?v=1.0.0') }}" >
 {% endblock %}
 
+{% block stylesheets %}
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link rel="stylesheet" href="{{ asset('/css/nucleo-icons.css') }}" >
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('/css/black-dashboard.css?v=1.0.0') }}" >
+{% endblock %}
+
 {% block body %}
 <div class="wrapper">
     <div class="sidebar">
@@ -30,7 +40,7 @@
           </a> #}
         </div>
         <ul class="nav">
-          <li>
+          <li >
             <a href="{{ path('user_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Users</p>
@@ -42,7 +52,7 @@
               <p>Employees</p>
             </a>
           </li>
-          <li >
+          <li>
             <a href="{{ path('branch_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Branches</p>
@@ -60,7 +70,7 @@
               <p>Employment Status</p>
             </a>
           </li>
-          <li class="active">
+          <li class="active ">
             <a href="{{path('job_title_index')}}">
               <i class="tim-icons icon-bell-55"></i>
               <p>Job Title</p>
@@ -187,12 +197,12 @@
       <!-- End Navbar -->
 
 
-    <div class="content" >
+    <div class="content">
         <div class="row">
           <div class="col-lg-4">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title">{{ job_title.jobTitle }}</h4>
+                <h4 class="card-title">  {{ job_title.jobTitle  }}</h4>
               </div>
                 <div class="card-body">
                     <div class="table-responsive">
