@@ -59,9 +59,8 @@ class EmployHistoryController extends AbstractController
          foreach($empStatuses as &$empStatus){
              $empStatusChoices[$empStatus['id'].'-'.$empStatus['emp_status']] = $empStatus['id'];
          }
-        var_dump($empStatusChoices);exit;
          $form = $this->createForm(EmployHistoryType::class,$employHistory, array(
-            'emp_Status_Choices' =>$empStatusChoices,
+            'emp_status_choices' =>$empStatusChoices,
         )); 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,7 +99,18 @@ class EmployHistoryController extends AbstractController
      */
     public function edit(Request $request, EmployHistory $employHistory): Response
     {
-        $form = $this->createForm(EmployHistoryType::class, $employHistory);
+        $employmentStatusModel = new EmploymentStatusModel();
+        $employHistoryModel = new EmployHistoryModel();
+        $entityManager = $this->getDoctrine()->getManager();
+         // //employment Status
+         $empStatuses = $employmentStatusModel->getAllEmploymentStatuses($entityManager);
+         $empStatusChoices;
+         foreach($empStatuses as &$empStatus){
+             $empStatusChoices[$empStatus['id'].'-'.$empStatus['emp_status']] = $empStatus['id'];
+         }
+         $form = $this->createForm(EmployHistoryType::class,$employHistory, array(
+            'emp_status_choices' =>$empStatusChoices,
+        )); 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

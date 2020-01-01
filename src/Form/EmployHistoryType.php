@@ -13,7 +13,7 @@ class EmployHistoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->empStatusChoices = $options['emp_Status_Choices'];
+        $this->empStatusChoices = $options['emp_status_choices'];
 
         $builder
         ->add('fromDate', DateType::class,[
@@ -36,7 +36,7 @@ class EmployHistoryType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EmployHistory::class,
-            'emp_Status_Choices' =>null,
+            'emp_status_choices' =>null,
         ]);
     }
 }
