@@ -189,7 +189,7 @@
           <div class="col-md-6">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Jobtile Index</h4>
+                <h4 class="card-title"> Leave Type Index</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -199,7 +199,6 @@
             <tr>
                 <th>Leave Type</th>
                 <th>Description</th>
-                <th>actions</th>
             </tr>
         </thead>
                     <tbody>
@@ -208,7 +207,7 @@
                 <td>{{ leave_type.leave_type }}</td>
                 <td>{{ leave_type.description }}</td>
                 <td>
-                    <a href="{{ path('leave_type_show', {'leaveType': leave_type.leave_type}) }}">show</a>
+                    <button class="btn" onclick="window.location.href='{{ path('leave_type_show', {'leaveType': leave_type.leave_type}) }}';">Show</button>
                     {# <a href="{{ path('leave_type_edit', {'leaveType': leave_type.leave_type}) }}">edit</a> #}
                 </td>
             </tr>
@@ -219,8 +218,7 @@
         {% endfor %}
                     </tbody>                
                     </table>
-                    
-                     <a href="{{ path('leave_type_new') }}">Create new</a>
+                     <button class="btn" onclick="window.location.href='{{ path('leave_type_new') }}';">Create New</button>
                 </div>
               </div>
             </div>

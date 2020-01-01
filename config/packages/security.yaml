@@ -69,7 +69,7 @@ security:
         - { path: ^/leavelimit, roles: ROLE_ADMIN }
         - { path: ^/leavetype, roles: ROLE_ADMIN }
         - { path: ^/paygrade, roles: ROLE_ADMIN }
-        - { path: ^/register, roles: ROLE_ADMIN }
+        # - { path: ^/register, roles: ROLE_ADMIN }
 
 
 

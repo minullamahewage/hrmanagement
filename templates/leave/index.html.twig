@@ -189,7 +189,7 @@
           <div class="col-md-6">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Leave Index</h4>
+                <h4 class="card-title"> Leaves Index</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -203,7 +203,6 @@
                 <th>ApprovalStatus</th>
                 <th>EmpId</th>
                 <th>LeaveType</th>
-                <th>actions</th>
             </tr>
         </thead>
                     <tbody>
@@ -216,7 +215,7 @@
                 <td>{{ leave.emp_id }}</td>
                 <td>{{ leave.leave_type }}</td>
                 <td>
-                    <a href="{{ path('leave_show', {'leaveFormId': leave.leave_form_id}) }}">show</a>
+                    <button class="btn" onclick="window.location.href='{{ path('leave_show', {'leaveFormId': leave.leave_form_id}) }}';">Show</button>
                     {# <a href="{{ path('leave_edit', {'leaveFormId': leave.leave_form_d}) }}">edit</a> #}
                 </td>
             </tr>
@@ -227,8 +226,6 @@
         {% endfor %}
                     </tbody>                
                     </table>
-                    
-                     <a href="{{ path('job_title_new') }}">Create new</a>
                 </div>
               </div>
             </div>
