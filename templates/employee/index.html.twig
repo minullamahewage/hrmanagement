@@ -178,7 +178,7 @@
                   </p>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
-                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
+                  <li class="nav-link"><a href="{{path('employee_show')}}" class="nav-item dropdown-item">Profile</a></li>
                   <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
                   <li class="dropdown-divider"></li>
                   <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
@@ -207,20 +207,18 @@
           <div class="col-md-12">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> Departments</h4>
+                <h4 class="card-title"> Employees</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table tablesorter " id="">
                         <thead>
                         <tr>
-                            <th>EmpId</th>
+                            <th>Emp Id</th>
                             <th>Nic</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>AddrLine1</th>
-                            <th>AddrLine2</th>
-                            <th>City</th>
+                            <th>Address</th>
                             <th>Country</th>
                             <th>PostalCode</th>
                             <th>Telephone No</th>
@@ -242,13 +240,11 @@
                             <td>{{ employee.NIC }}</td>
                             <td>{{ employee.name }}</td>
                             <td>{{ employee.email }}</td>
-                            <td>{{ employee.addr_line_1 }}</td>
-                            <td>{{ employee.addr_line_2 }}</td>
-                            <td>{{ employee.city }}</td>
+                            <td>{{ employee.addr_line_1 }}, {{ employee.addr_line_2 }}, {{ employee.city }}</td>
                             <td>{{ employee.country }}</td>
                             <td>{{ employee.postal_code }}</td>
                             <td>{% for telephone in employee.emp_telephone %}
-                                {{telephone.telephone}} ,
+                                {{telephone.telephone}},
                                 {% endfor %}
                             </td>
                             
