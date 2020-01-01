@@ -2,10 +2,10 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 01, 2020 at 01:55 PM
--- Server version: 10.4.10-MariaDB
--- PHP Version: 7.3.12
+-- Host: localhost
+-- Generation Time: Jan 01, 2020 at 05:00 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `hrmanagement`
 --
-CREATE DATABASE IF NOT EXISTS `hrmanagement` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `hrmanagement`;
 
 -- --------------------------------------------------------
 
@@ -46,7 +44,8 @@ CREATE TABLE `branch` (
 
 INSERT INTO `branch` (`branch_id`, `name`, `line_1`, `line_2`, `city`, `country`, `postal_code`) VALUES
 ('1', 'Colombo', '21', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100'),
-('2', 'Kandy', '20', 'Street', 'Kandy', 'Sri Lanka', '1000');
+('2', 'Kandy', '20', 'Street', 'Kandy', 'Sri Lanka', '1000'),
+('3', 'Branch 3', '3', 'Road 3', 'City 3', 'Sri Lanka', '10003');
 
 -- --------------------------------------------------------
 
@@ -68,7 +67,8 @@ CREATE TABLE `department` (
 INSERT INTO `department` (`dept_id`, `dept_name`, `building`, `floor`) VALUES
 (1, 'Finance', 'Main', 'Second'),
 (2, 'Human Resource', 'Main', 'First'),
-(3, 'IT', 'Main', 'Second');
+(3, 'IT', 'Main', 'Second'),
+(4, 'Maintenance', 'Main', 'Ground');
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,10 @@ CREATE TABLE `emergency_contact` (
 --
 
 INSERT INTO `emergency_contact` (`id`, `emp_id`, `name`, `telephone`) VALUES
-(3, '2', 'Em Contact 1', '077123123');
+(3, '2', 'Em Contact 1', '077123123'),
+(4, '3', 'Emergency Contact 2', '1123456783'),
+(5, '4', 'Emergency Contact 3', '1123456789'),
+(6, '1', 'Emergency Contact 4', '1234567890');
 
 -- --------------------------------------------------------
 
@@ -151,9 +154,9 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`emp_id`, `NIC`, `name`, `email`, `addr_line_1`, `addr_line_2`, `city`, `country`, `postal_code`, `dob`, `marital_status`, `branch_id`, `dept_id`, `job_title_id`, `pay_grade`, `emp_status_id`, `supervisor_id`) VALUES
 ('0', '9600000000', 'Admin', 'admin@gmail.com', '10', 'Road 0', 'Colombo', 'Sri Lanka', '10000', '1996-01-01', 'Married', '1', 3, 5, 'Level4', 5, '0'),
 ('1', '9600000001', 'HR Manager', 'hrmanager@gmail.com', '20', 'Main Street', 'Colombo 07', 'Sri Lanka', '10100', '1996-08-05', 'Unmarried', '1', 2, 2, 'Level4', 1, '1'),
-('2', '9700000002', 'Test2', 'test2@gmail.com', '2', 'Road2', 'Colombo', 'Sri Lanka', '1002', '1997-01-30', 'Unmarried', '1', 1, 1, 'Level2', 5, '1'),
-('3', '9600000003', 'Test 3', 'test3@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '2014-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '2'),
-('4', '9600000004', 'test4', 'test4@gmail.com', '20', 'Road 4', 'Colombo 4', 'Sri Lanka', '10004', '1997-04-04', 'Married', '2', 1, 4, 'Level4', 1, '2');
+('2', '9700000002', 'Supervisor', 'supervisor@gmail.com', '2', 'Road2', 'Colombo 02', 'Sri Lanka', '10002', '1997-01-30', 'Unmarried', '1', 1, 1, 'Level2', 5, '1'),
+('3', '9600000003', 'Manager', 'manager@gmail.com', '20', 'Road 3', 'Colombo 03', 'Sri Lanka', '10003', '1920-01-02', 'Unmarried', '1', 1, 1, 'Level1', 5, '2'),
+('4', '9600000004', 'Employee', 'employee@gmail.com', '20', 'Road 4', 'Colombo 4', 'Sri Lanka', '10004', '1997-04-04', 'Married', '2', 3, 4, 'Level4', 1, '2');
 
 -- --------------------------------------------------------
 
@@ -198,8 +201,7 @@ CREATE TABLE `employ_history` (
 --
 
 INSERT INTO `employ_history` (`emp_history_id`, `emp_id`, `to_date`, `from_date`, `emp_status_id`) VALUES
-(1, '1', '2015-12-18', '2018-12-01', 1),
-(5, '2', '2020-01-14', '2020-01-01', NULL);
+(1, '1', '2015-12-18', '2018-12-01', 1);
 
 --
 -- Triggers `employ_history`
@@ -271,10 +273,10 @@ INSERT INTO `emp_data` (`emp_id`, `attribute`, `value`) VALUES
 ('0', 'custom_attribute_2', NULL),
 ('1', 'custom_attribute_1', NULL),
 ('1', 'custom_attribute_2', NULL),
-('2', 'custom_attribute_1', NULL),
-('2', 'custom_attribute_2', NULL),
+('2', 'custom_attribute_1', 'custom_data_1_2'),
+('2', 'custom_attribute_2', 'custom_data_2_2'),
 ('3', 'custom_attribute_1', 'custom data 1_3'),
-('3', 'custom_attribute_2', NULL),
+('3', 'custom_attribute_2', 'custom data 2_3'),
 ('4', 'custom_attribute_1', NULL),
 ('4', 'custom_attribute_2', NULL);
 
@@ -360,7 +362,10 @@ INSERT INTO `leaves` (`leave_form_id`, `emp_id`, `from_date`, `till_date`, `leav
 (20, '3', '2019-12-15', '2019-12-16', 'No-pay', 'True'),
 (21, '3', '2019-12-18', '2019-12-20', 'No-pay', 'False'),
 (22, '1', '2019-12-30', '2019-12-31', 'Annual', 'True'),
-(23, '3', '2019-11-29', '2019-12-29', 'Annual', '0');
+(23, '3', '2019-11-29', '2019-12-29', 'Annual', '0'),
+(24, '4', '2020-01-01', '2020-01-03', 'Annual', 'Pending'),
+(25, '4', '2019-12-01', '2019-12-03', 'No-pay', 'Pending'),
+(26, '2', '2020-01-10', '2020-01-13', 'No-pay', 'Pending');
 
 --
 -- Triggers `leaves`
@@ -419,12 +424,13 @@ CREATE TABLE `leave_limit` (
 --
 
 INSERT INTO `leave_limit` (`pay_grade`, `leave_type`, `leave_limit`) VALUES
+('Level1', 'Maternity', 30),
 ('Level1', 'No-pay', 50),
 ('Level2', 'Annual', 10),
 ('Level2', 'Casual', 10),
 ('Level2', 'No-pay', 50),
 ('Level3', 'No-pay', 50),
-('Level4', 'Annual', 20),
+('Level4', 'Annual', 40),
 ('Level4', 'No-pay', 50);
 
 -- --------------------------------------------------------
@@ -477,7 +483,8 @@ INSERT INTO `pay_grade` (`pay_grade`) VALUES
 ('Level1'),
 ('Level2'),
 ('Level3'),
-('Level4');
+('Level4'),
+('Level5');
 
 -- --------------------------------------------------------
 
@@ -509,10 +516,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `roles`, `password`, `emp_id`) VALUES
-(4, 'test3', '[\"ROLE_EMPLOYEE\"]', '$2y$13$MlNe6dtdvyqKz29HFJtmAeS8jjsVeQqFMS1f9i.eBO6GIf/nBPSXy', '3'),
-(8, 'HRManager', '[\"ROLE_MANAGER\"]', '$2y$13$U6Gvp95WdT5l35zOPjta.OTdlcll8a01l715UNTSRvmCe6JM4q16q', '2'),
-(9, 'admin', '[\"ROLE_ADMIN\"]', '$argon2id$v=19$m=65536,t=4,p=1$TkkvLklMVWgzMFRadmFGRw$r79eLKWct5/fPBt5LwosyRp3vkDNZU1ZoHjROWTtSqE', '0'),
-(10, 'employee', '[\"ROLE_EMPLOYEE\"]', '$argon2id$v=19$m=65536,t=4,p=1$L2R6VXdlazY0eXdoU3BnQg$DToJvYDh6N0mM4Dxi2fgB++6TOMTc/1NNBBpCn/GWTg', '4');
+(11, 'admin', '[\"ROLE_ADMIN\"]', '$2y$13$Nk/PDr7d.Gezlm5Wu0DHneFMdAxz4eJuCVafCmq/M8b.q6No5y4zG', '0'),
+(12, 'hrmanager', '[\"ROLE_HRMANAGER\"]', '$2y$13$5HLQVwUxBiugA2VtjzpAY.62WVLaS9i4BtpY2YVJjS1RC/xtMoExO', '1'),
+(13, 'supervisor', '[\"ROLE_SUPERVISOR\"]', '$2y$13$vF8sJjLw3lZaiO2ymwUmiO9NG9p91vZ9wDCRIzwH61ysJvwiRkbEu', '2'),
+(14, 'employee', '[\"ROLE_EMPLOYEE\"]', '$2y$13$tt54Oc8kF6px8nnUXhayfOZbjfgUfESsc/VliHgLbSvF2k2acN.kC', '4');
 
 -- --------------------------------------------------------
 
@@ -681,7 +688,7 @@ ALTER TABLE `dependent`
 -- AUTO_INCREMENT for table `emergency_contact`
 --
 ALTER TABLE `emergency_contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `employment_status`
@@ -705,13 +712,13 @@ ALTER TABLE `job_title`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `leave_form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
