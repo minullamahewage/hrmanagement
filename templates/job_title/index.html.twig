@@ -200,7 +200,6 @@
                             {# <th>JobTitleId</th> #}
                             <th>JobTitle</th>
                             <th>Description</th>
-                            <th>actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -210,10 +209,8 @@
                             <td>{{ job_title.job_title }}</td>
                             <td>{{ job_title.description }}</td>
                             <td>
-                                <a href="{{ path('job_title_show', {'jobTitleId': job_title.job_title_id}) }}">show</a>
-                                </td>
-                                <td>
-                                <a href="{{ path('job_title_edit', {'jobTitleId': job_title.job_title_id}) }}">edit</a>
+                                <button class="btn" onclick="window.location.href='{{ path('job_title_show', {'jobTitleId': job_title.job_title_id}) }}';">Show</button>
+                                <button class="btn" onclick="window.location.href='{{ path('job_title_edit', {'jobTitleId': job_title.job_title_id}) }}';">Edit</button>
                             </td>
                         </tr>
                     {% else %}
@@ -224,7 +221,7 @@
                     </tbody>                
                     </table>
                     
-                     <a href="{{ path('job_title_new') }}">Create new</a>
+                     <button class="btn" onclick="window.location.href='{{ path('job_title_new') }}';">Create new</button>
                 </div>
               </div>
             </div>
