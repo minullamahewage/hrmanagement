@@ -57,7 +57,8 @@ security:
         - { path: ^/empcustom, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/empdata, roles: ROLE_ADMIN }
         - { path: ^/employhistory/emp, roles: ROLE_USER }
-        - { path: ^/employhistory, roles: ROLE_ADMIN }
+        - { path: ^/employhistory/new, roles: ROLE_ADMIN }
+        - { path: ^/employhistory, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/employmentstatus/new, roles: ROLE_ADMIN }
         - { path: ^/employmentstatus, roles: [ROLE_ADMIN, ROLE_MANAGER] }
         - { path: ^/emptelephone, roles: ROLE_ADMIN }
@@ -68,7 +69,8 @@ security:
         - { path: ^/leave/admin, roles: ROLE_ADMIN }
         - { path: ^/leavelimit, roles: ROLE_ADMIN }
         - { path: ^/leavetype, roles: ROLE_ADMIN }
-        - { path: ^/paygrade, roles: ROLE_ADMIN }
+        - { path: ^/paygrade/new, roles: ROLE_ADMIN }
+        - { path: ^/paygrade, roles: [ROLE_ADMIN, ROLE_MANAGER]  }
         - { path: ^/register, roles: ROLE_ADMIN }
         - { path: ^/report, roles: ROLE_ADMIN}
 

@@ -39,13 +39,14 @@ class DependentModel{
         $stmt->bindValue(':emp_id', $dependent->getEmpId());
         $stmt->bindValue(':name',$dependent->getName());
         $stmt->bindValue(':email', $dependent->getEmail());
-        $stmt->bindValue(':relationship', $dependent->getRelatioship());
+        $stmt->bindValue(':relationship', $dependent->getRelationship());
         $stmt->bindValue(':telephone', $dependent->getTelephone());
         $stmt->bindValue(':addr_line_1',$dependent->getAddrLine1());
         $stmt->bindValue(':addr_line_2', $dependent->getAddrLine1());
         $stmt->bindValue(':city', $dependent->getCity());
         $stmt->bindValue(':country',$dependent->getCountry());
         $stmt->bindValue(':postal_code', $dependent->getPostalCode());
+        $stmt->bindValue(':dependent_id', $dependent->getDependentId());
         $stmt->execute();
     }
 
