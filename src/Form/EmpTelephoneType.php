@@ -18,10 +18,12 @@ class EmpTelephoneType extends AbstractType
                 'constraints' => [
                 
                     new Length([
-                        'min' => 10,
-                        'minMessage' => 'Your telephone number should be at least {{ limit }} characters'
+                        'min' => 9,
+                        'max' => 9,
+                        'minMessage' => 'Your telephone number should be {{ limit }} characters',
+                        'maxMessage' => 'Your telephone number should be  {{ limit }} characters'
                         
-            ])]])
+                    ])]])
             ->add('empId')
         ;
     }
