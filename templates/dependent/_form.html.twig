@@ -3,7 +3,10 @@
     <div class="form-group">
         <label>{{ form_label(form.nic) }}</label>
         <input class="form-control" 
-            {{ form_widget(form.nic) }}       
+            {{ form_widget(form.nic) }} 
+            <div>
+            {{ form_errors(form.nic)}}   
+            </div>       
     </div>
 </div>
 <div class="col-md-6 px-md-1">
@@ -18,6 +21,9 @@
         <label>{{ form_label(form.email) }}</label>
         <input class="form-control" 
             {{ form_widget(form.email) }}
+            <div>
+            {{ form_errors(form.email)}}   
+            </div> 
     </div>
 </div>
 <div class="col-md-6 px-md-1">
@@ -33,6 +39,9 @@
         <label>{{ form_label(form.telephone) }}</label>
         <input class="form-control" 
             {{ form_widget(form.telephone) }}
+            <div>
+            {{ form_errors(form.telephone)}}   
+            </div> 
     </div>
 </div>
 
@@ -69,6 +78,9 @@
         <label>{{ form_label(form.postalCode) }}</label>
         <input class="form-control" 
             {{ form_widget(form.postalCode) }}
+            <div>
+            {{ form_errors(form.postalCode)}}   
+            </div> 
     </div>
 </div>
           <div class="col-md-6 px-md-1">
