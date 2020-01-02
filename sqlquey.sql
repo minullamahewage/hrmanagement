@@ -57,3 +57,47 @@ IF (NEW.to_date < NEW.from_date) THEN
   END IF;
 END; ??	
 DELIMITER ;
+
+//Database Roles and Users
+
+CREATE ROLE 'role_admin','role_hrmanager','role_manager','role_supervisor','role_employee';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'role_admin';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'role_hrmanager';
+
+GRANT SELECT ON *.* TO 'role_employee';
+GRANT INSERT ON leaves TO 'role_employee';
+
+GRANT SELECT ON leaves TO 'role_manager';
+GRANT SELECT ON leave_limit TO 'role_manager';
+GRANT SELECT ON leave_type TO 'role_manager';
+GRANT SELECT,UPDATE ON branch TO 'role_manager';
+GRANT SELECT,UPDATE ON department TO 'role_manager';
+GRANT SELECT,UPDATE ON dependent TO 'role_manager';
+GRANT SELECT,UPDATE ON emergency_contact TO 'role_manager';
+GRANT SELECT,UPDATE ON employee TO 'role_manager';
+GRANT SELECT,UPDATE ON employ_history TO 'role_manager';
+GRANT SELECT,UPDATE ON emp_custom TO 'role_manager';
+GRANT SELECT,UPDATE ON emp_data TO 'role_manager';
+GRANT SELECT,UPDATE ON emp_telephone TO 'role_manager';
+GRANT SELECT,UPDATE ON job_title TO 'role_manager';
+GRANT SELECT,UPDATE ON pay_grade TO 'role_manager';
+GRANT SELECT,UPDATE ON user TO 'role_manager';
+
+GRANT SELECT ON *.* TO 'role_supervisor';
+GRANT UPDATE ON leaves TO 'role_supervisor';
+GRANT UPDATE ON leave_limit TO 'role_supervisor';
+GRANT UPDATE ON leave_type TO 'role_supervisor';
+
+CREATE USER 'admin' IDENTIFIED BY 'adminpass';
+CREATE USER 'hrmanager' IDENTIFIED BY 'hrmanagerpass';
+CREATE USER 'manager1' IDENTIFIED BY 'manager1pass';
+CREATE USER 'supervisor1' IDENTIFIED BY 'supervisor1pass';
+CREATE USER 'employee1' IDENTIFIED BY 'employee1pass';
+
+GRANT 'role_admin' TO 'admin';
+GRANT 'role_hrmanager' TO 'hrmanager';
+GRANT 'role_manager' TO 'manager1';
+GRANT 'role_supervisor' TO 'supervisor1';
+GRANT 'role_employee' TO 'employee1';
