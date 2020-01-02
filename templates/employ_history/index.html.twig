@@ -147,7 +147,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">EmployHistory index</a>
+            <a class="navbar-brand" href="javascript:void(0)">Employment History index</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -195,7 +195,7 @@
           <div class="col-md-6">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> EmployHistory Index</h4>
+                <h4 class="card-title"> Employment History Index</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -203,20 +203,19 @@
                          
                         <thead>
             <tr>
-                <th>EmpHistoryId</th>
-                <th>ToDate</th>
-                <th>FromDate</th>
-                <th>EmpStatusId</th>
+                <th>Employment History Id</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Employment Status Id</th>
                 <th>Emp_id</th>
-                <th>actions</th>
             </tr>
         </thead>
                     <tbody>
                    {% for employ_history in employ_histories %}
             <tr>
                 <td>{{ employ_history.emp_history_id }}</td>
-                <td>{{ employ_history.to_date ? employ_history.to_date|date('Y-m-d') : '' }}</td>
                 <td>{{ employ_history.from_date ? employ_history.from_date|date('Y-m-d') : '' }}</td>
+                <td>{{ employ_history.to_date ? employ_history.to_date|date('Y-m-d') : '' }}</td>
                 <td>{{ employ_history.emp_status_id }}</td>
                 <td>{{ employ_history.emp_id }}</td>
                 <td>
