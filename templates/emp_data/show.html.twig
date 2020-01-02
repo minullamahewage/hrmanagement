@@ -210,7 +210,7 @@
           <div class="col-lg-4">
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"> EmpCustom {{ emp_custom.attribute }}</h4>
+                <h4 class="card-title"> EmpData {{ emp_custom.attribute }}</h4>
               </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -218,16 +218,24 @@
                                 <tbody>
                                      <tr>
                 <th>Attribute</th>
-                <td>{{ emp_custom.attribute }}</td>
+                <td>{{ emp_data.attribute }}</td>
+            </tr>
+            <tr>
+                <th>Emp_id</th>
+                <td>{{ emp_data.empId }}</td>
+            </tr>
+            <tr>
+                <th>Value</th>
+                <td>{{ emp_data.value }}</td>
             </tr>
                                 </tbody>
                             </table>
 
                         <div>
-                        <a class="btn btn-fill btn-primary" href="{{ path('emp_custom_index') }}">Edit</a>                        
-                        {{ include('emp_custom/_delete_form.html.twig') }}
+                        <a class="btn btn-fill btn-primary" href="{{ path('emp_data_index') }}">Edit</a>                        
+                        {{ include('emp_data/_delete_form.html.twig') }}
                         </div>
-                        <a href="{{ path('emp_custom_index') }}">Back to Branch list</a>
+                        <a href="{{ path('emp_data_index') }}">Back to EmpData list</a>
                     </div>
                 </div>
             </div>
