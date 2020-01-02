@@ -45,7 +45,7 @@ class EmployeeType extends AbstractType
             ->add('postalCode', NumberType::class)
             ->add('dob', DateType::Class, array(
                 'widget' => 'choice',
-                'years' => range(date('Y')-100, date('Y')-18),
+                'years' => range(date('Y')-60, date('Y')-18),
                 'months' => range(date('m'), 12),
                 'days' => range(date('d'), 31),
               ))
