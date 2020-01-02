@@ -58,6 +58,9 @@ IF (NEW.to_date < NEW.from_date) THEN
 END; ??	
 DELIMITER ;
 
+
+
+
 //Database Roles and Users
 
 CREATE ROLE 'role_admin','role_hrmanager','role_manager','role_supervisor','role_employee';
