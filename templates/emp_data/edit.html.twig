@@ -41,7 +41,7 @@
               <p>Employees</p>
             </a>
           </li>
-          <li class="active">
+          <li class="">
             <a href="{{ path('branch_index') }}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Branches</p>
@@ -113,6 +113,25 @@
               <p>Employment History</p>
             </a>
           </li>
+           <li>
+            <a href="{{ path('report_index') }}">
+              <i class="tim-icons icon-notes"></i>
+              <p>Reports</p>
+            </a>
+          </li>
+          <li  class="">
+            <a href="{{path('emp_custom_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employee Custom</p>
+            </a>
+          </li>
+          <li  class="active">
+            <a href="{{path('emp_custom_index')}}">
+              <i class="tim-icons icon-world"></i>
+              <p>Employee Data</p>
+            </a>
+          </li>
+
           {# <li class="active-pro">
             <a href="./upgrade.html">
               <i class="tim-icons icon-spaceship"></i>
@@ -134,7 +153,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Branches</a>
+            <a class="navbar-brand" href="javascript:void(0)">EmpData</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -182,13 +201,13 @@
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h2 class="title">Edit Branch Details</h2>
+                <h2 class="title">Edit EmpData Details</h2>
               </div>
               <div class="card-body">
 
-                {{ include('branch/_form.html.twig', {'button_label': 'Update'}) }}
-                {{ include('branch/_delete_form.html.twig') }}
-                <a href="{{ path('branch_index') }}">Back to Branch list</a>
+                {{ include('emp_data/_form.html.twig', {'button_label': 'Update'}) }}
+                {{ include('emp_data/_delete_form.html.twig') }}
+                <a href="{{ path('emp_data_index') }}">Back to EmpData list</a>
 
               </div>  
             </div>
