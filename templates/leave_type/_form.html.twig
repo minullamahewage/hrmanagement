@@ -1,4 +1,18 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.leaveType) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.leaveType) }}       
+    </div>
+</div>
+<div class="col-md-6 px-md-1">
+    <div class="form-group">
+        <label>{{ form_label(form.description) }}</label>
+        <input class="form-control" 
+            {{ form_widget(form.description) }}  
+                
+    </div>
+
+<button class="btn btn-fill btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
