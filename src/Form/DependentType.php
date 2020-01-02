@@ -23,9 +23,9 @@ class DependentType extends AbstractType
                 
                     new Length([
                         'min' => 10,
-                        'minMessage' => 'Your nic should be at least {{ limit }} characters',
+                        'minMessage' => 'Your nic should be 10 or 12 characters',
                         'max' => 12,
-                        'minMessage' => 'Your nic should be less than {{ limit }} characters'
+                        'minMessage' => 'Your nic should be 10 or 12 characters'
                         
             ])]])
             ->add('name')
